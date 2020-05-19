@@ -26,5 +26,5 @@ class Screen:
     def add_slave (self,slave):
         self.__slaves.add(slave)
 
-    def remove_salve (self,slave):
-        self.__slaves.remove(10)
+    def remove_slave (self,slave):
+        self.__slaves.remove(slave)

@@ -11,19 +11,27 @@ class InterfaceObject:
 
         master.add_slave(self)
 
+    # Função de atualização de comportamento
     def update (self):
         pass
 
+    # Parâmetros para impressão de um objeto e todos os seus slaves na tela
     def get_blit(self):
-        ret = [(self.get_img(), self.get_screen_position())]
+        return_list = [(self.get_img(), self.get_abs_position())]
         for slave in self.get_slaves():
-            ret = ret + slave.get_blit()
+            return_list += slave.get_blit()
 
-        return ret
+        return return_list
 
+    # Posição do objeto em relação ao centro da tela
     def get_screen_position(self):
-        return self.__master.get_screen_position() + self.__pos - self.__rect/2
+        return self.__master.get_screen_position() + self.__pos
 
+    # Posição do início do retângulo do objeto no referencial absoluto do Pygame
+    def get_abs_position(self):
+        return self.__master.get_abs_position() + self.__pos - self.__rect/2
+
+    # Posição do objeto em relação ao mestre
     def get_position (self):
         return self.__pos
 

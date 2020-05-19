@@ -18,6 +18,9 @@ class Screen:
         pg.display.update()
 
     def get_screen_position(self):
+        return Vector2(0,0)
+
+    def get_abs_position(self):
         return self.__pos
 
     def add_slave (self,slave):

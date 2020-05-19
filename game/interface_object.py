@@ -49,3 +49,6 @@ class InterfaceObject:
 
     def add_slave(self, slave):
         self.__slaves.add(slave)
+
+    def remove_slave (self,slave):
+        self.__slaves.remove(slave)

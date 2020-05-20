@@ -17,7 +17,10 @@ class Player:
     def get_nodes(self):
         return self.__nodes
 
-    def grow_size(self, x, y):
+    def get_head(self):
+        return self.__nodes[0]
+
+    def grow_size(self):
         self.__grow = True
 
     def update (self):

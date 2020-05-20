@@ -46,6 +46,7 @@ class InterfaceObject:
 
     def set_img(self,img):
         self.__img = img
+        self.__rect = Vector2(img.get_rect().size)
 
     def get_slaves(self):
         return self.__slaves

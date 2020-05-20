@@ -1,9 +1,10 @@
 from game import pg
 from pygame.math import Vector2
 
+
 class InterfaceObject:
-    def __init__ (self, master, img, x=0, y=0):
-        self.__pos = Vector2(x,y)
+    def __init__(self, master, img, x=0, y=0):
+        self.__pos = Vector2(x, y)
         self.__master = master
         self.__img = img
         self.__slaves = set()
@@ -12,7 +13,7 @@ class InterfaceObject:
         master.add_slave(self)
 
     # Função de atualização de comportamento
-    def update (self):
+    def update(self):
         pass
 
     # Parâmetros para impressão de um objeto e todos os seus slaves na tela
@@ -29,19 +30,19 @@ class InterfaceObject:
 
     # Posição do início do retângulo do objeto no referencial absoluto do Pygame
     def get_abs_position(self):
-        return self.__master.get_abs_position() + self.__pos - self.__rect/2
+        return self.__master.get_abs_position() + self.__pos - self.__rect / 2
 
     # Posição do objeto em relação ao mestre
-    def get_position (self):
+    def get_position(self):
         return self.__pos
 
-    def set_position (self, pos):
+    def set_position(self, pos):
         self.__pos = Vector2(pos)
 
     def get_img(self):
         return self.__img
 
-    def set_img(self,img):
+    def set_img(self, img):
         self.__img = img
 
     def get_slaves(self):

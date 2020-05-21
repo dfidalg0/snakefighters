@@ -23,16 +23,18 @@ class GameEngine:
         running = True
         while running:
             self.__screen.update()
-            self.__clock.tick(10)
+            self.__clock.tick(15)  # 15 FPS parece ser adequado
+
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     running = False
 
                 if event.type == pg.KEYDOWN:
+                    # Pode ser feito checando event.key in self.__command.keys()
                     try:
                         self.__command[event.key]()
                     except KeyError:
-                        pass
+                        pass  # Chave não associada a nenhum comando
 
             for player in self.__player:
                 player.update()

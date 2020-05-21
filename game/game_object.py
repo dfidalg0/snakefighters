@@ -9,7 +9,7 @@ class GameObject(InterfaceObject):
         self.__spd = Vector2(vx, vy)
 
     def update(self):
-        self.set_position(self.get_position() + self.__spd)
+        self.set_pos(self.get_pos() + self.__spd)
 
     def get_spd(self):
         return self.__spd

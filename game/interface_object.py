@@ -33,10 +33,10 @@ class InterfaceObject:
         return self.__master.get_abs_position() + self.__pos - self.__rect / 2
 
     # Posição do objeto em relação ao mestre
-    def get_position(self):
+    def get_pos(self):
         return self.__pos
 
-    def set_position(self, pos):
+    def set_pos(self, pos):
         self.__pos = Vector2(pos)
 
     def get_img(self):

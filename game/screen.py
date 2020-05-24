@@ -21,7 +21,7 @@ class Screen:
     def get_screen_position(self):
         return Vector2(0, 0)
 
-    def get_abs_position(self):
+    def aux_abs_pos(self):
         return self.__pos
 
     def add_slave(self, slave):

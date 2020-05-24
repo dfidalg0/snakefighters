@@ -1,6 +1,7 @@
 from game import pg, Screen, GameObject
 from time import sleep
 
+
 def get_close():
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -14,8 +15,8 @@ screen = Screen()
 SNAKE_FIG = pg.image.load('assets/img/snake_test.png')
 
 master = GameObject(screen, SNAKE_FIG, y=180, vy=-5)
-slv1 = GameObject(master, SNAKE_FIG, -200,100)
-slv2 = GameObject(slv1, SNAKE_FIG, -200,100)
+slv1 = GameObject(master, SNAKE_FIG, -200, 100)
+slv2 = GameObject(slv1, SNAKE_FIG, -200, 100)
 
 for i in range(100):
     if get_close():
@@ -26,9 +27,9 @@ for i in range(100):
     slv1.update()
     slv2.update()
 
-master.set_spd((4,0))
-slv1.set_spd((-4,0))
-slv2.set_spd((5,5))
+master.set_spd((4, 0))
+slv1.set_spd((-4, 0))
+slv2.set_spd((5, 5))
 
 for i in range(100):
     if get_close():

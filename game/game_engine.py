@@ -1,6 +1,5 @@
 from game import pg, Screen, GameObject, Player
 from pygame.math import Vector2
-from time import sleep
 from pygame.time import Clock
 
 

@@ -1,5 +1,4 @@
 from game import pg
-from game.interface_object import InterfaceObject
 from pygame.math import Vector2
 
 

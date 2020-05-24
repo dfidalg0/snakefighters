@@ -1,17 +1,17 @@
-from game import pg, Screen, GameObject
+from game import pg, Screen, GameObject, gspeed
 from pygame.math import Vector2
 
 
 class Player:
     # TODO: Modificar o construtor para atribuir velocidade corretamente
-    def __init__(self, screen, imgset, x, y, vx, vy):
+    def __init__(self, screen, imgset, x, y, orient):
         self.__screen = screen
-        self.__imghead = pg.transform.scale(imgset[0],(45,45))
-        self.__imgbody = pg.transform.scale(imgset[1],(45,45))
-        self.__imgtail = pg.transform.scale(imgset[2],(45,45))
-        head = GameObject(screen, self.__imghead, x, y, 45,0)
-        body = GameObject(screen, self.__imgbody, x - 45, y, 45,0)
-        tail = GameObject(screen, self.__imgtail, x - 45*2, y, 45,0)
+        self.__imghead = pg.transform.scale(imgset[0], (45, 45))
+        self.__imgbody = pg.transform.scale(imgset[1], (45, 45))
+        self.__imgtail = pg.transform.scale(imgset[2], (45, 45))
+        head = GameObject(screen, self.__imghead, x, y, gspeed*orient, 0)
+        body = GameObject(screen, self.__imgbody, x - 45*orient, y, gspeed*orient, 0)
+        tail = GameObject(screen, self.__imgtail, x - 45*orient * 2, y, gspeed*orient, 0)
         self.__nodes = [head, body, tail]
         self.__grow = False
 
@@ -45,17 +45,17 @@ class Player:
         self.__nodes[0].update()
 
     def up(self):
-        if self.__nodes[0].get_spd() != Vector2(0, 45):
+        if self.__nodes[0].get_spd() != Vector2(0, gspeed):
             self.__nodes[0].set_spd((0, -45))
 
     def down(self):
-        if self.__nodes[0].get_spd() != Vector2(0, -45):
+        if self.__nodes[0].get_spd() != Vector2(0, -gspeed):
             self.__nodes[0].set_spd((0, 45))
 
     def left(self):
-        if self.__nodes[0].get_spd() != Vector2(45, 0):
+        if self.__nodes[0].get_spd() != Vector2(gspeed, 0):
             self.__nodes[0].set_spd((-45, 0))
 
     def right(self):
-        if self.__nodes[0].get_spd() != Vector2(-45, 0):
+        if self.__nodes[0].get_spd() != Vector2(-gspeed, 0):
             self.__nodes[0].set_spd((45, 0))

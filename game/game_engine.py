@@ -11,13 +11,13 @@ class GameEngine:
         self.__command = {}
         self.__clock = Clock()
 
-    def add_player(self, imgset, x, y, keyset, vx=0, vy=0):
-        newplayer = Player(self.__screen, imgset, x, y, vx, vy)
+    def add_player(self, imgset, orient, x, y, keyset):
+        newplayer = Player(self.__screen, imgset, x, y, orient)
         self.__player.append(newplayer)
 
         controls = newplayer.get_controls()
 
-        self.__command.update(zip(keyset,controls))
+        self.__command.update(zip(keyset, controls))
 
     def game_loop(self):
         running = True

@@ -3,7 +3,6 @@ from pygame.math import Vector2
 
 
 class Player:
-    # TODO: Modificar o construtor para atribuir velocidade corretamente
     def __init__(self, screen, imgset, x, y, orient):
         self.__screen = screen
         self.__imghead = pg.transform.scale(imgset[0], (45, 45))

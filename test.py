@@ -36,7 +36,7 @@ for i in range(100):
     slv1.update()
     slv2.update()
     sword.set_img(pg.transform.rotate(KUNAI,angle))
-    sword.set_pos(sword.get_position().rotate(-w))
+    sword.set_pos(sword.get_pos().rotate(-w))
     angle += w
     angle %= 360
 
@@ -53,7 +53,7 @@ for i in range(200):
     slv1.update()
     slv2.update()
     sword.set_img(pg.transform.rotate(KUNAI,angle))
-    sword.set_pos(sword.get_position().rotate(-w))
+    sword.set_pos(sword.get_pos().rotate(-w))
     angle += w
     angle %= 360
 
@@ -70,6 +70,6 @@ while True:
     slv1.update()
     slv2.update()
     sword.set_img(pg.transform.rotate(KUNAI,angle))
-    sword.set_pos(sword.get_position().rotate(-w))
+    sword.set_pos(sword.get_pos().rotate(-w))
     angle += w
     angle %= 360

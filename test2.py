@@ -1,5 +1,8 @@
-from game import pg, Screen, GameObject, Player, GameEngine, gspeed, imgsety, imgsetb
+from game import pg, Screen, GameObject, Player, GameEngine, gspeed, gunity, imgsetb, imgsety
 
+k = 7
+y = k * 3 * gunity
+x = int(4 * y / 3)
 
 screen = Screen()
 game = GameEngine(screen)

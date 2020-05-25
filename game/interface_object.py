@@ -30,7 +30,7 @@ class InterfaceObject:
 
     # Posição do início do retângulo do objeto no referencial absoluto do Pygame
     def get_abs_position(self):
-        return self.aux_abs_pos() - self.__rect/2
+        return self.aux_abs_pos() - self.__rect / 2
 
     def aux_abs_pos(self):
         return self.__master.aux_abs_pos() + self.__pos
@@ -55,5 +55,5 @@ class InterfaceObject:
     def add_slave(self, slave):
         self.__slaves.add(slave)
 
-    def remove_slave (self,slave):
+    def remove_slave(self, slave):
         self.__slaves.remove(slave)

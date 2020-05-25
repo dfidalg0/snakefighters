@@ -1,4 +1,4 @@
-from game import pg, Screen, GameObject, gspeed
+from game import pg, Screen, GameObject, gspeed, gunity
 from pygame.math import Vector2
 
 
@@ -15,8 +15,8 @@ class Player:
             imgbody = imgset['BODY_L']
             imgtail = imgset['TAIL_L']
         head = GameObject(screen, imghead, x, y, gspeed * orient, 0)
-        body = GameObject(screen, imgbody, x - 45 * orient, y, gspeed * orient, 0)
-        tail = GameObject(screen, imgtail, x - 45 * orient * 2, y, gspeed * orient, 0)
+        body = GameObject(screen, imgbody, x - gunity * orient, y, gspeed * orient, 0)
+        tail = GameObject(screen, imgtail, x - gunity * orient * 2, y, gspeed * orient, 0)
         self.__nodes = [head, body, tail]
         self.__grow = False
 
@@ -41,7 +41,7 @@ class Player:
 
             new_pos = self.__nodes[0].get_pos()
 
-            new_img = self.__get_img_body(old_spd,new_spd)
+            new_img = self.__get_img_body(old_spd, new_spd)
 
             new_node = GameObject(self.__screen, new_img, *new_pos, *new_spd)
 
@@ -56,10 +56,10 @@ class Player:
             self.__nodes[-1].set_spd(new_spd)
 
             for i in range(len(self.__nodes) - 2, 0, -1):
-                new_spd = self.__nodes[i-1].get_spd()
+                new_spd = self.__nodes[i - 1].get_spd()
                 old_spd = self.__nodes[i].get_spd()
 
-                new_img = self.__get_img_body(old_spd,new_spd)
+                new_img = self.__get_img_body(old_spd, new_spd)
 
                 self.__nodes[i].update()
                 self.__nodes[i].set_img(new_img)
@@ -88,7 +88,7 @@ class Player:
             self.__nodes[0].set_img(self.__imgset['HEAD_R'])
 
     # Funções auxiliares da classe
-    def __get_img_body(self,old_spd,new_spd):
+    def __get_img_body(self, old_spd, new_spd):
         if old_spd == new_spd:
             if new_spd.y < 0:
                 img = self.__imgset['BODY_U']
@@ -110,7 +110,7 @@ class Player:
 
         return img
 
-    def __get_img_tail(self,new_spd):
+    def __get_img_tail(self, new_spd):
         if new_spd.y < 0:
             img = self.__imgset['TAIL_U']
         elif new_spd.y > 0:

@@ -29,7 +29,6 @@ class GameEngine:
         if nfood <= 3:
             Food(self.__screen, imgpowerup['FOOD'], xf, yf)
             nfood = nfood + 1
-            print(nfood)
         i = random.randint(1, 1000)
         if i < 10:
             SecondChance(self.__screen, imgpowerup['LIFE'], xl, yl)

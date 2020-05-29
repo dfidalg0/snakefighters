@@ -75,4 +75,3 @@ from game.food import Food
 from game.secondchance import SecondChance
 from game.invencibility import Invencibility
 from game.game_engine import GameEngine
-

@@ -57,3 +57,6 @@ class InterfaceObject:
 
     def remove_slave(self, slave):
         self.__slaves.remove(slave)
+
+    def destroy(self):
+        self.__master.remove_slave(self)

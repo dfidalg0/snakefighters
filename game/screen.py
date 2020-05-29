@@ -7,6 +7,7 @@ class Screen:
         self.__screen = pg.display.set_mode(resolution)
         self.__pos = Vector2(resolution[0] / 2, resolution[1] / 2)
         self.__color = color
+        self.__resolution = resolution
         self.__slaves = set()
         self.__background = pg.image.load('assets/img/background.jpg')
 
@@ -20,6 +21,9 @@ class Screen:
 
     def get_screen_position(self):
         return Vector2(0, 0)
+
+    def get_resolution(self):
+        return self.__resolution
 
     def aux_abs_pos(self):
         return self.__pos

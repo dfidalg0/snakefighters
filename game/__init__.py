@@ -3,6 +3,12 @@ import pygame as pg
 gspeed = 30
 gunity = 30
 
+imgpowerup = {
+    'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
+    'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
+    'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity))
+}
+
 imgsety = {
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_baixo.png'), (gunity, gunity)),
@@ -64,4 +70,9 @@ from game.screen import Screen
 from game.interface_object import InterfaceObject
 from game.game_object import GameObject
 from game.player import Player
+from game.powerup import PowerUp
+from game.food import Food
+from game.secondchance import SecondChance
+from game.invencibility import Invencibility
 from game.game_engine import GameEngine
+

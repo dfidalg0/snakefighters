@@ -1,6 +1,7 @@
-from game import pg, Screen, GameObject, Player
+from game import pg, Screen, GameObject, Player, imgpowerup, Food, SecondChance, Invencibility
 from pygame.math import Vector2
 from pygame.time import Clock
+import random
 
 
 class GameEngine:
@@ -18,11 +19,31 @@ class GameEngine:
 
         self.__command.update(zip(keyset, controls))
 
+    def powerup_factory(self, nfood):
+        boundx = (self.__screen.get_resolution()[0] - 100) / 2
+        boundy = (self.__screen.get_resolution()[1] - 100) / 2
+        xf = random.randint(-boundx, boundx)
+        yf = random.randint(-boundy, boundy)
+        xl = random.randint(-boundx, boundx)
+        yl = random.randint(-boundy, boundy)
+        if nfood <= 3:
+            Food(self.__screen, imgpowerup['FOOD'], xf, yf)
+            nfood = nfood + 1
+            print(nfood)
+        i = random.randint(1, 1000)
+        if i < 10:
+            SecondChance(self.__screen, imgpowerup['LIFE'], xl, yl)
+        if i > 990:
+            Invencibility(self.__screen, imgpowerup['INVI'], xl, yl)
+        return nfood
+
     def game_loop(self):
         running = True
+        nfood = 0
         while running:
             self.__screen.update()
             self.__clock.tick(15)  # 15 FPS parece ser adequado
+            nfood = self.powerup_factory(nfood)
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:

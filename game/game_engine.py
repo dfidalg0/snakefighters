@@ -6,18 +6,34 @@ import random
 
 class GameEngine:
     def __init__(self, screen):
-        self.__player = []
         self.__screen = screen
         self.__command = {}
-        self.__clock = Clock()
+        self.__players = []
+        self.__obstacles = []
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__screen, imgset, x, y, orient)
-        self.__player.append(newplayer)
+        self.__players.append(newplayer)
 
         controls = newplayer.get_controls()
 
         self.__command.update(zip(keyset, controls))
+
+    def remove_player(self,player):
+        player.destroy()
+        self.__players.remove(player)
+
+    def add_obstacle(self,**kwargs):
+        if 'master' not in kwargs.keys():
+            kwargs['master'] = self.__screen
+
+        self.__obstacles.append(GameObject(**kwargs))
+
+    def clear_obstacles(self):
+        for obstacle in self.__obstacles:
+            obstacle.destroy()
+
+        self.__obstacles.clear()
 
     def powerup_factory(self, nfood):
         boundx = (self.__screen.get_resolution()[0] - 100) / 2
@@ -37,12 +53,12 @@ class GameEngine:
         return nfood
 
     def game_loop(self):
-        from math import inf
         running = True
         nfood = 0
+        clock = Clock()
         while running:
             self.__screen.update()
-            self.__clock.tick(15)  # 15 FPS parece ser adequado
+            clock.tick(15)  # 15 FPS parece ser adequado
             nfood = self.powerup_factory(nfood)
 
             for event in pg.event.get():
@@ -57,18 +73,21 @@ class GameEngine:
                         pass  # Chave não associada a nenhum comando
 
             dead_players = []
-            for player in self.__player:
+            for player in self.__players:
                 head = player.get_head()
-                for other in self.__player:
+                for other in self.__players:
                     if other.collision(head):
+                        player.dec_health()
+
+                for obstacle in self.__obstacles:
+                    if obstacle.collision(head):
                         player.dec_health()
 
                 if player.get_health() <= 0:
                     dead_players.append(player)
 
-            for player in self.__player:
+            for player in self.__players:
                 player.update()
 
             for player in dead_players:
-                player.destroy()
-                self.__player.remove(player)
+                self.remove_player(player)

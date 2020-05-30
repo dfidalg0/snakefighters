@@ -37,6 +37,7 @@ class GameEngine:
         return nfood
 
     def game_loop(self):
+        from math import inf
         running = True
         nfood = 0
         while running:
@@ -55,5 +56,19 @@ class GameEngine:
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
 
+            dead_players = []
+            for player in self.__player:
+                head = player.get_head()
+                for other in self.__player:
+                    if other.collision(head):
+                        player.dec_health()
+
+                if player.get_health() <= 0:
+                    dead_players.append(player)
+
             for player in self.__player:
                 player.update()
+
+            for player in dead_players:
+                player.destroy()
+                self.__player.remove(player)

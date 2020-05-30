@@ -19,8 +19,7 @@ class Player:
         tail = GameObject(screen, imgtail, x - gunity * orient * 2, y, gspeed * orient, 0)
         self.__nodes = [head, body, tail]
         self.__grow = False
-
-        self.p = GameObject(screen, imgset['TAIL_D'],y=-100, w=15)
+        self.__health = 1
 
     def get_nodes(self):
         return self.__nodes
@@ -35,10 +34,6 @@ class Player:
         self.__grow = True
 
     def update(self):
-        self.p.update()
-        if self.p.collision(self.__nodes[0]):
-            from random import random
-            print(random())
         if self.__grow:
             self.__grow = False
 
@@ -92,6 +87,30 @@ class Player:
         if self.__nodes[0].get_spd().x == 0:
             self.__nodes[0].set_spd((gspeed, 0))
             self.__nodes[0].set_img(self.__imgset['HEAD_R'])
+
+    def collision(self,obj):
+        i0 = 4 if self.__nodes[0] == obj else 0
+        for i in range(i0,len(self.__nodes)):
+            if self.__nodes[i].collision(obj):
+                return True
+
+        return False
+
+    def inc_health(self):
+        self.__health += 1
+
+    def dec_health(self):
+        self.__health -= 1
+
+    def get_health(self):
+        return self.__health
+
+    def set_health(self,health):
+        self.__health = health
+
+    def destroy(self):
+        for i in range(len(self.__nodes)):
+            self.__nodes[i].destroy()
 
     # Funções auxiliares da classe
     def __get_img_body(self, old_spd, new_spd):

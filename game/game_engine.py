@@ -10,6 +10,7 @@ class GameEngine:
         self.__command = {}
         self.__players = []
         self.__obstacles = []
+        self.__powerups = []
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__screen, imgset, x, y, orient)
@@ -43,13 +44,67 @@ class GameEngine:
         xl = random.randint(-boundx, boundx)
         yl = random.randint(-boundy, boundy)
         if nfood <= 3:
-            Food(self.__screen, imgpowerup['FOOD'], xf, yf)
-            nfood = nfood + 1
-        i = random.randint(1, 1000)
-        if i < 10:
-            SecondChance(self.__screen, imgpowerup['LIFE'], xl, yl)
-        if i > 990:
-            Invencibility(self.__screen, imgpowerup['INVI'], xl, yl)
+            food = Food(self.__screen, imgpowerup['FOOD'], xf, yf)
+            collide = False
+
+            for obstacle in self.__obstacles:
+                if obstacle.collision(food):
+                    food.destroy()
+                    collide = True
+                    break
+
+            if not collide:
+                for powerup in self.__powerups:
+                    if powerup.collision(food):
+                        food.destroy()
+                        collide = True
+                        break
+
+            if not collide:
+                self.__powerups.append(food)
+                nfood = nfood + 1
+
+        i = random.randint(1, 300)
+        if i == 1 or i== 2:
+            life = SecondChance(self.__screen, imgpowerup['LIFE'], xl, yl)
+            collide = False
+
+            for obstacle in self.__obstacles:
+                if obstacle.collision(life):
+                    life.destroy()
+                    collide = True
+                    break
+
+            if not collide:
+                for powerup in self.__powerups:
+                    if powerup.collision(life):
+                        life.destroy()
+                        collide = True
+                        break
+
+            if not collide:
+                self.__powerups.append(life)
+
+        if i == 3:
+            invencibility = Invencibility(self.__screen, imgpowerup['INVI'], xl, yl)
+            collide = False
+
+            for obstacle in self.__obstacles:
+                if obstacle.collision(invencibility):
+                    invencibility.destroy()
+                    collide = True
+                    break
+
+            if not collide:
+                for powerup in self.__powerups:
+                    if powerup.collision(invencibility):
+                        invencibility.destroy()
+                        collide = True
+                        break
+
+            if not collide:
+                self.__powerups.append(invencibility)
+
         return nfood
 
     def game_loop(self):

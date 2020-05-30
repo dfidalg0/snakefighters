@@ -7,6 +7,7 @@ class GameObject(InterfaceObject):
     def __init__(self, master, img, x=0, y=0, vx=0, vy=0, w=0):
         super().__init__(master, img, x, y)
         self.__img0 = img
+        self.__bound = [i/2 for i in img.get_rect().size]
         self.__spd = Vector2(vx, vy)
         self.__ang_spd = w
         self.__angle = 0
@@ -37,5 +38,40 @@ class GameObject(InterfaceObject):
     def set_ang_spd(self,w):
         self.__ang_spd = w
 
+    def contains(self,coords):
+        diff = self.get_screen_position() - Vector2(coords)
+        py = diff.dot(self.__axis) * self.__axis
+        px = diff - py
+        limits = self.__bound
+
+        return px.length() < limits[0] and py.length() < limits[1]
+
+    def get_collision_box(self):
+        y = self.__axis
+        x = y.rotate(90)
+        p0 = self.get_screen_position()
+
+        dots = [
+            p0,
+            p0 + self.__bound[0] * x + self.__bound[1] * y,
+            p0 + self.__bound[0] * x - self.__bound[1] * y,
+            p0 - self.__bound[0] * x + self.__bound[1] * y,
+            p0 - self.__bound[0] * x - self.__bound[1] * y,
+        ]
+
+        return dots
+
+    # OBS: A checagem de colisão é simétrica
     def collision(self, other):
+        self_dots = self.get_collision_box()
+        other_dots = other.get_collision_box()
+
+        for dot in self_dots:
+            if other.contains(dot):
+                return True
+
+        for dot in other_dots:
+            if self.contains(dot):
+                return True
+
         return False

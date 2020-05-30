@@ -20,6 +20,8 @@ class Player:
         self.__nodes = [head, body, tail]
         self.__grow = False
 
+        self.p = GameObject(screen, imgset['TAIL_D'],y=-100, w=15)
+
     def get_nodes(self):
         return self.__nodes
 
@@ -33,6 +35,10 @@ class Player:
         self.__grow = True
 
     def update(self):
+        self.p.update()
+        if self.p.collision(self.__nodes[0]):
+            from random import random
+            print(random())
         if self.__grow:
             self.__grow = False
 

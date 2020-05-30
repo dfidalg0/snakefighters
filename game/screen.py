@@ -8,9 +8,10 @@ class Screen:
         self.__screen = pg.display.set_mode(resolution)
         self.__pos = Vector2(resolution[0] / 2, resolution[1] / 2)
         self.__color = color
-        self.__resolution = resolution
+        self.__resolution = Vector2(resolution)
         self.__slaves = deque()
-        self.__background = pg.image.load('assets/img/background.jpg')
+        background = pg.image.load('assets/img/background.jpg')
+        self.__background = pg.transform.scale(background,resolution)
 
     def update(self):
         self.__screen.blit(self.__background, (0, 0))

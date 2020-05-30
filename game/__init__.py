@@ -2,6 +2,8 @@ import pygame as pg
 
 gspeed = 30
 gunity = 30
+fps = 15
+prob_pup = 1/150
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
@@ -70,8 +72,11 @@ from game.screen import Screen
 from game.interface_object import InterfaceObject
 from game.game_object import GameObject
 from game.player import Player
-from game.powerup import PowerUp
-from game.food import Food
-from game.secondchance import SecondChance
-from game.invencibility import Invencibility
+
+from game.powerup.secondchance import SecondChance
+from game.powerup.invencibility import Invencibility
+from game.powerup.food import Food
+
+powerup_list = [SecondChance,Invencibility]
+
 from game.game_engine import GameEngine

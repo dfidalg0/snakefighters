@@ -1,7 +1,8 @@
-from game import pg, Screen, GameObject, Player, imgpowerup, Food, SecondChance, Invencibility
+from game import pg, powerup_list, fps, prob_pup
+from game import Screen, GameObject, Player, Food
 from pygame.math import Vector2
 from pygame.time import Clock
-import random
+from random import randint, random, choice
 
 
 class GameEngine:
@@ -11,6 +12,11 @@ class GameEngine:
         self.__players = []
         self.__obstacles = []
         self.__powerups = []
+        self.__nfood = 0
+        self.__bound = Vector2(
+            (self.__screen.get_resolution()[0] - 100) / 2,
+            (self.__screen.get_resolution()[1] - 100) / 2
+        )
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__screen, imgset, x, y, orient)
@@ -36,97 +42,76 @@ class GameEngine:
 
         self.__obstacles.clear()
 
-    def powerup_factory(self, nfood):
-        boundx = (self.__screen.get_resolution()[0] - 100) / 2
-        boundy = (self.__screen.get_resolution()[1] - 100) / 2
-        xf = random.randint(-boundx, boundx)
-        yf = random.randint(-boundy, boundy)
-        xl = random.randint(-boundx, boundx)
-        yl = random.randint(-boundy, boundy)
-        if nfood <= 3:
-            food = Food(self.__screen, imgpowerup['FOOD'], xf, yf)
+    def generate_powerups(self):
+        if self.__nfood <= 3:
+            self.place_power_up(Food)
+            self.__nfood += 1
+
+        if random() < prob_pup:
+            NewPowerUp = choice(powerup_list)
+            self.place_power_up(NewPowerUp)
+
+    def remove_food(self):
+        self.__nfood -= 1
+
+    def place_power_up(self,PowerUp):
+        collide = True
+        while collide:
             collide = False
 
+            x = randint(-self.__bound.x, self.__bound.x)
+            y = randint(-self.__bound.y, self.__bound.y)
+
+            pup = PowerUp(self.__screen, x, y)
+
             for obstacle in self.__obstacles:
-                if obstacle.collision(food):
-                    food.destroy()
+                if obstacle.collision(pup):
+                    pup.destroy()
                     collide = True
                     break
 
-            if not collide:
-                for powerup in self.__powerups:
-                    if powerup.collision(food):
-                        food.destroy()
-                        collide = True
-                        break
+            if collide:
+                continue
 
-            if not collide:
-                self.__powerups.append(food)
-                nfood = nfood + 1
-
-        i = random.randint(1, 300)
-        if i == 1 or i== 2:
-            life = SecondChance(self.__screen, imgpowerup['LIFE'], xl, yl)
-            collide = False
-
-            for obstacle in self.__obstacles:
-                if obstacle.collision(life):
-                    life.destroy()
+            for powerup in self.__powerups:
+                if powerup.collision(pup):
+                    pup.destroy()
                     collide = True
                     break
 
-            if not collide:
-                for powerup in self.__powerups:
-                    if powerup.collision(life):
-                        life.destroy()
-                        collide = True
-                        break
+            if collide:
+                continue
 
-            if not collide:
-                self.__powerups.append(life)
-
-        if i == 3:
-            invencibility = Invencibility(self.__screen, imgpowerup['INVI'], xl, yl)
-            collide = False
-
-            for obstacle in self.__obstacles:
-                if obstacle.collision(invencibility):
-                    invencibility.destroy()
+            for player in self.__players:
+                if player.collision(pup):
+                    pup.destroy()
                     collide = True
                     break
 
-            if not collide:
-                for powerup in self.__powerups:
-                    if powerup.collision(invencibility):
-                        invencibility.destroy()
-                        collide = True
-                        break
-
-            if not collide:
-                self.__powerups.append(invencibility)
-
-        return nfood
+        self.__powerups.append(pup)
 
     def game_loop(self):
         running = True
-        nfood = 0
         clock = Clock()
         while running:
             self.__screen.update()
-            clock.tick(15)  # 15 FPS parece ser adequado
-            nfood = self.powerup_factory(nfood)
+            clock.tick(fps)
+            self.generate_powerups()
 
+            # Resolução da fila de eventos
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     running = False
-
-                if event.type == pg.KEYDOWN:
-                    # Pode ser feito checando event.key in self.__command.keys()
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        running = False
                     try:
                         self.__command[event.key]()
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
+            # Fila de eventos
 
+            # Checagem de colisões fatais
             dead_players = []
             for player in self.__players:
                 head = player.get_head()
@@ -141,8 +126,24 @@ class GameEngine:
                 if player.get_health() <= 0:
                     dead_players.append(player)
 
+            for player in dead_players:
+                self.remove_player(player)
+            # Colisões fatais
+
+            # Atualização das posições dos jogadores remanescentes
             for player in self.__players:
                 player.update()
 
-            for player in dead_players:
-                self.remove_player(player)
+            # Checagem de coleta de power-ups
+            catched_pups = []
+            for player in self.__players:
+                head = player.get_head()
+                for pup in self.__powerups:
+                    if pup.collision(head):
+                        pup.catch(player,self)
+                        catched_pups.append(pup)
+
+            for pup in catched_pups:
+                pup.destroy()
+                self.__powerups.remove(pup)
+            # Coleta de power-ups

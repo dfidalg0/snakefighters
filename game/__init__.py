@@ -3,7 +3,8 @@ import pygame as pg
 gspeed = 30
 gunity = 30
 fps = 15
-prob_pup = 1/150
+prob_pup = 1/3
+max_health = 3
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),

@@ -41,16 +41,19 @@ class Player:
         self.__imgset = imgset
 
     def get_health(self):
-        return self.__health
+        return self.__health.real
+
+    def get_virtual_health(self):
+        return self.__health.imag
 
     def set_health(self,health):
         self.__health = health
 
-    def inc_health(self):
-        self.__health += 1
+    def inc_health(self,inc=1):
+        self.__health += inc
 
-    def dec_health(self):
-        self.__health -= 1
+    def dec_health(self,dec=1):
+        self.__health -= dec
 
     def update(self):
         if self.__effect:

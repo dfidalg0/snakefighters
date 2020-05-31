@@ -8,4 +8,5 @@ class SecondChance(PowerUpMeta):
         super().__init__(master, imgpowerup['LIFE'], x, y)
 
     def catch(self,player,engine):
-        pass
+        if player.get_health() < 3:
+            player.inc_health()

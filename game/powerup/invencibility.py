@@ -1,6 +1,7 @@
-from game import pg, imgpowerup
+from game import pg, imgpowerup, imgsetp, fps
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
+from math import inf
 
 
 class Invencibility(PowerUpMeta):
@@ -8,4 +9,30 @@ class Invencibility(PowerUpMeta):
         super().__init__(master, imgpowerup['INVI'], x, y)
 
     def catch(self,player,engine):
-        pass
+        player.clear_effect()
+
+        old_health = player.get_health()
+        player.set_health(inf)
+        timer = 0
+        timer_end = 3 * fps
+
+        imgset0 = player.get_imgset()
+
+        current, aux = imgset0, imgsetp
+
+        def effect(end=False):
+            nonlocal timer, timer_end
+            nonlocal imgset0, current, aux
+
+            if end:
+                player.set_health(old_health)
+                player.set_imgset(imgset0)
+            elif timer >= timer_end:
+                player.clear_effect()
+            else:
+                # if timer % 2 == 0:
+                current, aux = aux, current
+                player.set_imgset(current)
+                timer += 1
+
+        player.add_effect(effect)

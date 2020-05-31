@@ -1,6 +1,5 @@
 from game import pg
 from pygame.math import Vector2
-from collections import deque
 
 
 class InterfaceObject:
@@ -8,7 +7,7 @@ class InterfaceObject:
         self.__pos = Vector2(x, y)
         self.__master = master
         self.__img = img
-        self.__slaves = deque()
+        self.__slaves = []
         self.__rect = Vector2(img.get_rect().size)
 
         master.add_slave(self)
@@ -54,7 +53,7 @@ class InterfaceObject:
         return self.__slaves
 
     def add_slave(self, slave):
-        self.__slaves.appendleft(slave)
+        self.__slaves.append(slave)
 
     def remove_slave(self, slave):
         self.__slaves.remove(slave)

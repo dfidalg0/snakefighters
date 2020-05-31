@@ -1,6 +1,5 @@
 from game import pg, gunity
 from pygame.math import Vector2
-from collections import deque
 
 
 class Screen:
@@ -9,7 +8,7 @@ class Screen:
         self.__pos = Vector2(resolution[0] / 2, resolution[1] / 2)
         self.__color = color
         self.__resolution = Vector2(resolution)
-        self.__slaves = deque()
+        self.__slaves = []
         background = pg.image.load('assets/img/background.jpg')
         self.__background = pg.transform.scale(background,resolution)
 
@@ -31,7 +30,7 @@ class Screen:
         return self.__pos
 
     def add_slave(self, slave):
-        self.__slaves.appendleft(slave)
+        self.__slaves.append(slave)
 
     def remove_slave(self, slave):
         self.__slaves.remove(slave)

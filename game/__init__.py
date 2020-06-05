@@ -69,14 +69,51 @@ imgsetp = {
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/roxo_curva_direita_cima.png'), (gunity, gunity))
 }
 
+imgbutton = {
+
+'jogador_unico' :   [ pg.image.load('assets/img/buttons/jogador_unico.png'),
+                      pg.image.load('assets/img/buttons/jogador_unico2.png'),
+                      pg.image.load('assets/img/buttons/jogador_unico3.png') ],
+'multijogadores' :  [ pg.image.load('assets/img/buttons/multijogadores.png'),
+                      pg.image.load('assets/img/buttons/multijogadores2.png'),
+                      pg.image.load('assets/img/buttons/multijogadores3.png') ],
+'opcoes' :          [ pg.image.load('assets/img/buttons/opcoes.png'),
+                      pg.image.load('assets/img/buttons/opcoes2.png'),
+                      pg.image.load('assets/img/buttons/opcoes3.png') ],
+'extra' :           [ pg.image.load('assets/img/buttons/extra.png'),
+                      pg.image.load('assets/img/buttons/extra2.png'),
+                      pg.image.load('assets/img/buttons/extra3.png')],
+'encerrar' :        [ pg.image.load('assets/img/buttons/encerrar.png'),
+                      pg.image.load('assets/img/buttons/encerrar2.png'),
+                      pg.image.load('assets/img/buttons/encerrar3.png')],
+'dois_jogadores' :  [ pg.image.load('assets/img/buttons/dois_jogadores.png'),
+                      pg.image.load('assets/img/buttons/dois_jogadores2.png'),
+                      pg.image.load('assets/img/buttons/dois_jogadores3.png')],
+'tres_jogadores' :  [ pg.image.load('assets/img/buttons/tres_jogadores.png'),
+                      pg.image.load('assets/img/buttons/tres_jogadores2.png'),
+                      pg.image.load('assets/img/buttons/tres_jogadores3.png') ],
+'quatro_jogadores': [ pg.image.load('assets/img/buttons/quatro_jogadores.png'),
+                      pg.image.load('assets/img/buttons/quatro_jogadores2.png'),
+                      pg.image.load('assets/img/buttons/quatro_jogadores3.png') ],
+'voltar':           [ pg.image.load('assets/img/buttons/voltar.png'),
+                      pg.image.load('assets/img/buttons/voltar2.png'),
+                      pg.image.load('assets/img/buttons/voltar3.png') ],
+
+
+
+}
+
+
 from game.screen import Screen
 from game.interface_object import InterfaceObject
 from game.game_object import GameObject
 from game.player import Player
+from game.menu import MainMenu
 
 from game.powerup.secondchance import SecondChance
 from game.powerup.invencibility import Invencibility
 from game.powerup.food import Food
+
 
 powerup_list = [SecondChance,Invencibility]
 

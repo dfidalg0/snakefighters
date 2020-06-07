@@ -1,5 +1,16 @@
 from game import pg
 from game.constants import gunity
+import json
+
+def load_map(path):
+    with open(path) as file:
+        return json.load(file)
+
+maps = {
+    'cross_and_borders' : load_map('assets/maps/cross_and_borders.json')
+}
+
+del load_map, json
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
@@ -7,7 +18,7 @@ imgpowerup = {
     'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity))
 }
 
-wall = {
+imgwall = {
     'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9*gunity, gunity)),
     'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11*gunity, gunity)),
     'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7*gunity, gunity)), 90),

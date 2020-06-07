@@ -32,7 +32,14 @@ class GameEngine:
         if 'master' not in kwargs.keys():
             kwargs['master'] = self.__gamebox
 
-        self.__obstacles.append(GameObject(**kwargs))
+        obj = GameObject(**kwargs)
+        self.__obstacles.append(obj)
+
+        return obj
+
+    def remove_obstacle(self,obj):
+        obj.destroy()
+        self.__obstacles.remove(obj)
 
     def clear_obstacles(self):
         for obstacle in self.__obstacles:

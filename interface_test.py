@@ -1,5 +1,5 @@
 from game import pg, Screen, GameObject
-from time import sleep
+from pygame.time import Clock
 
 
 def get_close():
@@ -17,21 +17,24 @@ SNAKE = pg.transform.scale(SNAKE,(90,90))
 
 KUNAI = pg.image.load('assets/img/weapon.png')
 KUNAI = pg.transform.scale(KUNAI,(90,90))
+KUNAI = KUNAI.subsurface((5*90//16,0,90-5*90//16,90))
 
-master = GameObject(screen, SNAKE, y=180, vy=-5)
+master = GameObject(screen, SNAKE, y=180, vy=-15)
 slv1 = GameObject(master, SNAKE, -200,100)
 slv2 = GameObject(slv1, SNAKE, -200,100)
 
 sword = GameObject(slv1, KUNAI, y=-SNAKE.get_rect().size[1])
 
-w = 2.5
+w = 25
 angle = w
 
-for i in range(100):
+clock = Clock()
+clock_tick = 30
+for i in range(33):
     if get_close():
         exit()
     screen.update()
-    sleep(0.001)
+    clock.tick(clock_tick)
     master.update()
     slv1.update()
     slv2.update()
@@ -40,15 +43,15 @@ for i in range(100):
     angle += w
     angle %= 360
 
-master.set_spd((2,0))
-slv1.set_spd((-2,0))
-slv2.set_spd((2,2))
+master.set_spd((10,0))
+slv1.set_spd((-10,0))
+slv2.set_spd((10,10))
 
-for i in range(200):
+for i in range(40):
     if get_close():
         exit()
     screen.update()
-    sleep(0.001)
+    clock.tick(clock_tick)
     master.update()
     slv1.update()
     slv2.update()
@@ -65,7 +68,7 @@ while True:
     if get_close():
         exit()
     screen.update()
-    sleep(0.001)
+    clock.tick(clock_tick)
     master.update()
     slv1.update()
     slv2.update()

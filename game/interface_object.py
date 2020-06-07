@@ -7,7 +7,7 @@ class InterfaceObject:
         self.__pos = Vector2(x, y)
         self.__master = master
         self.__img = img
-        self.__slaves = set()
+        self.__slaves = []
         self.__rect = Vector2(img.get_rect().size)
 
         master.add_slave(self)
@@ -53,7 +53,10 @@ class InterfaceObject:
         return self.__slaves
 
     def add_slave(self, slave):
-        self.__slaves.add(slave)
+        self.__slaves.append(slave)
 
     def remove_slave(self, slave):
         self.__slaves.remove(slave)
+
+    def destroy(self):
+        self.__master.remove_slave(self)

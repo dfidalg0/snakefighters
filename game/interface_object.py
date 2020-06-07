@@ -15,8 +15,9 @@ class InterfaceObject:
     # Função de atualização de comportamento
     def update(self):
         pass
+
     def get_rect(self):
-        return  self.__rect
+        return self.__rect
 
     # Parâmetros para impressão de um objeto e todos os seus slaves na tela
     def get_blit(self):

@@ -14,10 +14,7 @@ class GameEngine:
         self.__obstacles = []
         self.__powerups = []
         self.__nfood = 0
-        self.__bound = Vector2(
-            self.__gamebox.get_rect()[0] / 2,
-            self.__gamebox.get_rect()[1] / 2
-        )
+        self.__bound = self.__gamebox.get_rect()//2 - (gunity,gunity)
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
@@ -60,8 +57,8 @@ class GameEngine:
         while collide:
             collide = False
 
-            x = randint(-self.__bound.x / gunity, self.__bound.x / gunity) * gunity
-            y = randint(-self.__bound.y / gunity, self.__bound.y / gunity) * gunity
+            x = randint(-self.__bound.x // gunity, self.__bound.x // gunity) * gunity
+            y = randint(-self.__bound.y // gunity, self.__bound.y // gunity) * gunity
 
             pup = PowerUp(self.__gamebox, x, y)
 
@@ -123,6 +120,10 @@ class GameEngine:
                 for obstacle in self.__obstacles:
                     if obstacle.collision(head):
                         player.dec_health()
+
+                abs_pos = abs(head.get_pos().elementwise())
+                if abs_pos.x >= self.__bound.x or abs_pos.y >= self.__bound.y:
+                    player.set_health(0)
 
                 if player.get_health() <= 0:
                     dead_players.append(player)

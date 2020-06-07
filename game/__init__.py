@@ -2,7 +2,7 @@ import pygame as pg
 
 gspeed = 20
 gunity = 20
-fps = 15
+fps = 10
 prob_pup = 1/150
 max_health = 3
 
@@ -10,6 +10,13 @@ imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity))
+}
+
+wall = {
+    'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9*gunity, gunity)),
+    'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11*gunity, gunity)),
+    'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7*gunity, gunity)), 90),
+    'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5*gunity, gunity)), 90)
 }
 
 imgsety = {

@@ -1,4 +1,5 @@
-from game import pg, imgpowerup
+from game import pg
+from game.assets import imgpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 

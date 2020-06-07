@@ -1,4 +1,5 @@
-from game import pg, Screen, GameObject, gspeed, gunity
+from game import pg, Screen, GameObject
+from game.constants import gspeed, gunity
 from pygame.math import Vector2
 
 

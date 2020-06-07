@@ -12,6 +12,9 @@ maps = {
 
 del load_map, json
 
+pg.font.init()
+font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf',90)
+
 img_wait_background = pg.Surface(resolution)
 img_wait_background.fill((0,0,0))
 

@@ -1,7 +1,7 @@
 from game import InterfaceObject
 from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity
-from game.assets import imgwall, img_wait_background
+from game.assets import imgwall, img_wait_background, font_barbarian
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
@@ -111,24 +111,17 @@ class GameEngine:
         background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
 
-        pg.font.init()
-        fonte = pg.font.SysFont('tahoma',65)
+        fonte = font_barbarian
 
-        y = -0.1 * self.__screen.get_resolution()[1]
+        messages = ['Ready','Set','Fight!']
 
-        jogo_comecIMG = fonte.render("Jogo começa em ",True,(255,255,255))
-        jogo_comecIMG = InterfaceObject(self.__screen, jogo_comecIMG, 0, y)
-
-        y = 0.08 * self.__screen.get_resolution()[1]
-
-        for i in range(3,0,-1):
-            segundosIMG = fonte.render(str(i) + " segundos...", True, (255,255,255))
-            segundosIMG = InterfaceObject(self.__screen, segundosIMG, 0, y)
+        for i in range(3):
+            segundosIMG = fonte.render(messages[i], True, (134, 177, 11))
+            segundosIMG = InterfaceObject(self.__screen, segundosIMG, 0, 0)
             self.__screen.update()
             pg.time.wait(1000)
             segundosIMG.destroy()
 
-        jogo_comecIMG.destroy()
         background.destroy()
 
         running = True

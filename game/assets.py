@@ -12,6 +12,8 @@ maps = {
 
 del load_map, json
 
+img_wait_background = pg.image.load('assets/img/waiting_screen.png')
+
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
@@ -62,6 +64,25 @@ imgsetb = {
     'TURN_LU': pg.transform.scale(pg.image.load('assets/img/azul_curva_esquerda_cima.png'), (gunity, gunity)),
     'TURN_RD': pg.transform.scale(pg.image.load('assets/img/azul_curva_direita_baixo.png'), (gunity, gunity)),
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/azul_curva_direita_cima.png'), (gunity, gunity))
+}
+
+imgseto = {
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/laranja_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/laranja_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/laranja_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/laranja_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgsetp = {

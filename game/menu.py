@@ -111,22 +111,8 @@ class MainMenu(InterfaceObject):
 
     ## obs.: acho que essa função deveria ficar na game_engine e pausar enquanto da pra enxergar os players e o mapa
     ## fonte provisória pq provavelmente vai ficar na game engine dps
-    def wait_to_init(self,tempo_s):
+    def wait_to_init(self):
         del self.__slaves[0:5]
-        self.__img = pg.image.load('assets/img/waiting_screen.png')
-
-        pg.font.init()
-        fonte = pg.font.SysFont('tahoma',65)
-        jogo_comecIMG = fonte.render("Jogo começa em ",True,(255,255,255))
-        jogo_comec = InterfaceObject(self,jogo_comecIMG,0,-self.__rect[1]*0.1)
-        print(pg.font.get_fonts());
-
-        for i in range(tempo_s,0,-1):
-            segundosIMG = fonte.render(str(i) +" segundos...",True,(255,255,255))
-            segundosIMG = InterfaceObject(self,segundosIMG,0,self.__rect[1]*0.08)
-            self.__master.update();
-            pg.time.wait(1000);
-            segundosIMG.destroy();
 
 
     def menu_loop(self):

@@ -1,8 +1,8 @@
 from game import pg, Screen, InterfaceObject, GameEngine, MainMenu
-from game.assets import imgsetb, imgsety
+from game.assets import imgsety, imgsetb, imgseto, imgsetp
 from game.constants import gspeed, gunity
 
-sprites_list = [imgsety,imgsetb,imgsety,imgsetb]
+sprites_list = [imgsety,imgsetb,imgseto,imgsetp]
 
 screen = Screen()
 menu = MainMenu(screen)
@@ -17,7 +17,7 @@ if n > 0:
     arena = InterfaceObject(screen, background)
     game = GameEngine(screen,arena)
 
-    menu.wait_to_init(3)
+    menu.wait_to_init()
     for i in range(n):
         game.add_player(sprites_list[i], 1, -200 , -200+100*i, config["players"][i])
 

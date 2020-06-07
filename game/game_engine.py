@@ -1,6 +1,7 @@
+from game import InterfaceObject
 from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity
-from game.assets import imgwall
+from game.assets import imgwall, img_wait_background
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
@@ -106,6 +107,30 @@ class GameEngine:
         self.__powerups.append(pup)
 
     def game_loop(self):
+        background = img_wait_background.convert()
+        background.set_alpha(235)
+        background = InterfaceObject(self.__screen, background, 0, 0)
+
+        pg.font.init()
+        fonte = pg.font.SysFont('tahoma',65)
+
+        y = -0.1 * self.__screen.get_resolution()[1]
+
+        jogo_comecIMG = fonte.render("Jogo começa em ",True,(255,255,255))
+        jogo_comecIMG = InterfaceObject(self.__screen, jogo_comecIMG, 0, y)
+
+        y = 0.08 * self.__screen.get_resolution()[1]
+
+        for i in range(3,0,-1):
+            segundosIMG = fonte.render(str(i) + " segundos...", True, (255,255,255))
+            segundosIMG = InterfaceObject(self.__screen, segundosIMG, 0, y)
+            self.__screen.update()
+            pg.time.wait(1000)
+            segundosIMG.destroy()
+
+        jogo_comecIMG.destroy()
+        background.destroy()
+
         running = True
         clock = Clock()
         while running:

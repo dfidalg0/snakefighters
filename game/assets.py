@@ -2,12 +2,16 @@ from game import pg
 from game.constants import gunity
 import json
 
+
 def load_map(path):
     with open(path) as file:
         return json.load(file)
 
+
 maps = {
-    'cross_and_borders' : load_map('assets/maps/cross_and_borders.json')
+    'cross_and_borders': load_map('assets/maps/cross_and_borders.json'),
+    'lines': load_map('assets/maps/lines.json'),
+    'eights': load_map('assets/maps/eights.json')
 }
 
 del load_map, json
@@ -20,10 +24,12 @@ imgpowerup = {
 }
 
 imgwall = {
-    'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9*gunity, gunity)),
-    'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11*gunity, gunity)),
-    'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7*gunity, gunity)), 90),
-    'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5*gunity, gunity)), 90)
+    'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9 * gunity, gunity)),
+    'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11 * gunity, gunity)),
+    'H15': pg.transform.scale((pg.image.load('assets/img/parede_15.png')), (15 * gunity, gunity)),
+    'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7 * gunity, gunity)), 90),
+    'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5 * gunity, gunity)), 90),
+    'V9': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_9.png'), (9 * gunity, gunity)), 90)
 }
 
 imgsety = {

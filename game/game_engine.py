@@ -108,7 +108,7 @@ class GameEngine:
 
     def game_loop(self):
         background = img_wait_background.convert()
-        background.set_alpha(235)
+        background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
 
         pg.font.init()

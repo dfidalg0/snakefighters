@@ -1,5 +1,5 @@
 from game import pg
-from game.constants import gunity
+from game.constants import gunity, resolution
 import json
 
 def load_map(path):
@@ -12,7 +12,8 @@ maps = {
 
 del load_map, json
 
-img_wait_background = pg.image.load('assets/img/waiting_screen.png')
+img_wait_background = pg.Surface(resolution)
+img_wait_background.fill((0,0,0))
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),

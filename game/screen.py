@@ -1,10 +1,10 @@
 from game import pg
-from game.constants import gunity
+from game.constants import gunity, resolution
 from pygame.math import Vector2
 
 
 class Screen:
-    def __init__(self, resolution=(1280, 720), color=(0, 0, 0)):
+    def __init__(self, color=(0, 0, 0)):
         self.__screen = pg.display.set_mode(resolution)
         self.__pos = Vector2(resolution[0] / 2, resolution[1] / 2)
         self.__color = color

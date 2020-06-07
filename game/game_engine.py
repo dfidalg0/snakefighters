@@ -129,7 +129,7 @@ class GameEngine:
                         player.dec_health()
 
                 abs_pos = abs(head.get_pos().elementwise())
-                if abs_pos.x >= self.__bound.x or abs_pos.y >= self.__bound.y:
+                if abs_pos.x > self.__bound.x or abs_pos.y > self.__bound.y:
                     player.set_health(0)
 
                 if player.get_health() <= 0:

@@ -1,4 +1,5 @@
 from game import pg, Screen, GameObject, gspeed, gunity
+from collections import deque
 from pygame.math import Vector2
 
 
@@ -21,6 +22,7 @@ class Player:
         self.__grow = False
         self.__health = 1
         self.__effect = None
+        self.__command_queue = deque()
 
     def get_nodes(self):
         return self.__nodes
@@ -56,6 +58,11 @@ class Player:
         self.__health -= dec
 
     def update(self):
+        while self.__command_queue:
+            command = self.__command_queue.popleft()
+            if command():
+                break
+
         if self.__effect:
             self.__effect()
 
@@ -97,20 +104,40 @@ class Player:
         self.__nodes[0].set_img(new_img)
 
     def up(self):
-        if self.__nodes[0].get_spd().y == 0:
-            self.__nodes[0].set_spd((0, -gspeed))
+        def command():
+            if self.__nodes[0].get_spd().y == 0:
+                self.__nodes[0].set_spd((0, -gspeed))
+                return True
+            return False
+
+        self.__command_queue.append(command)
 
     def down(self):
-        if self.__nodes[0].get_spd().y == 0:
-            self.__nodes[0].set_spd((0, gspeed))
+        def command():
+            if self.__nodes[0].get_spd().y == 0:
+                self.__nodes[0].set_spd((0, gspeed))
+                return True
+            return False
+
+        self.__command_queue.append(command)
 
     def left(self):
-        if self.__nodes[0].get_spd().x == 0:
-            self.__nodes[0].set_spd((-gspeed, 0))
+        def command():
+            if self.__nodes[0].get_spd().x == 0:
+                self.__nodes[0].set_spd((-gspeed, 0))
+                return True
+            return False
+
+        self.__command_queue.append(command)
 
     def right(self):
-        if self.__nodes[0].get_spd().x == 0:
-            self.__nodes[0].set_spd((gspeed, 0))
+        def command():
+            if self.__nodes[0].get_spd().x == 0:
+                self.__nodes[0].set_spd((gspeed, 0))
+                return True
+            return False
+
+        self.__command_queue.append(command)
 
     def collision(self,obj):
         i0 = 4 if self.__nodes[0] == obj else 0
@@ -121,6 +148,7 @@ class Player:
         return False
 
     def destroy(self):
+        self.clear_effect()
         for i in range(len(self.__nodes)):
             self.__nodes[i].destroy()
 

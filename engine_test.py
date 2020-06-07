@@ -7,9 +7,9 @@ background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 
 arena = InterfaceObject(screen, background)
 game = GameEngine(screen, arena)
 
-game.load_map(maps['cross_and_borders'])
+game.load_map(maps['eights'])
 
-game.add_player(imgsety, 1, -200, 100, [pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT])
-game.add_player(imgsetb, -1, 200, 100, [pg.K_w, pg.K_a, pg.K_s, pg.K_d])
+game.add_player(imgsety, 1, -200, 0, [pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT])
+game.add_player(imgsetb, -1, 200, 0, [pg.K_w, pg.K_a, pg.K_s, pg.K_d])
 
 game.game_loop()

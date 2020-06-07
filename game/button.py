@@ -1,4 +1,5 @@
-from game import pg,Screen,InterfaceObject,imgbutton
+from game import pg,Screen,InterfaceObject
+from game.assets import imgbutton
 from pygame.math import Vector2
 
 
@@ -39,4 +40,3 @@ class Button(InterfaceObject):
         else:
             self.__buttonState = 0;
         return False;
-

@@ -1,5 +1,4 @@
-from game import pg
-from game import GameObject
+from game import pg, GameObject
 from pygame.math import Vector2
 from abc import ABC,abstractmethod
 

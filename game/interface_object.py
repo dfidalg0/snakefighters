@@ -16,6 +16,9 @@ class InterfaceObject:
     def update(self):
         pass
 
+    def get_rect(self):
+        return self.__rect
+
     # Parâmetros para impressão de um objeto e todos os seus slaves na tela
     def get_blit(self):
         return_list = [(self.get_img(), self.get_abs_position())]

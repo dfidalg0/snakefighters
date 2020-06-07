@@ -15,9 +15,8 @@ screen = Screen()
 SNAKE = pg.image.load('assets/img/snake_test.png')
 SNAKE = pg.transform.scale(SNAKE,(90,90))
 
-KUNAI = pg.image.load('assets/img/weapon.png')
-KUNAI = pg.transform.scale(KUNAI,(90,90))
-KUNAI = KUNAI.subsurface((5*90//16,0,90-5*90//16,90))
+KUNAI = pg.image.load('assets/img/kunai.png')
+KUNAI = pg.transform.scale(KUNAI,(34,90))
 
 master = GameObject(screen, SNAKE, y=180, vy=-15)
 slv1 = GameObject(master, SNAKE, -200,100)

@@ -1,4 +1,5 @@
-from game import pg,Screen,InterfaceObject,imgbutton,Button
+from game import pg,Screen,InterfaceObject,Button
+from game.assets import imgbutton
 from pygame.math import Vector2
 from pygame.time import Clock
 

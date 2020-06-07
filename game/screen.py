@@ -9,11 +9,9 @@ class Screen:
         self.__color = color
         self.__resolution = Vector2(resolution)
         self.__slaves = []
-        background = pg.image.load('assets/img/background.jpg')
-        self.__background = pg.transform.scale(background,resolution)
 
     def update(self):
-        self.__screen.blit(self.__background, (0, 0))
+        self.__screen.fill(self.__color)
         for slave in self.__slaves:
             for img, screen_pos in slave.get_blit():
                 self.__screen.blit(img, screen_pos)

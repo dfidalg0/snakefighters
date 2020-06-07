@@ -1,9 +1,9 @@
 import pygame as pg
 
-gspeed = 30
-gunity = 30
+gspeed = 20
+gunity = 20
 fps = 15
-prob_pup = 1/3
+prob_pup = 1/150
 max_health = 3
 
 imgpowerup = {

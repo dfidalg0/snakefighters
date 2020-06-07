@@ -28,7 +28,7 @@ imgwall = {
     'H15': pg.transform.scale((pg.image.load('assets/img/parede_15.png')), (15 * gunity, gunity)),
     'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7 * gunity, gunity)), 90),
     'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5 * gunity, gunity)), 90),
-    'V8': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_8.png'), (8 * gunity, gunity)), 90)
+    'V9': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_9.png'), (9 * gunity, gunity)), 90)
 }
 
 imgsety = {

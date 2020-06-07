@@ -1,4 +1,5 @@
-from game import pg, gunity
+from game import pg
+from game.constants import gunity
 from pygame.math import Vector2
 
 

@@ -1,5 +1,6 @@
-from game import pg, powerup_list, fps, prob_pup, gunity
-from game import Screen, GameObject, Player, Food
+from game import pg, Screen, GameObject, Player, Food, powerup_list
+from game.constants import fps, prob_pup, gunity
+from game.assets import imgwall
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
@@ -46,6 +47,15 @@ class GameEngine:
             obstacle.destroy()
 
         self.__obstacles.clear()
+
+    def load_map(self,map):
+        for wall in map:
+            params = {
+                'img' : imgwall[wall[0]],
+                'x' : wall[1]*gunity,
+                'y' : wall[2]*gunity
+            }
+            self.add_obstacle(**params)
 
     def generate_powerups(self):
         if self.__nfood <= 3:

@@ -1,4 +1,6 @@
-from game import pg, imgpowerup, imgsetw, fps, max_health
+from game import pg
+from game.constants import fps, max_health
+from game.assets import imgpowerup, imgsetw
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 from math import inf

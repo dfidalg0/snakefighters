@@ -1,6 +1,7 @@
-from game import pg, Screen, GameObject, gspeed, gunity
-from collections import deque
+from game import pg, Screen, GameObject
+from game.constants import gspeed, gunity
 from pygame.math import Vector2
+from collections import deque
 
 
 class Player:

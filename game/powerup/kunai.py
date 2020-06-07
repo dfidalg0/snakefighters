@@ -1,4 +1,6 @@
-from game import pg, imgpowerup, fps, gunity
+from game import pg
+from game.assets import imgpowerup
+from game.constants import fps, gunity
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 from math import inf

@@ -14,10 +14,11 @@ class GameEngine:
         self.__command = {}
         self.__players = []
         self.__obstacles = []
+        self.__effects = []
         self.__powerups = deque()
         self.__foods = []
         self.__nfood = 0
-        self.__bound = self.__gamebox.get_rect()//2 - (gunity,gunity)
+        self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
@@ -40,7 +41,7 @@ class GameEngine:
 
         return obj
 
-    def remove_obstacle(self,obj):
+    def remove_obstacle(self, obj):
         obj.destroy()
         self.__obstacles.remove(obj)
 
@@ -50,12 +51,19 @@ class GameEngine:
 
         self.__obstacles.clear()
 
-    def load_map(self,map):
+    def add_effect(self, effect):
+        self.__effects.append(effect)
+
+    def remove_effect(self, effect):
+        effect(end=True)
+        self.__effects.remove(effect)
+
+    def load_map(self, map):
         for wall in map:
             params = {
-                'img' : imgwall[wall[0]],
-                'x' : wall[1]*gunity,
-                'y' : wall[2]*gunity
+                'img': imgwall[wall[0]],
+                'x': wall[1] * gunity,
+                'y': wall[2] * gunity
             }
             self.add_obstacle(**params)
 
@@ -182,7 +190,11 @@ class GameEngine:
             for pup in self.__powerups:
                 pup.inc_timer()
 
-            if self.__powerups and self.__powerups[0].get_timer() == 10*fps:
+            if self.__powerups and self.__powerups[0].get_timer() == 10 * fps:
                 self.__powerups[0].destroy()
                 self.__powerups.popleft()
             # Timer de power-ups
+
+            #Efeitos na tela
+            for effect in self.__effects:
+                effect()

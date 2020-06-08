@@ -3,7 +3,7 @@ gspeed = 20
 gunity = 20
 
 # Frames per second
-fps = 15
+fps = 13
 
 # Power-up probability
 prob_pup = 1/150
@@ -17,3 +17,6 @@ resolution = (1280,720)
 # Player orientations
 left = -1
 right = 1
+
+# Food limit
+max_food = 4

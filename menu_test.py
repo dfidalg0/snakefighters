@@ -1,5 +1,6 @@
 from game import pg, Screen, InterfaceObject, GameEngine, MainMenu
 from game.constants import gunity
+from game.assets import maps
 
 screen = Screen()
 menu = MainMenu(screen)
@@ -21,5 +22,7 @@ if n > 0:
 
     for i in range(n):
         game.add_player(sprites[i],orientations[i],*positions[i],controls[i])
+
+    game.load_map(maps['eights'])
 
     game.game_loop()

@@ -15,8 +15,9 @@ from game.menu import MainMenu
 from game.powerup.secondchance import SecondChance
 from game.powerup.invencibility import Invencibility
 from game.powerup.kunai import Kunai
+from game.powerup.bomb import Bomb
 from game.powerup.food import Food
 
-powerup_list = [SecondChance,Invencibility,Kunai]
+powerup_list = [SecondChance, Invencibility, Kunai, Bomb]
 
 from game.game_engine import GameEngine

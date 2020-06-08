@@ -1,10 +1,11 @@
 from game import InterfaceObject
 from game import pg, Screen, GameObject, Player, Food, powerup_list
-from game.constants import fps, prob_pup, gunity
+from game.constants import fps, prob_pup, gunity, max_food
 from game.assets import imgwall, img_wait_background, font_barbarian
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
+from collections import deque
 
 
 class GameEngine:
@@ -14,9 +15,11 @@ class GameEngine:
         self.__command = {}
         self.__players = []
         self.__obstacles = []
-        self.__powerups = []
+        self.__effects = []
+        self.__powerups = deque()
+        self.__foods = []
         self.__nfood = 0
-        self.__bound = self.__gamebox.get_rect()//2 - (gunity,gunity)
+        self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
     def add_player(self, imgset, orient, x, y, keyset):
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
@@ -39,7 +42,7 @@ class GameEngine:
 
         return obj
 
-    def remove_obstacle(self,obj):
+    def remove_obstacle(self, obj):
         obj.destroy()
         self.__obstacles.remove(obj)
 
@@ -49,26 +52,32 @@ class GameEngine:
 
         self.__obstacles.clear()
 
-    def load_map(self,map):
+    def add_effect(self, effect):
+        self.__effects.append(effect)
+
+    def remove_effect(self, effect):
+        effect(end=True)
+        self.__effects.remove(effect)
+
+    def load_map(self, map):
         for wall in map:
             params = {
-                'img' : imgwall[wall[0]],
-                'x' : wall[1]*gunity,
-                'y' : wall[2]*gunity
+                'img': imgwall[wall[0]],
+                'x': wall[1] * gunity,
+                'y': wall[2] * gunity
             }
             self.add_obstacle(**params)
 
     def generate_powerups(self):
-        if self.__nfood <= 3:
-            self.place_power_up(Food)
+        if self.__nfood < max_food:
             self.__nfood += 1
+            pup = self.place_power_up(Food)
+            self.__foods.append(pup)
 
         if random() < prob_pup:
             NewPowerUp = choice(powerup_list)
-            self.place_power_up(NewPowerUp)
-
-    def remove_food(self):
-        self.__nfood -= 1
+            pup = self.place_power_up(NewPowerUp)
+            self.__powerups.append(pup)
 
     def place_power_up(self, PowerUp):
         collide = True
@@ -98,13 +107,22 @@ class GameEngine:
             if collide:
                 continue
 
+            for food in self.__foods:
+                if food.collision(pup):
+                    pup.destroy()
+                    collide = True
+                    break
+
+            if collide:
+                continue
+
             for player in self.__players:
                 if player.collision(pup):
                     pup.destroy()
                     collide = True
                     break
 
-        self.__powerups.append(pup)
+        return pup
 
     def game_loop(self):
         background = img_wait_background.convert()
@@ -144,6 +162,10 @@ class GameEngine:
                         pass  # Chave não associada a nenhum comando
             # Fila de eventos
 
+            # Efeitos na tela
+            for effect in self.__effects:
+                effect()
+
             # Checagem de colisões fatais
             dead_players = []
             for player in self.__players:
@@ -156,9 +178,25 @@ class GameEngine:
                     if obstacle.collision(head):
                         player.dec_health()
 
-                abs_pos = abs(head.get_pos().elementwise())
+                pos = head.get_pos()
+                abs_pos = abs(pos.elementwise())
                 if abs_pos.x > self.__bound.x or abs_pos.y > self.__bound.y:
-                    player.set_health(0)
+                    player.dec_health()
+                    player.clear_command_queue()
+
+                    spd = head.get_spd()
+                    angle = choice([90,-90])
+                    pos = pos + spd.rotate(angle)
+                    abs_pos = abs(pos.elementwise())
+
+                    if (
+                        abs_pos.elementwise() > self.__bound or
+                        abs_pos.x > self.__bound.x + gunity or
+                        abs_pos.y > self.__bound.y + gunity
+                    ):
+                        head.set_spd(spd.rotate(-angle))
+                    else:
+                        head.set_spd(spd.rotate(angle))
 
                 if player.get_health() <= 0:
                     dead_players.append(player)
@@ -173,14 +211,33 @@ class GameEngine:
 
             # Checagem de coleta de power-ups
             catched_pups = []
+            catched_foods = []
             for player in self.__players:
                 head = player.get_head()
                 for pup in self.__powerups:
                     if pup.collision(head):
                         pup.catch(player, self)
                         catched_pups.append(pup)
+                for food in self.__foods:
+                    if food.collision(head):
+                        food.catch(player, self)
+                        catched_foods.append(food)
 
             for pup in catched_pups:
                 pup.destroy()
                 self.__powerups.remove(pup)
+
+            for food in catched_foods:
+                food.destroy()
+                self.__foods.remove(food)
+                self.__nfood -= 1
             # Coleta de power-ups
+
+            # Checagem de timer de power-ups
+            for pup in self.__powerups:
+                pup.inc_timer()
+
+            if self.__powerups and self.__powerups[0].get_timer() == 10 * fps:
+                self.__powerups[0].destroy()
+                self.__powerups.popleft()
+            # Timer de power-ups

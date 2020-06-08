@@ -1,16 +1,18 @@
 from game import pg
 from game.constants import gunity, resolution
-import json
 
-def load_map(path):
-    with open(path) as file:
-        return json.load(file)
 
-maps = {
-    'cross_and_borders': load_map('assets/maps/cross_and_borders.json')
-}
+from json import load
+from os import listdir
 
-del load_map, json
+maps = {}
+for filename in listdir('assets/maps'):
+    if filename[-5:] == '.json':
+        path = 'assets/maps/' + filename
+        with open(path) as file:
+            maps[filename[:-5]] = load(file)
+
+del load, listdir
 
 pg.font.init()
 font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf',90)
@@ -26,14 +28,17 @@ imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity)),
-    'WEAP': pg.transform.scale(pg.image.load('assets/img/pup_generico.png'), (gunity, gunity))
+    'WEAP': pg.transform.scale(pg.image.load('assets/img/pup_generico.png'), (gunity, gunity)),
+    'BOMB': pg.transform.scale(pg.image.load('assets/img/bomb.png'), (gunity, gunity)),
 }
 
 imgwall = {
-    'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9*gunity, gunity)),
-    'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11*gunity, gunity)),
-    'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7*gunity, gunity)), 90),
-    'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5*gunity, gunity)), 90)
+    'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9 * gunity, gunity)),
+    'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11 * gunity, gunity)),
+    'H15': pg.transform.scale((pg.image.load('assets/img/parede_15.png')), (15 * gunity, gunity)),
+    'V7': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_7.png'), (7 * gunity, gunity)), 90),
+    'V5': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_5.png'), (5 * gunity, gunity)), 90),
+    'V9': pg.transform.rotate(pg.transform.scale(pg.image.load('assets/img/parede_9.png'), (9 * gunity, gunity)), 90)
 }
 
 imgsety = {
@@ -112,6 +117,7 @@ imgsetp = {
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/roxo_curva_direita_cima.png'), (gunity, gunity))
 }
 
+# Game effects
 imgsetw = {
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_baixo.png'), (gunity, gunity)),
@@ -178,3 +184,4 @@ imgbutton = {
         pg.image.load('assets/img/buttons/voltar3.png')
     ]
 }
+img_explosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))

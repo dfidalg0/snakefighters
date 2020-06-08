@@ -140,6 +140,9 @@ class Player:
 
         self.__command_queue.append(command)
 
+    def clear_command_queue(self):
+        self.__command_queue.clear()
+
     def collision(self,obj):
         i0 = 4 if self.__nodes[0] == obj else 0
         for i in range(i0,len(self.__nodes)):

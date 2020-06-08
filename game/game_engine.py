@@ -1,11 +1,19 @@
+from game import InterfaceObject, PlayerUI
 from game import pg, Screen, GameObject, Player, Food, powerup_list
-from game.constants import fps, prob_pup, gunity, max_food
-from game.assets import imgwall
+from game.constants import fps, prob_pup, gunity, max_food, resolution
+from game.assets import imgwall, img_wait_background, font_barbarian, imgkeyboard
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
 from collections import deque
 
+
+ui_positions = [
+    (-resolution[0]//2 + 40, -335),
+    (+resolution[0]//2 - 40, -335),
+    (-resolution[0]//2 + 40, +335),
+    (+resolution[0]//2 - 40, +335),
+]
 
 class GameEngine:
     def __init__(self, screen, gamebox):
@@ -13,6 +21,7 @@ class GameEngine:
         self.__gamebox = gamebox
         self.__command = {}
         self.__players = []
+        self.__playeruis = []
         self.__obstacles = []
         self.__effects = []
         self.__powerups = deque()
@@ -20,9 +29,22 @@ class GameEngine:
         self.__nfood = 0
         self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
+        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
+            InterfaceObject(gamebox, imgwall['H1'], x, +15 * gunity)
+            InterfaceObject(gamebox, imgwall['H1'], x, -15 * gunity)
+
+        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
+            InterfaceObject(gamebox, imgwall['H1'], +30 * gunity, y)
+            InterfaceObject(gamebox, imgwall['H1'], -30 * gunity, y)
+
     def add_player(self, imgset, orient, x, y, keyset):
+        pos = ui_positions[imgset['id']]
+
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
+        newui = PlayerUI(self.__screen,newplayer,*pos)
+
         self.__players.append(newplayer)
+        self.__playeruis.append(newui)
 
         controls = newplayer.get_controls()
 
@@ -124,6 +146,58 @@ class GameEngine:
         return pup
 
     def game_loop(self):
+        pg.mouse.set_visible(False)
+
+        background = img_wait_background.convert()
+        background.set_alpha(180)
+        background = InterfaceObject(self.__screen, background, 0, 0)
+
+        instructions = []
+        n = len(self.__players)
+
+        pos0 = -self.__bound/2
+        inc = 2 * gunity
+        if n >= 1:
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['s'],*pos0))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['a'],*(pos0 - (inc,0))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['w'],*(pos0 - (0,inc))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['d'],*(pos0 + (inc,0))))
+        pos0[0] *= -1
+        if n >= 2:
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['h'],*pos0))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['g'],*(pos0 - (inc,0))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['y'],*(pos0 - (0,inc))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['j'],*(pos0 + (inc,0))))
+        pos0[1] *= -1
+        if n >= 4:
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['5'],*pos0))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['4'],*(pos0 - (inc,0))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['8'],*(pos0 - (0,inc))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['6'],*(pos0 + (inc,0))))
+        pos0[0] *= -1
+        if n >= 3:
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['down'],*pos0))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['left'],*(pos0 - (inc,0))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['up'],*(pos0 - (0,inc))))
+            instructions.append(InterfaceObject(self.__screen, imgkeyboard['right'],*(pos0 + (inc,0))))
+
+        fonte = font_barbarian
+
+        messages = ['Ready>','Set..>','Fight>']
+
+        for i in range(3):
+            segundosIMG = fonte.render(messages[i], True, (134, 177, 11))
+            segundosIMG = InterfaceObject(self.__screen, segundosIMG, 0, 0)
+            self.__screen.update()
+            pg.time.wait(1000)
+            segundosIMG.destroy()
+
+        for instruction in instructions:
+            instruction.destroy()
+        instructions.clear()
+
+        background.destroy()
+
         running = True
         clock = Clock()
         while running:
@@ -190,6 +264,10 @@ class GameEngine:
             # Atualização das posições dos jogadores remanescentes
             for player in self.__players:
                 player.update()
+
+            # Atualização das interfaces dos jogadores
+            for UI in self.__playeruis:
+                UI.update()
 
             # Checagem de coleta de power-ups
             catched_pups = []

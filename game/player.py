@@ -1,5 +1,5 @@
 from game import pg, Screen, GameObject
-from game.constants import gspeed, gunity
+from game.constants import gspeed, gunity, left, right, max_health
 from pygame.math import Vector2
 from collections import deque
 
@@ -8,11 +8,12 @@ class Player:
     def __init__(self, screen, imgset, x, y, orient):
         self.__screen = screen
         self.__imgset = imgset
-        if orient == 1:
+        self.__id = imgset['id']
+        if orient == right:
             imghead = imgset['HEAD_R']
             imgbody = imgset['BODY_R']
             imgtail = imgset['TAIL_R']
-        elif orient == -1:
+        elif orient == left:
             imghead = imgset['HEAD_L']
             imgbody = imgset['BODY_L']
             imgtail = imgset['TAIL_L']
@@ -21,9 +22,12 @@ class Player:
         tail = GameObject(screen, imgtail, x - gunity * orient * 2, y, gspeed * orient, 0)
         self.__nodes = [head, body, tail]
         self.__grow = False
-        self.__health = 1
+        self.__health = [1,0]
         self.__effect = None
         self.__command_queue = deque()
+
+    def get_id(self):
+        return self.__id
 
     def get_nodes(self):
         return self.__nodes
@@ -44,19 +48,30 @@ class Player:
         self.__imgset = imgset
 
     def get_health(self):
-        return self.__health.real
+        return self.__health[0]
 
     def get_virtual_health(self):
-        return self.__health.imag
+        return self.__health[1]
 
     def set_health(self,health):
-        self.__health = health
+        self.__health[0] = health
 
-    def inc_health(self,inc=1):
-        self.__health += inc
+    def set_virtual_health(self,health):
+        self.__health[1] = health
 
-    def dec_health(self,dec=1):
-        self.__health -= dec
+    def inc_health(self):
+        if self.__health[0] < max_health:
+            self.__health[0] += 1
+
+    def dec_health(self):
+        self.__health[0] -= 1
+
+    def inc_virtual_health(self):
+        if self.__health[1] < max_health:
+            self.__health[1] += 1
+
+    def dec_virtual_health(self):
+        self.__health[1] -= 1
 
     def update(self):
         while self.__command_queue:

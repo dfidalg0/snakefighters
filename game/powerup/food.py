@@ -10,4 +10,3 @@ class Food(PowerUpMeta):
 
     def catch(self,player,engine):
         player.grow_size()
-        engine.remove_food()

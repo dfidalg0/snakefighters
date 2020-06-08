@@ -11,7 +11,7 @@ class PowerUpMeta(GameObject,ABC):
     def get_timer(self):
         return self.__timer
 
-    def increase_timer(self):
+    def inc_timer(self):
         self.__timer += 1
 
     @abstractmethod

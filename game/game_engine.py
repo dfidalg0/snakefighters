@@ -1,5 +1,5 @@
 from game import pg, Screen, GameObject, Player, Food, powerup_list
-from game.constants import fps, prob_pup, gunity
+from game.constants import fps, prob_pup, gunity, max_food
 from game.assets import imgwall
 from pygame.math import Vector2
 from pygame.time import Clock
@@ -14,8 +14,8 @@ class GameEngine:
         self.__command = {}
         self.__players = []
         self.__obstacles = []
-        self.__powerups = []
-        self.__pupsdeque = deque()
+        self.__powerups = deque()
+        self.__foods = []
         self.__nfood = 0
         self.__bound = self.__gamebox.get_rect()//2 - (gunity,gunity)
 
@@ -60,17 +60,15 @@ class GameEngine:
             self.add_obstacle(**params)
 
     def generate_powerups(self):
-        if self.__nfood <= 3:
-            self.place_power_up(Food)
+        if self.__nfood < max_food:
             self.__nfood += 1
+            pup = self.place_power_up(Food)
+            self.__foods.append(pup)
 
         if random() < prob_pup:
             NewPowerUp = choice(powerup_list)
             pup = self.place_power_up(NewPowerUp)
-            self.__pupsdeque.append(pup)
-
-    def remove_food(self):
-        self.__nfood -= 1
+            self.__powerups.append(pup)
 
     def place_power_up(self, PowerUp):
         collide = True
@@ -106,14 +104,7 @@ class GameEngine:
                     collide = True
                     break
 
-        self.__powerups.append(pup)
-
         return pup
-
-    def remove_power_up(self):
-        self.__pupsdeque[0].destroy()
-        pup = self.__pupsdeque.popleft()
-        self.__powerups.remove(pup)
 
     def game_loop(self):
         running = True
@@ -122,15 +113,6 @@ class GameEngine:
             self.__screen.update()
             clock.tick(fps)
             self.generate_powerups()
-
-            for pups in self.__pupsdeque:
-                pups.increase_timer()
-                print(pups.get_timer())
-
-                if pups.get_timer() == 10*fps:
-                    print("oi")
-                    self.remove_power_up()
-                    break
 
             # Resolução da fila de eventos
             for event in pg.event.get():
@@ -174,15 +156,32 @@ class GameEngine:
 
             # Checagem de coleta de power-ups
             catched_pups = []
+            catched_foods = []
             for player in self.__players:
                 head = player.get_head()
                 for pup in self.__powerups:
                     if pup.collision(head):
                         pup.catch(player, self)
                         catched_pups.append(pup)
+                for food in self.__foods:
+                    if food.collision(head):
+                        food.catch(player, self)
+                        catched_foods.append(food)
 
             for pup in catched_pups:
                 pup.destroy()
                 self.__powerups.remove(pup)
-                self.__pupsdeque.remove(pup)
+
+            for food in catched_foods:
+                food.destroy()
+                self.__foods.remove(food)
             # Coleta de power-ups
+
+            # Checagem de timer de power-ups
+            for pup in self.__powerups:
+                pup.inc_timer()
+
+            if self.__powerups and self.__powerups[0].get_timer() == 10*fps:
+                self.__powerups[0].destroy()
+                self.__powerups.popleft()
+            # Timer de power-ups

@@ -8,7 +8,7 @@ arena = InterfaceObject(screen, background)
 game = GameEngine(screen, arena)
 
 WALL = pg.transform.scale(pg.image.load('assets/img/parede.png'), (gunity, gunity))
-1
+
 game.load_map(maps['eights'])
 
 for x in range(-30 * gunity, +30 * gunity+1, gunity):

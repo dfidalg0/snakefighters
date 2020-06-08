@@ -175,6 +175,7 @@ class GameEngine:
             for food in catched_foods:
                 food.destroy()
                 self.__foods.remove(food)
+                self.__nfood -= 1
             # Coleta de power-ups
 
             # Checagem de timer de power-ups

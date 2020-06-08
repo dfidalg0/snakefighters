@@ -21,7 +21,7 @@ imgpowerup = {
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity)),
     'WEAP': pg.transform.scale(pg.image.load('assets/img/pup_generico.png'), (gunity, gunity)),
-    'WALL': pg.transform.scale(pg.image.load('assets/img/parede.png'), (gunity, gunity)),
+    'BOMB': pg.transform.scale(pg.image.load('assets/img/bomb.png'), (gunity, gunity)),
 }
 
 imgwall = {

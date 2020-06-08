@@ -20,7 +20,7 @@ img_wait_background.fill((0,0,0))
 
 img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'),resolution)
 
-img_icon = pg.transform.scale(pg.image.load('assets/img/icon.png'),(32,32))
+img_icon = pg.image.load('assets/img/icon.png')
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),

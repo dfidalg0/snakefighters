@@ -42,6 +42,13 @@ for i in range(4):
 del aux, colors, coords, half_res, i
 # Screen Background
 
+imgkeyboard = {}
+keys = ['w','a','s','d','y','g','h','j','up','left','down','right','8','4','5','6']
+for key in keys:
+    imgkeyboard[key] = pg.transform.scale(pg.image.load('assets/img/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+
+del key, keys
+
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),

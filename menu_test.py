@@ -6,9 +6,6 @@ screen = Screen()
 menu = MainMenu(screen)
 config = menu.menu_loop()
 
-# menu.wait_to_init();
-# se pá é melhor dar mais informações pra config e fazer um loop mais bonitinho kk
-
 n = config['player_number']
 sprites = config['players']['sprites']
 orientations = config['players']['orientations']

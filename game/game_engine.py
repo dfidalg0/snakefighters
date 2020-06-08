@@ -160,9 +160,25 @@ class GameEngine:
                     if obstacle.collision(head):
                         player.dec_health()
 
-                abs_pos = abs(head.get_pos().elementwise())
+                pos = head.get_pos()
+                abs_pos = abs(pos.elementwise())
                 if abs_pos.x > self.__bound.x or abs_pos.y > self.__bound.y:
-                    player.set_health(0)
+                    player.dec_health()
+                    player.clear_command_queue()
+
+                    spd = head.get_spd()
+                    angle = choice([90,-90])
+                    pos = pos + spd.rotate(angle)
+                    abs_pos = abs(pos.elementwise())
+
+                    if (
+                        abs_pos.elementwise() > self.__bound or
+                        abs_pos.x > self.__bound.x + gunity or
+                        abs_pos.y > self.__bound.y + gunity
+                    ):
+                        head.set_spd(spd.rotate(-angle))
+                    else:
+                        head.set_spd(spd.rotate(angle))
 
                 if player.get_health() <= 0:
                     dead_players.append(player)

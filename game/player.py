@@ -1,5 +1,5 @@
 from game import pg, Screen, GameObject
-from game.constants import gspeed, gunity
+from game.constants import gspeed, gunity, left, right
 from pygame.math import Vector2
 from collections import deque
 
@@ -8,11 +8,11 @@ class Player:
     def __init__(self, screen, imgset, x, y, orient):
         self.__screen = screen
         self.__imgset = imgset
-        if orient == 1:
+        if orient == right:
             imghead = imgset['HEAD_R']
             imgbody = imgset['BODY_R']
             imgtail = imgset['TAIL_R']
-        elif orient == -1:
+        elif orient == left:
             imghead = imgset['HEAD_L']
             imgbody = imgset['BODY_L']
             imgtail = imgset['TAIL_L']

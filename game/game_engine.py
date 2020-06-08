@@ -113,7 +113,7 @@ class GameEngine:
 
         fonte = font_barbarian
 
-        messages = ['Ready','Set','Fight!']
+        messages = ['Ready>','Set..>','Fight>']
 
         for i in range(3):
             segundosIMG = fonte.render(messages[i], True, (134, 177, 11))

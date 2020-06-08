@@ -160,13 +160,13 @@ class GameEngine:
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['g'],*(pos0 - (inc,0))))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['y'],*(pos0 - (0,inc))))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['j'],*(pos0 + (inc,0))))
-        if n >= 3:
+        if n >= 4:
             pos0[1] *= -1
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['5'],*pos0))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['4'],*(pos0 - (inc,0))))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['8'],*(pos0 - (0,inc))))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['6'],*(pos0 + (inc,0))))
-        if n >= 4:
+        if n >= 3:
             pos0[0] *= -1
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['down'],*pos0))
             instructions.append(InterfaceObject(self.__screen, imgkeyboard['left'],*(pos0 - (inc,0))))

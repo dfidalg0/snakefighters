@@ -1,5 +1,4 @@
 from game import pg
-from game.constants import max_health
 from game.assets import imgpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
@@ -13,6 +12,6 @@ class SecondChance(PowerUpMeta):
     def catch(self,player,engine):
         health = player.get_health()
         if health == inf:
-            player.inc_health(1j)
-        elif health < max_health:
+            player.inc_virtual_health()
+        else:
             player.inc_health()

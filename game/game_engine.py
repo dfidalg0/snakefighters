@@ -1,6 +1,6 @@
-from game import InterfaceObject
+from game import InterfaceObject, PlayerUI
 from game import pg, Screen, GameObject, Player, Food, powerup_list
-from game.constants import fps, prob_pup, gunity, max_food
+from game.constants import fps, prob_pup, gunity, max_food, resolution
 from game.assets import imgwall, img_wait_background, font_barbarian
 from pygame.math import Vector2
 from pygame.time import Clock
@@ -8,12 +8,20 @@ from random import randint, random, choice
 from collections import deque
 
 
+ui_positions = [
+    (-resolution[0]//2 + 40, -335),
+    (+resolution[0]//2 - 40, -335),
+    (-resolution[0]//2 + 40, +335),
+    (+resolution[0]//2 - 40, +335),
+]
+
 class GameEngine:
     def __init__(self, screen, gamebox):
         self.__screen = screen
         self.__gamebox = gamebox
         self.__command = {}
         self.__players = []
+        self.__playeruis = []
         self.__obstacles = []
         self.__effects = []
         self.__powerups = deque()
@@ -22,8 +30,13 @@ class GameEngine:
         self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
     def add_player(self, imgset, orient, x, y, keyset):
+        pos = ui_positions[imgset['id']]
+
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
+        newui = PlayerUI(self.__screen,newplayer,*pos)
+
         self.__players.append(newplayer)
+        self.__playeruis.append(newui)
 
         controls = newplayer.get_controls()
 
@@ -125,6 +138,8 @@ class GameEngine:
         return pup
 
     def game_loop(self):
+        pg.mouse.set_visible(False)
+
         background = img_wait_background.convert()
         background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
@@ -208,6 +223,10 @@ class GameEngine:
             # Atualização das posições dos jogadores remanescentes
             for player in self.__players:
                 player.update()
+
+            # Atualização das interfaces dos jogadores
+            for UI in self.__playeruis:
+                UI.update()
 
             # Checagem de coleta de power-ups
             catched_pups = []

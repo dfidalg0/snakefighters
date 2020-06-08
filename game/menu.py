@@ -5,6 +5,7 @@ from game.constants import left, right, gunity
 from pygame.math import Vector2
 from pygame.time import Clock
 
+
 QUIT = 0
 MAIN = 1
 MULTIPLAYER = 2

@@ -2,6 +2,9 @@ from game import pg
 from game.constants import gunity, resolution
 
 
+dummy_surface = pg.Surface((2,2))
+dummy_surface.set_colorkey((0,0,0))
+
 from json import load
 from os import listdir
 
@@ -12,17 +15,32 @@ for filename in listdir('assets/maps'):
         with open(path) as file:
             maps[filename[:-5]] = load(file)
 
-del load, listdir
+del load, listdir, filename
 
 pg.font.init()
 font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf',90)
+
+img_icon = pg.image.load('assets/img/icon.png')
 
 img_wait_background = pg.Surface(resolution)
 img_wait_background.fill((0,0,0))
 
 img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'),resolution)
 
-img_icon = pg.image.load('assets/img/icon.png')
+# Screen Background
+half_res = (resolution[0]/2,resolution[1]/2)
+aux = pg.Surface(half_res)
+img_scr_background = pg.Surface(resolution)
+
+colors = [(136, 131, 8), (12, 24, 106), (113, 60, 11), (81, 14, 87)]
+coords = [(0,0),(half_res[0],0),(0,half_res[1]),half_res]
+
+for i in range(4):
+    aux.fill(colors[i])
+    img_scr_background.blit(aux,coords[i])
+
+del aux, colors, coords, half_res, i
+# Screen Background
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
@@ -42,6 +60,7 @@ imgwall = {
 }
 
 imgsety = {
+    'id' : 0,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_esquerda.png'), (gunity, gunity)),
@@ -61,6 +80,7 @@ imgsety = {
 }
 
 imgsetb = {
+    'id' : 1,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_esquerda.png'), (gunity, gunity)),
@@ -80,6 +100,7 @@ imgsetb = {
 }
 
 imgseto = {
+    'id' : 2,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_esquerda.png'), (gunity, gunity)),
@@ -99,6 +120,7 @@ imgseto = {
 }
 
 imgsetp = {
+    'id' : 3,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_esquerda.png'), (gunity, gunity)),
@@ -184,4 +206,8 @@ imgbutton = {
         pg.image.load('assets/img/buttons/voltar3.png')
     ]
 }
+
 img_explosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))
+
+skull = pg.image.load('assets/img/skull.png')
+heart = pg.image.load('assets/img/coracao_interface.png')

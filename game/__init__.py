@@ -10,6 +10,7 @@ from game.game_object import GameObject
 from game.button import Button
 from game.player import Player
 from game.menu import MainMenu
+from game.player_ui import PlayerUI
 
 
 from game.powerup.secondchance import SecondChance

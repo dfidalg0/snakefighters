@@ -13,7 +13,7 @@ class Invencibility(PowerUpMeta):
     def catch(self,player,engine):
         player.clear_effect()
 
-        old_health = player.get_health()
+        player.set_virtual_health(player.get_health())
         player.set_health(inf)
         timer = 0
         timer_end = 3 * fps
@@ -27,8 +27,8 @@ class Invencibility(PowerUpMeta):
             nonlocal imgset0, current, aux
 
             if end:
-                new_health = old_health + player.get_virtual_health()
-                new_health = min(max_health, new_health)
+                new_health = player.get_virtual_health()
+                player.set_virtual_health(0)
 
                 player.set_health(new_health)
                 player.set_imgset(imgset0)

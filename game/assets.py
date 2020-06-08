@@ -57,7 +57,10 @@ imgpowerup = {
     'BOMB': pg.transform.scale(pg.image.load('assets/img/bomb.png'), (gunity, gunity)),
 }
 
+imgwall = {}
+
 imgwall = {
+    'H1': pg.transform.scale((pg.image.load('assets/img/parede.png')), (gunity, gunity)),
     'H9': pg.transform.scale((pg.image.load('assets/img/parede_9.png')), (9 * gunity, gunity)),
     'H11': pg.transform.scale((pg.image.load('assets/img/parede_11.png')), (11 * gunity, gunity)),
     'H15': pg.transform.scale((pg.image.load('assets/img/parede_15.png')), (15 * gunity, gunity)),

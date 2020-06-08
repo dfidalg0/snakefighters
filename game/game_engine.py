@@ -29,6 +29,14 @@ class GameEngine:
         self.__nfood = 0
         self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
+        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
+            InterfaceObject(gamebox, imgwall['H1'], x, +15 * gunity)
+            InterfaceObject(gamebox, imgwall['H1'], x, -15 * gunity)
+
+        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
+            InterfaceObject(gamebox, imgwall['H1'], +30 * gunity, y)
+            InterfaceObject(gamebox, imgwall['H1'], -30 * gunity, y)
+
     def add_player(self, imgset, orient, x, y, keyset):
         pos = ui_positions[imgset['id']]
 

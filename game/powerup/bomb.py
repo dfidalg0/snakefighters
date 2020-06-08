@@ -1,6 +1,6 @@
 from game import pg
-from game.constants import max_health
-from game.assets import imgpowerup
+from game.constants import fps
+from game.assets import imgpowerup, img_explosion
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 
@@ -10,4 +10,18 @@ class Bomb(PowerUpMeta):
         super().__init__(master, imgpowerup['BOMB'], x, y)
 
     def catch(self, player, engine):
-        player.dec_health()
+        pos = self.get_pos()
+        explosion = engine.add_obstacle(x=pos[0], y=pos[1], img=img_explosion)
+
+        timer = 0
+
+        def explode(end=False):
+            nonlocal timer,explosion
+            if end:
+                engine.remove_obstacle(explosion)
+            elif timer >= fps//2:
+                engine.remove_effect(explode)
+            else:
+                timer += 1
+
+        engine.add_effect(explode)

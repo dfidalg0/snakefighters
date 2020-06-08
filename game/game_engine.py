@@ -106,6 +106,15 @@ class GameEngine:
             if collide:
                 continue
 
+            for food in self.__foods:
+                if food.collision(pup):
+                    pup.destroy()
+                    collide = True
+                    break
+
+            if collide:
+                continue
+
             for player in self.__players:
                 if player.collision(pup):
                     pup.destroy()
@@ -134,6 +143,10 @@ class GameEngine:
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
             # Fila de eventos
+
+            # Efeitos na tela
+            for effect in self.__effects:
+                effect()
 
             # Checagem de colisões fatais
             dead_players = []
@@ -194,7 +207,3 @@ class GameEngine:
                 self.__powerups[0].destroy()
                 self.__powerups.popleft()
             # Timer de power-ups
-
-            #Efeitos na tela
-            for effect in self.__effects:
-                effect()

@@ -1,20 +1,18 @@
 from game import pg
 from game.constants import gunity
-import json
 
 
-def load_map(path):
-    with open(path) as file:
-        return json.load(file)
+from json import load
+from os import listdir
 
+maps = {}
+for filename in listdir('assets/maps'):
+    if filename[-5:] == '.json':
+        path = 'assets/maps/' + filename
+        with open(path) as file:
+            maps[filename[:-5]] = load(file)
 
-maps = {
-    'cross_and_borders': load_map('assets/maps/cross_and_borders.json'),
-    'lines': load_map('assets/maps/lines.json'),
-    'eights': load_map('assets/maps/eights.json')
-}
-
-del load_map, json
+del load, listdir
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
@@ -90,6 +88,7 @@ imgsetp = {
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/roxo_curva_direita_cima.png'), (gunity, gunity))
 }
 
+# Game effects
 imgsetw = {
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_baixo.png'), (gunity, gunity)),
@@ -108,3 +107,5 @@ imgsetw = {
     'TURN_RD': pg.transform.scale(pg.image.load('assets/img/branco_curva_direita_baixo.png'), (gunity, gunity)),
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/branco_curva_direita_cima.png'), (gunity, gunity))
 }
+
+img_explosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))

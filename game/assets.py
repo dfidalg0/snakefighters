@@ -43,9 +43,12 @@ del aux, colors, coords, half_res, i
 # Screen Background
 
 imgkeyboard = {}
-keys = ['w','a','s','d','y','g','h','j','up','left','down','right','8','4','5','6']
+keys = (
+    'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split() +
+    '0 1 2 3 4 5 6 7 8 9'.split() + ['up','left','down','right']
+)
 for key in keys:
-    imgkeyboard[key] = pg.transform.scale(pg.image.load('assets/img/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+    imgkeyboard[key] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
 
 del key, keys
 

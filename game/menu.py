@@ -20,8 +20,8 @@ default_positions = [
 ]
 default_controls = [
     [pg.K_w, pg.K_a, pg.K_s, pg.K_d],
+[pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT],
     [pg.K_y, pg.K_g, pg.K_h, pg.K_j],
-    [pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT],
     [pg.K_KP8, pg.K_KP4, pg.K_KP5, pg.K_KP6]
 ]
 
@@ -53,33 +53,43 @@ class MainMenu():
 
         self.clear_buttons()
 
-        labels = ['jogador_unico','multijogadores','opcoes','extra','encerrar']
+        labels = ['jogar','modo_pratica','opcoes','extra']
 
-        x = -self.__bound[0] * 0.65
+        x = -self.__bound[0] * 0.66
         y = -self.__bound[1] * 0.70
 
         for label in labels:
             Button(self, imgbutton[label], x,y)
-            y += self.__bound[1] * 0.3
+            y += self.__bound[1] * 0.307
+
+        Button(self, imgbutton['encerrar'], -self.__bound[0] * 0.665, y)
 
     def multijogadores(self):
         self.__state = MULTIPLAYER
 
         self.clear_buttons()
 
-        labels = ['dois_jogadores','tres_jogadores','quatro_jogadores','voltar']
+        labels = ['dois_jogadores','tres_jogadores']
 
-        x = -self.__bound[0] * 0.65
+        x = -self.__bound[0] * 0.655
         y = -self.__bound[1] * 0.70
 
         for label in labels:
             Button(self, imgbutton[label], x,y)
-            y += self.__bound[1] * 0.3
+            y += self.__bound[1] * 0.307
+
+
+        Button(self, imgbutton['quatro_jogadores'],-self.__bound[0] * 0.664 , -self.__bound[1] * 0.086)
+        Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
 
     def update(self):
         if self.__state == MAIN:
-            # single player
+            # multiplayer
             if self.__buttons[0].check_hover():
+                self.multijogadores()
+
+            # single player
+            elif self.__buttons[1].check_hover():
                 self.__config['player_number'] = 1
                 self.__config['players']['sprites'].append(default_sprites[0])
                 self.__config['players']['orientations'].append(default_orientations[0])
@@ -87,15 +97,12 @@ class MainMenu():
                 self.__config['players']['controls'].append(default_controls[0])
                 self.__state = QUIT
 
-            # multiplayer
-            elif self.__buttons[1].check_hover():
-                self.multijogadores()
             # opcoes
             elif self.__buttons[2].check_hover():
-                print('menu opcoes')
+                print("opcoes")
             # extras ?
             elif self.__buttons[3].check_hover():
-                print('pq coloquei extras')
+                print("extras")
             # encerrar
             elif self.__buttons[4].check_hover():
                 self.__state = QUIT

@@ -173,15 +173,15 @@ imgsetw = {
 }
 
 imgbutton = {
-    'jogador_unico': [
-        pg.image.load('assets/img/buttons/jogador_unico.png'),
-        pg.image.load('assets/img/buttons/jogador_unico2.png'),
-        pg.image.load('assets/img/buttons/jogador_unico3.png')
+    'jogar': [
+        pg.image.load('assets/img/buttons/jogar.png'),
+        pg.image.load('assets/img/buttons/jogar2.png'),
+        pg.image.load('assets/img/buttons/jogar3.png')
     ],
-    'multijogadores': [
-        pg.image.load('assets/img/buttons/multijogadores.png'),
-        pg.image.load('assets/img/buttons/multijogadores2.png'),
-        pg.image.load('assets/img/buttons/multijogadores3.png')
+    'modo_pratica': [
+        pg.image.load('assets/img/buttons/modo_pratica.png'),
+        pg.image.load('assets/img/buttons/modo_pratica2.png'),
+        pg.image.load('assets/img/buttons/modo_pratica3.png')
     ],
     'opcoes': [
         pg.image.load('assets/img/buttons/opcoes.png'),

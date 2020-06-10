@@ -1,6 +1,6 @@
 from game import pg
 from game.constants import fps
-from game.assets import imgpowerup, img_explosion
+from game.assets import imgpowerup, imgexplosion
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 
@@ -11,7 +11,7 @@ class Bomb(PowerUpMeta):
 
     def catch(self, player, engine):
         pos = self.get_pos()
-        explosion = engine.add_obstacle(x=pos[0], y=pos[1], img=img_explosion)
+        explosion = engine.add_obstacle(x=pos[0], y=pos[1], img=imgexplosion)
 
         timer = 0
 

@@ -56,8 +56,9 @@ imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity)),
-    'WEAP': pg.transform.scale(pg.image.load('assets/img/pup_generico.png'), (gunity, gunity)),
+    'WEAP': pg.transform.scale(pg.image.load('assets/img/dagger.png'), (gunity, gunity)),
     'BOMB': pg.transform.scale(pg.image.load('assets/img/bomb.png'), (gunity, gunity)),
+    'FIRE': pg.transform.scale(pg.image.load('assets/img/fire.png'), (gunity, gunity))
 }
 
 imgwall = {}
@@ -220,7 +221,8 @@ imgbutton = {
     ]
 }
 
-img_explosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))
+imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))
+imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'),(24,64))
 
 skull = pg.image.load('assets/img/skull.png')
 heart = pg.image.load('assets/img/coracao_interface.png')

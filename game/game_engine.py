@@ -139,7 +139,7 @@ class GameEngine:
         self.__effects.remove(effect)
 
     def load_map(self, map):
-        for wall in map:
+        for wall in map['walls']:
             params = {
                 'img': imgwall[wall[0]],
                 'x': wall[1] * gunity,

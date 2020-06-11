@@ -43,21 +43,25 @@ del aux, colors, coords, half_res, i
 # Screen Background
 
 imgkeyboard = {}
-keys = (
-    'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split() +
-    '0 1 2 3 4 5 6 7 8 9'.split() + ['up','left','down','right']
-)
-for key in keys:
-    imgkeyboard[key] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
-del key, keys
+for key in keys:
+    imgkeyboard[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+
+for i in range(10):
+    imgkeyboard[pg.K_KP0 + i] = imgkeyboard[pg.K_0 + i]
+
+for (i,key) in enumerate(['up','down','right','left']):
+    imgkeyboard[pg.K_UP + i] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+
+del key, keys, i
 
 imgpowerup = {
-    'FOOD': pg.transform.scale(pg.image.load('assets/img/ponto.png'), (gunity, gunity)),
-    'LIFE': pg.transform.scale(pg.image.load('assets/img/vida.png'), (gunity, gunity)),
-    'INVI': pg.transform.scale(pg.image.load('assets/img/invencibilidade.png'), (gunity, gunity)),
-    'WEAP': pg.transform.scale(pg.image.load('assets/img/pup_generico.png'), (gunity, gunity)),
-    'BOMB': pg.transform.scale(pg.image.load('assets/img/bomb.png'), (gunity, gunity)),
+    'FOOD': pg.transform.scale(pg.image.load('assets/img/powerups/ponto.png'), (gunity, gunity)),
+    'LIFE': pg.transform.scale(pg.image.load('assets/img/powerups/vida.png'), (gunity, gunity)),
+    'INVI': pg.transform.scale(pg.image.load('assets/img/powerups/invencibilidade.png'), (gunity, gunity)),
+    'WEAP': pg.transform.scale(pg.image.load('assets/img/powerups/pup_generico.png'), (gunity, gunity)),
+    'BOMB': pg.transform.scale(pg.image.load('assets/img/powerups/bomb.png'), (gunity, gunity)),
 }
 
 imgwall = {}
@@ -74,102 +78,102 @@ imgwall = {
 
 imgsety = {
     'id' : 0,
-    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_cima.png'), (gunity, gunity)),
-    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_baixo.png'), (gunity, gunity)),
-    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_esquerda.png'), (gunity, gunity)),
-    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/amarelo_cabeca_direita.png'), (gunity, gunity)),
-    'BODY_U': pg.transform.scale(pg.image.load('assets/img/amarelo_corpo_cima.png'), (gunity, gunity)),
-    'BODY_D': pg.transform.scale(pg.image.load('assets/img/amarelo_corpo_baixo.png'), (gunity, gunity)),
-    'BODY_L': pg.transform.scale(pg.image.load('assets/img/amarelo_corpo_esquerda.png'), (gunity, gunity)),
-    'BODY_R': pg.transform.scale(pg.image.load('assets/img/amarelo_corpo_direita.png'), (gunity, gunity)),
-    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/amarelo_cauda_cima.png'), (gunity, gunity)),
-    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/amarelo_cauda_baixo.png'), (gunity, gunity)),
-    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/amarelo_cauda_esquerda.png'), (gunity, gunity)),
-    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/amarelo_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/amarelo_curva_esquerda_baixo.png'), (gunity, gunity)),
-    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/amarelo_curva_esquerda_cima.png'), (gunity, gunity)),
-    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/amarelo_curva_direita_baixo.png'), (gunity, gunity)),
-    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/amarelo_curva_direita_cima.png'), (gunity, gunity))
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgsetb = {
     'id' : 1,
-    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_cima.png'), (gunity, gunity)),
-    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_baixo.png'), (gunity, gunity)),
-    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_esquerda.png'), (gunity, gunity)),
-    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/azul_cabeca_direita.png'), (gunity, gunity)),
-    'BODY_U': pg.transform.scale(pg.image.load('assets/img/azul_corpo_cima.png'), (gunity, gunity)),
-    'BODY_D': pg.transform.scale(pg.image.load('assets/img/azul_corpo_baixo.png'), (gunity, gunity)),
-    'BODY_L': pg.transform.scale(pg.image.load('assets/img/azul_corpo_esquerda.png'), (gunity, gunity)),
-    'BODY_R': pg.transform.scale(pg.image.load('assets/img/azul_corpo_direita.png'), (gunity, gunity)),
-    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/azul_cauda_cima.png'), (gunity, gunity)),
-    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/azul_cauda_baixo.png'), (gunity, gunity)),
-    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/azul_cauda_esquerda.png'), (gunity, gunity)),
-    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/azul_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/azul_curva_esquerda_baixo.png'), (gunity, gunity)),
-    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/azul_curva_esquerda_cima.png'), (gunity, gunity)),
-    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/azul_curva_direita_baixo.png'), (gunity, gunity)),
-    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/azul_curva_direita_cima.png'), (gunity, gunity))
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/snakes/azul_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/snakes/azul_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/snakes/azul_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/snakes/azul_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/azul_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/azul_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/azul_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/azul_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgseto = {
     'id' : 2,
-    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_cima.png'), (gunity, gunity)),
-    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_baixo.png'), (gunity, gunity)),
-    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_esquerda.png'), (gunity, gunity)),
-    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/laranja_cabeca_direita.png'), (gunity, gunity)),
-    'BODY_U': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_cima.png'), (gunity, gunity)),
-    'BODY_D': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_baixo.png'), (gunity, gunity)),
-    'BODY_L': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_esquerda.png'), (gunity, gunity)),
-    'BODY_R': pg.transform.scale(pg.image.load('assets/img/laranja_corpo_direita.png'), (gunity, gunity)),
-    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_cima.png'), (gunity, gunity)),
-    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_baixo.png'), (gunity, gunity)),
-    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_esquerda.png'), (gunity, gunity)),
-    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/laranja_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/laranja_curva_esquerda_baixo.png'), (gunity, gunity)),
-    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/laranja_curva_esquerda_cima.png'), (gunity, gunity)),
-    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/laranja_curva_direita_baixo.png'), (gunity, gunity)),
-    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/laranja_curva_direita_cima.png'), (gunity, gunity))
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgsetp = {
     'id' : 3,
-    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_cima.png'), (gunity, gunity)),
-    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_baixo.png'), (gunity, gunity)),
-    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_esquerda.png'), (gunity, gunity)),
-    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/roxo_cabeca_direita.png'), (gunity, gunity)),
-    'BODY_U': pg.transform.scale(pg.image.load('assets/img/roxo_corpo_cima.png'), (gunity, gunity)),
-    'BODY_D': pg.transform.scale(pg.image.load('assets/img/roxo_corpo_baixo.png'), (gunity, gunity)),
-    'BODY_L': pg.transform.scale(pg.image.load('assets/img/roxo_corpo_esquerda.png'), (gunity, gunity)),
-    'BODY_R': pg.transform.scale(pg.image.load('assets/img/roxo_corpo_direita.png'), (gunity, gunity)),
-    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/roxo_cauda_cima.png'), (gunity, gunity)),
-    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/roxo_cauda_baixo.png'), (gunity, gunity)),
-    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/roxo_cauda_esquerda.png'), (gunity, gunity)),
-    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/roxo_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/roxo_curva_esquerda_baixo.png'), (gunity, gunity)),
-    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/roxo_curva_esquerda_cima.png'), (gunity, gunity)),
-    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/roxo_curva_direita_baixo.png'), (gunity, gunity)),
-    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/roxo_curva_direita_cima.png'), (gunity, gunity))
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_curva_direita_cima.png'), (gunity, gunity))
 }
 
 # Game effects
 imgsetw = {
-    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_cima.png'), (gunity, gunity)),
-    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_baixo.png'), (gunity, gunity)),
-    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_esquerda.png'), (gunity, gunity)),
-    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/branco_cabeca_direita.png'), (gunity, gunity)),
-    'BODY_U': pg.transform.scale(pg.image.load('assets/img/branco_corpo_cima.png'), (gunity, gunity)),
-    'BODY_D': pg.transform.scale(pg.image.load('assets/img/branco_corpo_baixo.png'), (gunity, gunity)),
-    'BODY_L': pg.transform.scale(pg.image.load('assets/img/branco_corpo_esquerda.png'), (gunity, gunity)),
-    'BODY_R': pg.transform.scale(pg.image.load('assets/img/branco_corpo_direita.png'), (gunity, gunity)),
-    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/branco_cauda_cima.png'), (gunity, gunity)),
-    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/branco_cauda_baixo.png'), (gunity, gunity)),
-    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/branco_cauda_esquerda.png'), (gunity, gunity)),
-    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/branco_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/branco_curva_esquerda_baixo.png'), (gunity, gunity)),
-    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/branco_curva_esquerda_cima.png'), (gunity, gunity)),
-    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/branco_curva_direita_baixo.png'), (gunity, gunity)),
-    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/branco_curva_direita_cima.png'), (gunity, gunity))
+    'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cabeca_cima.png'), (gunity, gunity)),
+    'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cabeca_baixo.png'), (gunity, gunity)),
+    'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cabeca_esquerda.png'), (gunity, gunity)),
+    'HEAD_R': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cabeca_direita.png'), (gunity, gunity)),
+    'BODY_U': pg.transform.scale(pg.image.load('assets/img/snakes/branco_corpo_cima.png'), (gunity, gunity)),
+    'BODY_D': pg.transform.scale(pg.image.load('assets/img/snakes/branco_corpo_baixo.png'), (gunity, gunity)),
+    'BODY_L': pg.transform.scale(pg.image.load('assets/img/snakes/branco_corpo_esquerda.png'), (gunity, gunity)),
+    'BODY_R': pg.transform.scale(pg.image.load('assets/img/snakes/branco_corpo_direita.png'), (gunity, gunity)),
+    'TAIL_U': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cauda_cima.png'), (gunity, gunity)),
+    'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cauda_baixo.png'), (gunity, gunity)),
+    'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cauda_esquerda.png'), (gunity, gunity)),
+    'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/branco_cauda_direita.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/branco_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/branco_curva_esquerda_cima.png'), (gunity, gunity)),
+    'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/branco_curva_direita_baixo.png'), (gunity, gunity)),
+    'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/branco_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgbutton = {

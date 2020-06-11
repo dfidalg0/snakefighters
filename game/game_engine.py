@@ -276,8 +276,9 @@ class GameEngine:
 
         running = True
         clock = Clock()
-        while running:
+        winners = []
 
+        while running:
             self.__screen.update()
             clock.tick(fps)
             self.generate_powerups()
@@ -343,18 +344,18 @@ class GameEngine:
             for player in dead_players:
                 self.remove_player(player)
 
-                if len(self.__players) <2:
-                    if len(self.__players) == 1:
-                        winner = self.__players[0].get_id()
-                    else:
-                        maior = 0
-                        for player in dead_players:
-                            if player.get_pontos() > maior:
-                                maior = player.get_pontos()
-                        for player in dead_players:
-                            if player.get_pontos() == maior:
-                                winner = player.get_id()
-                    running = False
+            if dead_players and len(self.__players) < 2:
+                if len(self.__players) == 1:
+                    winners.append(self.__players[0].get_id())
+                else:
+                    maior = 0
+                    for player in dead_players:
+                        if player.get_pontos() > maior:
+                            maior = player.get_pontos()
+                    for player in dead_players:
+                        if player.get_pontos() == maior:
+                            winners.append(player.get_id())
+                running = False
 
             # Colisões fatais
 
@@ -397,3 +398,5 @@ class GameEngine:
             if self.__powerups and self.__powerups[0].get_timer() == 10 * fps:
                 self.__powerups.popleft().destroy()
             # Timer de power-ups
+
+        return winners

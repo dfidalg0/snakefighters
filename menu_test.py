@@ -22,4 +22,5 @@ if n > 0:
     for i in range(n):
         game.add_player(sprites[i],orientations[i],*positions[i],controls[i])
 
-    game.game_loop()
+    winners = game.game_loop()
+    print(winners)

@@ -21,6 +21,7 @@ class GameEngine:
         self.__gamebox = gamebox
         self.__command = {}
         self.__players = []
+        self.__playerkeys = {}
         self.__playeruis = []
         self.__obstacles = []
         self.__effects = []
@@ -38,7 +39,10 @@ class GameEngine:
             InterfaceObject(gamebox, imgwall['H1'], -30 * gunity, y)
 
     def add_player(self, imgset, orient, x, y, keyset):
-        pos = ui_positions[imgset['id']]
+        id = imgset['id']
+        pos = ui_positions[id]
+
+        self.__playerkeys[id] = keyset
 
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
         newui = PlayerUI(self.__screen,newplayer,*pos)
@@ -152,51 +156,32 @@ class GameEngine:
         background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
 
-        instructions = []
-        n = len(self.__players)
+        inc = 2*gunity
+        incs = [(0,0),(-inc,+inc),(0,+inc),(+inc,+inc)]
 
-        pos0 = -self.__bound/2
-        inc = 2 * gunity
-        if n >= 1:
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['s'],*pos0))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['a'],*(pos0 - (inc,0))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['w'],*(pos0 - (0,inc))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['d'],*(pos0 + (inc,0))))
-        pos0[0] *= -1
-        if n >= 2:
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['h'],*pos0))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['g'],*(pos0 - (inc,0))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['y'],*(pos0 - (0,inc))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['j'],*(pos0 + (inc,0))))
-        pos0[1] *= -1
-        if n >= 4:
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['5'],*pos0))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['4'],*(pos0 - (inc,0))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['8'],*(pos0 - (0,inc))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['6'],*(pos0 + (inc,0))))
-        pos0[0] *= -1
-        if n >= 3:
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['down'],*pos0))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['left'],*(pos0 - (inc,0))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['up'],*(pos0 - (0,inc))))
-            instructions.append(InterfaceObject(self.__screen, imgkeyboard['right'],*(pos0 + (inc,0))))
+        pos0 = -self.__bound/2 - (0,inc)
+        order = [0,1,3,2]
+        for i in range(4):
+            if order[i] in self.__playerkeys.keys():
+                for j in range(4):
+                    InterfaceObject(background, imgkeyboard[self.__playerkeys[order[i]][j]], *(pos0 + incs[j]))
 
-        fonte = font_barbarian
+            pos0[i % 2] *= -1
+
+        font = font_barbarian
 
         messages = ['Ready>','Set..>','Fight>']
 
         for i in range(3):
-            segundosIMG = fonte.render(messages[i], True, (134, 177, 11))
+            segundosIMG = font.render(messages[i], True, (134, 177, 11))
             segundosIMG = InterfaceObject(self.__screen, segundosIMG, 0, 0)
             self.__screen.update()
             pg.time.wait(1000)
             segundosIMG.destroy()
 
-        for instruction in instructions:
-            instruction.destroy()
-        instructions.clear()
-
         background.destroy()
+
+        del background, pos0, inc, incs, font, messages, i, segundosIMG
 
         running = True
         clock = Clock()

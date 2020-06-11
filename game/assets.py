@@ -1,9 +1,8 @@
 from game import pg
 from game.constants import gunity, resolution
 
-
-dummy_surface = pg.Surface((2,2))
-dummy_surface.set_colorkey((0,0,0))
+dummy_surface = pg.Surface((2, 2))
+dummy_surface.set_colorkey((0, 0, 0))
 
 from json import load
 from os import listdir
@@ -18,26 +17,31 @@ for filename in listdir('assets/maps'):
 del load, listdir, filename
 
 pg.font.init()
-font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf',90)
+font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf', 90)
+font_snake = pg.font.Font('assets/fonts/Snake Chan.ttf', 50)
 
 img_icon = pg.image.load('assets/img/icon.png')
 
 img_wait_background = pg.Surface(resolution)
-img_wait_background.fill((0,0,0))
+img_wait_background.fill((0, 0, 0))
 
-img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'),resolution)
+img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'), resolution)
 
 # Screen Background
-half_res = (resolution[0]/2,resolution[1]/2)
+half_res = (resolution[0] / 2, resolution[1] / 2)
 aux = pg.Surface(half_res)
 img_scr_background = pg.Surface(resolution)
 
 colors = [(136, 131, 8), (12, 24, 106), (113, 60, 11), (81, 14, 87)]
-coords = [(0,0),(half_res[0],0),(0,half_res[1]),half_res]
+coords = [(0, 0), (half_res[0], 0), (0, half_res[1]), half_res]
 
 for i in range(4):
     aux.fill(colors[i])
-    img_scr_background.blit(aux,coords[i])
+    img_scr_background.blit(aux, coords[i])
+
+background2 = pg.transform.scale(pg.image.load('assets/img/background2.png'), (60 * gunity, 30 * gunity))
+
+img_scr_background.blit(background2, (40, 60))
 
 del aux, colors, coords, half_res, i
 # Screen Background
@@ -46,13 +50,15 @@ imgkeyboard = {}
 keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 for key in keys:
-    imgkeyboard[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+    imgkeyboard[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),
+                                               (2 * gunity, 2 * gunity))
 
 for i in range(10):
     imgkeyboard[pg.K_KP0 + i] = imgkeyboard[pg.K_0 + i]
 
-for (i,key) in enumerate(['up','down','right','left']):
-    imgkeyboard[pg.K_UP + i] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),(2*gunity,2*gunity))
+for (i, key) in enumerate(['up', 'down', 'right', 'left']):
+    imgkeyboard[pg.K_UP + i] = pg.transform.scale(
+        pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'), (2 * gunity, 2 * gunity))
 
 del key, keys, i
 
@@ -60,7 +66,7 @@ imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/powerups/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/powerups/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/powerups/invencibilidade.png'), (gunity, gunity)),
-    'WEAP': pg.transform.scale(pg.image.load('assets/img/powerups/pup_generico.png'), (gunity, gunity)),
+    'WEAP': pg.transform.scale(pg.image.load('assets/img/powerups/dagger.png'), (gunity, gunity)),
     'BOMB': pg.transform.scale(pg.image.load('assets/img/powerups/bomb.png'), (gunity, gunity)),
     'FIRE': pg.transform.scale(pg.image.load('assets/img/powerups/fire.png'), (gunity, gunity))
 }
@@ -78,7 +84,7 @@ imgwall = {
 }
 
 imgsety = {
-    'id' : 0,
+    'id': 0,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cabeca_esquerda.png'), (gunity, gunity)),
@@ -91,14 +97,15 @@ imgsety = {
     'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_baixo.png'), (gunity, gunity)),
     'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_esquerda.png'), (gunity, gunity)),
     'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_esquerda_baixo.png'),
+                                  (gunity, gunity)),
     'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_esquerda_cima.png'), (gunity, gunity)),
     'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_direita_baixo.png'), (gunity, gunity)),
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/amarelo_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgsetb = {
-    'id' : 1,
+    'id': 1,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/azul_cabeca_esquerda.png'), (gunity, gunity)),
@@ -118,7 +125,7 @@ imgsetb = {
 }
 
 imgseto = {
-    'id' : 2,
+    'id': 2,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cabeca_esquerda.png'), (gunity, gunity)),
@@ -131,14 +138,15 @@ imgseto = {
     'TAIL_D': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_baixo.png'), (gunity, gunity)),
     'TAIL_L': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_esquerda.png'), (gunity, gunity)),
     'TAIL_R': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_cauda_direita.png'), (gunity, gunity)),
-    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_esquerda_baixo.png'), (gunity, gunity)),
+    'TURN_LD': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_esquerda_baixo.png'),
+                                  (gunity, gunity)),
     'TURN_LU': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_esquerda_cima.png'), (gunity, gunity)),
     'TURN_RD': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_direita_baixo.png'), (gunity, gunity)),
     'TURN_RU': pg.transform.scale(pg.image.load('assets/img/snakes/laranja_curva_direita_cima.png'), (gunity, gunity))
 }
 
 imgsetp = {
-    'id' : 3,
+    'id': 3,
     'HEAD_U': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_cima.png'), (gunity, gunity)),
     'HEAD_D': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_baixo.png'), (gunity, gunity)),
     'HEAD_L': pg.transform.scale(pg.image.load('assets/img/snakes/roxo_cabeca_esquerda.png'), (gunity, gunity)),
@@ -218,7 +226,7 @@ imgbutton = {
         pg.image.load('assets/img/buttons/quatro_jogadores2.png'),
         pg.image.load('assets/img/buttons/quatro_jogadores3.png')
     ],
-    'voltar':           [
+    'voltar': [
         pg.image.load('assets/img/buttons/voltar.png'),
         pg.image.load('assets/img/buttons/voltar2.png'),
         pg.image.load('assets/img/buttons/voltar3.png')
@@ -250,8 +258,8 @@ imgbutton = {
     ]
 }
 
-imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'),(5*gunity,5*gunity))
-imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'),(24,64))
+imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'), (5 * gunity, 5 * gunity))
+imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'), (24, 64))
 
 skull = pg.image.load('assets/img/skull.png')
 heart = pg.image.load('assets/img/coracao_interface.png')

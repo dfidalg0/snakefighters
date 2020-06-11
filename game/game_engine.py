@@ -1,22 +1,24 @@
 from game import InterfaceObject, PlayerUI
 from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity, max_food, resolution
-from game.assets import imgwall, img_wait_background, font_barbarian, imgkeyboard
+from game.assets import imgwall, img_wait_background, font_barbarian, font_snake, imgkeyboard
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
 from collections import deque
 
+SHRINK_ARENA = pg.USEREVENT
 
 ui_positions = [
-    (-resolution[0]//2 + 40, -335),
-    (+resolution[0]//2 - 40, -335),
-    (-resolution[0]//2 + 40, +335),
-    (+resolution[0]//2 - 40, +335),
+    (-resolution[0] // 2 + 40, -335),
+    (+resolution[0] // 2 - 40, -335),
+    (-resolution[0] // 2 + 40, +335),
+    (+resolution[0] // 2 - 40, +335),
 ]
 
+
 class GameEngine:
-    def __init__(self, screen, gamebox):
+    def __init__(self, screen, gamebox, map):
         self.__screen = screen
         self.__gamebox = gamebox
         self.__command = {}
@@ -30,13 +32,69 @@ class GameEngine:
         self.__nfood = 0
         self.__bound = self.__gamebox.get_rect() // 2 - (gunity, gunity)
 
+        self.__walls = [deque() for i in range(4)]
+
+        for wall in map['walls']:
+            params = {
+                'img': imgwall[wall[0]],
+                'x': wall[1] * gunity,
+                'y': wall[2] * gunity
+            }
+            self.add_obstacle(**params)
+
         for x in range(-30 * gunity, +30 * gunity + 1, gunity):
-            InterfaceObject(gamebox, imgwall['H1'], x, +15 * gunity)
-            InterfaceObject(gamebox, imgwall['H1'], x, -15 * gunity)
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], x, +15 * gunity)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], x, -15 * gunity)
+            self.__walls[0].append(w1)
+            self.__walls[1].append(w2)
 
         for y in range(-14 * gunity, +14 * gunity + 1, gunity):
-            InterfaceObject(gamebox, imgwall['H1'], +30 * gunity, y)
-            InterfaceObject(gamebox, imgwall['H1'], -30 * gunity, y)
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], +30 * gunity, y)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], -30 * gunity, y)
+            self.__walls[2].append(w1)
+            self.__walls[3].append(w2)
+
+    def shrink_arena(self):
+        gbox = self.__gamebox
+        img = gbox.get_img()
+        rect = img.get_rect()
+        rect[0] += gunity
+        rect[1] += gunity
+        rect[2] -= 2 * gunity
+        rect[3] -= 2 * gunity
+        img = img.subsurface(rect)
+
+        for wallset in self.__walls:
+            wallset.popleft().destroy()
+            wallset.pop().destroy()
+
+        gbox.set_img(img)
+
+        self.__bound = gbox.get_rect() // 2 - (gunity, gunity)
+
+        incs = [Vector2(0, -1), Vector2(0, +1), Vector2(-1, 0), Vector2(+1, 0)]
+        for i in range(4):
+            for wall in self.__walls[i]:
+                wall.set_pos(wall.get_pos() + incs[i] * gunity)
+
+        destroy = []
+        for food in self.__foods:
+            abs_pos = abs(food.get_pos().elementwise())
+            if abs_pos[0] > self.__bound[0] or abs_pos[1] > self.__bound[1]:
+                food.destroy()
+                destroy.append(food)
+                self.__nfood -= 1
+        for food in destroy:
+            self.__foods.remove(food)
+
+        destroy = []
+        for pup in self.__powerups:
+            abs_pos = abs(pup.get_pos().elementwise())
+            if abs_pos[0] > self.__bound[0] or abs_pos[1] > self.__bound[1]:
+                pup.destroy()
+                destroy.append(pup)
+        for pup in destroy:
+            self.__powerups.remove(pup)
 
     def add_player(self, imgset, orient, x, y, keyset):
         id = imgset['id']
@@ -45,7 +103,7 @@ class GameEngine:
         self.__playerkeys[id] = keyset
 
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
-        newui = PlayerUI(self.__screen,newplayer,*pos)
+        newui = PlayerUI(self.__screen, newplayer, *pos)
 
         self.__players.append(newplayer)
         self.__playeruis.append(newui)
@@ -83,15 +141,6 @@ class GameEngine:
     def remove_effect(self, effect):
         effect(end=True)
         self.__effects.remove(effect)
-
-    def load_map(self, map):
-        for wall in map:
-            params = {
-                'img': imgwall[wall[0]],
-                'x': wall[1] * gunity,
-                'y': wall[2] * gunity
-            }
-            self.add_obstacle(**params)
 
     def generate_powerups(self):
         if self.__nfood < max_food:
@@ -149,6 +198,33 @@ class GameEngine:
 
         return pup
 
+    def exibit_time(self):
+        font = font_snake
+        message = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
+        timer = 0
+
+        time = font.render(message[0], True, (0, 177, 11))
+        timeup = InterfaceObject(self.__screen, time, 0, -330)
+        timedw = InterfaceObject(self.__screen, time, 0, 330)
+
+        def print_message(end=False):
+            nonlocal timer
+            if end:
+                timeup.destroy()
+                timedw.destroy()
+
+            elif timer >= 10 * fps:
+                self.shrink_arena()
+                self.remove_effect(print_message)
+
+            else:
+                newtime = font.render(message[timer // fps], True, (0, 177, 11))
+                timeup.set_img(newtime)
+                timedw.set_img(newtime)
+                timer += 1
+
+        self.add_effect(print_message)
+
     def game_loop(self):
         pg.mouse.set_visible(False)
 
@@ -156,11 +232,11 @@ class GameEngine:
         background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
 
-        inc = 2*gunity
-        incs = [(0,0),(-inc,+inc),(0,+inc),(+inc,+inc)]
+        inc = 2 * gunity
+        incs = [(0, 0), (-inc, +inc), (0, +inc), (+inc, +inc)]
 
-        pos0 = -self.__bound/2 - (0,inc)
-        order = [0,1,3,2]
+        pos0 = -self.__bound / 2 - (0, inc)
+        order = [0, 1, 3, 2]
         for i in range(4):
             if order[i] in self.__playerkeys.keys():
                 for j in range(4):
@@ -170,7 +246,7 @@ class GameEngine:
 
         font = font_barbarian
 
-        messages = ['Ready>','Set..>','Fight>']
+        messages = ['Ready>', 'Set..>', 'Fight>']
 
         for i in range(3):
             segundosIMG = font.render(messages[i], True, (134, 177, 11))
@@ -182,6 +258,12 @@ class GameEngine:
         background.destroy()
 
         del background, pos0, inc, incs, font, messages, i, segundosIMG
+
+        pg.time.set_timer(SHRINK_ARENA, 90000 - 10000)
+
+        pg.key.get_pressed()
+        for player in self.__players:
+            player.clear_command_queue()
 
         running = True
         clock = Clock()
@@ -201,6 +283,13 @@ class GameEngine:
                         self.__command[event.key]()
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
+                elif event.type == SHRINK_ARENA:
+                    self.exibit_time()
+
+                    if self.__bound.elementwise() > 4 * gunity:
+                        pg.time.set_timer(SHRINK_ARENA, 10000)
+                    else:
+                        pg.time.set_timer(SHRINK_ARENA,0)
             # Fila de eventos
 
             # Efeitos na tela
@@ -221,19 +310,21 @@ class GameEngine:
 
                 pos = head.get_pos()
                 abs_pos = abs(pos.elementwise())
-                if abs_pos.x > self.__bound.x or abs_pos.y > self.__bound.y:
+                if abs_pos.x > self.__bound.x + gunity or abs_pos.y > self.__bound.y + gunity:
+                    player.set_health(0)
+                elif abs_pos.x > self.__bound.x or abs_pos.y > self.__bound.y:
                     player.dec_health()
                     player.clear_command_queue()
 
                     spd = head.get_spd()
-                    angle = choice([90,-90])
+                    angle = choice([90, -90])
                     pos = pos + spd.rotate(angle)
                     abs_pos = abs(pos.elementwise())
 
                     if (
-                        abs_pos.elementwise() > self.__bound or
-                        abs_pos.x > self.__bound.x + gunity or
-                        abs_pos.y > self.__bound.y + gunity
+                            abs_pos.elementwise() > self.__bound or
+                            abs_pos.x > self.__bound.x + gunity or
+                            abs_pos.y > self.__bound.y + gunity
                     ):
                         head.set_spd(spd.rotate(-angle))
                     else:
@@ -283,6 +374,5 @@ class GameEngine:
                 pup.inc_timer()
 
             if self.__powerups and self.__powerups[0].get_timer() == 10 * fps:
-                self.__powerups[0].destroy()
-                self.__powerups.popleft()
+                self.__powerups.popleft().destroy()
             # Timer de power-ups

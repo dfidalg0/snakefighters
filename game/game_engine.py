@@ -18,7 +18,7 @@ ui_positions = [
 
 
 class GameEngine:
-    def __init__(self, screen, gamebox, map):
+    def __init__(self, screen, gamebox, gamemap):
         self.__screen = screen
         self.__gamebox = gamebox
         self.__command = {}
@@ -34,11 +34,11 @@ class GameEngine:
 
         self.__walls = [deque() for i in range(4)]
 
-        for wall in map['walls']:
+        for wall in gamemap['walls']:
             params = {
                 'img': imgwall[wall[0]],
-                'x': wall[1] * gunity,
-                'y': wall[2] * gunity
+                'x': wall[1],
+                'y': wall[2]
             }
             self.add_obstacle(**params)
 

@@ -14,6 +14,10 @@ for filename in listdir('assets/maps'):
         with open(path) as file:
             maps[filename[:-5]] = load(file)
 
+for i in maps.keys():
+    maps[i]['positions'] = [(pos[0]*gunity, pos[1]*gunity) for pos in maps[i]['positions']]
+    maps[i]['walls'] = [(wall[0],wall[1]*gunity,wall[2]*gunity) for wall in maps[i]['walls']]
+
 del load, listdir, filename
 
 pg.font.init()

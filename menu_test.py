@@ -7,10 +7,13 @@ menu = MainMenu(screen)
 config = menu.menu_loop()
 
 n = config['player_number']
-sprites = config['players']['sprites']
-orientations = config['players']['orientations']
-positions = config['players']['positions']
-controls = config['players']['controls']
+
+players = config['players']
+sprites = players['sprites']
+controls = players['controls']
+
+orientations = config['map']['orientations']
+positions = config['map']['positions']
 
 if n > 0:
     background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 * gunity, 30 * gunity))

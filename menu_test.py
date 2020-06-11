@@ -17,7 +17,7 @@ if n > 0:
     arena = InterfaceObject(screen, background)
     game = GameEngine(screen,arena)
 
-    game.load_map(maps['eights'])
+    game.load_map(config['map'])
 
     for i in range(n):
         game.add_player(sprites[i],orientations[i],*positions[i],controls[i])

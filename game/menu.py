@@ -13,10 +13,10 @@ MULTIPLAYER = 2
 default_sprites = [imgsety, imgsetb, imgseto, imgsetp]
 default_orientations = [1,-1,1,-1]
 default_positions = [
-    (-10 * gunity, -5 * gunity),
-    (+10 * gunity, -5 * gunity),
-    (-10 * gunity, +5 * gunity),
-    (+10 * gunity, +5 * gunity)
+    (-15 * gunity, -13 * gunity),
+    (+15 * gunity, -13 * gunity),
+    (-15 * gunity, +13 * gunity),
+    (+15 * gunity, +13 * gunity)
 ]
 default_controls = [
     [pg.K_w, pg.K_a, pg.K_s, pg.K_d],

@@ -22,7 +22,8 @@ class Player:
         tail = GameObject(screen, imgtail, x - gunity * orient * 2, y, gspeed * orient, 0)
         self.__nodes = [head, body, tail]
         self.__grow = False
-        self.__health = [1,0]
+        self.__health = [1, 0]
+        self.__pontos = 0
         self.__effect = None
         self.__command_queue = deque()
 
@@ -40,11 +41,15 @@ class Player:
 
     def grow_size(self):
         self.__grow = True
+        self.__pontos += 1
+
+    def get_pontos(self):
+        return self.__pontos
 
     def get_imgset(self):
         return self.__imgset
 
-    def set_imgset(self,imgset):
+    def set_imgset(self, imgset):
         self.__imgset = imgset
 
     def get_health(self):
@@ -53,10 +58,10 @@ class Player:
     def get_virtual_health(self):
         return self.__health[1]
 
-    def set_health(self,health):
+    def set_health(self, health):
         self.__health[0] = health
 
-    def set_virtual_health(self,health):
+    def set_virtual_health(self, health):
         self.__health[1] = health
 
     def inc_health(self):
@@ -158,9 +163,9 @@ class Player:
     def clear_command_queue(self):
         self.__command_queue.clear()
 
-    def collision(self,obj):
+    def collision(self, obj):
         i0 = 4 if self.__nodes[0] == obj else 0
-        for i in range(i0,len(self.__nodes)):
+        for i in range(i0, len(self.__nodes)):
             if self.__nodes[i].collision(obj):
                 return True
 
@@ -171,7 +176,7 @@ class Player:
         for i in range(len(self.__nodes)):
             self.__nodes[i].destroy()
 
-    def add_effect(self,effect):
+    def add_effect(self, effect):
         self.__effect = effect
 
     def clear_effect(self):

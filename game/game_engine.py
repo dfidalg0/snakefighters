@@ -336,6 +336,20 @@ class GameEngine:
 
             for player in dead_players:
                 self.remove_player(player)
+
+                if len(self.__players) <2:
+                    if len(self.__players) == 1:
+                        winner = self.__players[0].get_id()
+                    else:
+                        maior = 0
+                        for player in dead_players:
+                            if player.get_pontos() > maior:
+                                maior = player.get_pontos()
+                        for player in dead_players:
+                            if player.get_pontos() == maior:
+                                winner = player.get_id()
+                    running = False
+
             # Colisões fatais
 
             # Atualização das posições dos jogadores remanescentes

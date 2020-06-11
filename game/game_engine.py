@@ -286,7 +286,7 @@ class GameEngine:
                 elif event.type == SHRINK_ARENA:
                     self.exibit_time()
 
-                    if self.__bound.elementwise() > 4 * gunity:
+                    if self.__bound.elementwise() > 3 * gunity:
                         pg.time.set_timer(SHRINK_ARENA, 10000)
                     else:
                         pg.time.set_timer(SHRINK_ARENA,0)

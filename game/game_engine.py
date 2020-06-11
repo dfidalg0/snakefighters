@@ -162,7 +162,7 @@ class GameEngine:
         pos0 = -self.__bound/2 - (0,inc)
         order = [0,1,3,2]
         for i in range(4):
-            if i in self.__playerkeys.keys():
+            if order[i] in self.__playerkeys.keys():
                 for j in range(4):
                     InterfaceObject(background, imgkeyboard[self.__playerkeys[order[i]][j]], *(pos0 + incs[j]))
 

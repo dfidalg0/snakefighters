@@ -1,11 +1,8 @@
 from game import pg
-from game.assets import imgpowerup
+from game.assets import imgpowerup, imgkunai
 from game.constants import fps, gunity
 from game.powerup.powerup_meta import PowerUpMeta
-from pygame.math import Vector2
-from math import inf
 
-imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'),(24,64))
 
 class Kunai(PowerUpMeta):
     def __init__(self, master, x=0, y=0):

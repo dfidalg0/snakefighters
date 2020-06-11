@@ -13,12 +13,21 @@ from game.menu import MainMenu
 from game.player_ui import PlayerUI
 
 
-from game.powerup.secondchance import SecondChance
-from game.powerup.invencibility import Invencibility
-from game.powerup.kunai import Kunai
-from game.powerup.bomb import Bomb
+from game.powerup.powerup_meta import PowerUpMeta
 from game.powerup.food import Food
 
-powerup_list = [SecondChance, Invencibility, Kunai, Bomb]
+from os import listdir as ls
+
+modules = [file[:-3] for file in ls('game/powerup') if file[-3:] == '.py']
+
+for module in modules:
+    exec('import game.powerup.' + module)
+    exec('del game.powerup.' + module)
+
+powerup_list = PowerUpMeta.__subclasses__()
+powerup_list.remove(Food)
+
+del PowerUpMeta, ls, module, modules
+
 
 from game.game_engine import GameEngine

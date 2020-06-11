@@ -60,7 +60,7 @@ imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/powerups/ponto.png'), (gunity, gunity)),
     'LIFE': pg.transform.scale(pg.image.load('assets/img/powerups/vida.png'), (gunity, gunity)),
     'INVI': pg.transform.scale(pg.image.load('assets/img/powerups/invencibilidade.png'), (gunity, gunity)),
-    'WEAP': pg.transform.scale(pg.image.load('assets/img/powerups/pup_generico.png'), (gunity, gunity)),
+    'WEAP': pg.transform.scale(pg.image.load('assets/img/powerups/dagger.png'), (gunity, gunity)),
     'BOMB': pg.transform.scale(pg.image.load('assets/img/powerups/bomb.png'), (gunity, gunity)),
     'FIRE': pg.transform.scale(pg.image.load('assets/img/powerups/fire.png'), (gunity, gunity))
 }

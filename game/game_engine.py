@@ -7,15 +7,15 @@ from pygame.time import Clock
 from random import randint, random, choice
 from collections import deque
 
-
 SHRINK_ARENA = pg.USEREVENT
 
 ui_positions = [
-    (-resolution[0]//2 + 40, -335),
-    (+resolution[0]//2 - 40, -335),
-    (-resolution[0]//2 + 40, +335),
-    (+resolution[0]//2 - 40, +335),
+    (-resolution[0] // 2 + 40, -335),
+    (+resolution[0] // 2 - 40, -335),
+    (-resolution[0] // 2 + 40, +335),
+    (+resolution[0] // 2 - 40, +335),
 ]
+
 
 class GameEngine:
     def __init__(self, screen, gamebox):
@@ -47,15 +47,15 @@ class GameEngine:
             self.__walls[3].append(w2)
 
     def shrink_arena(self):
-        if not (self.__bound.elementwise() > 2*gunity):
-            pg.time.set_timer(SHRINK_ARENA,0)
+        if not (self.__bound.elementwise() > 2 * gunity):
+            pg.time.set_timer(SHRINK_ARENA, 0)
             return
 
         gbox = self.__gamebox
         img = gbox.get_img()
         size = img.get_rect().size
-        dec = 2*gunity
-        img = pg.transform.scale(img,(size[0] - dec, size[1] - dec))
+        dec = 2 * gunity
+        img = pg.transform.scale(img, (size[0] - dec, size[1] - dec))
 
         for wallset in self.__walls:
             wallset.popleft().destroy()
@@ -65,10 +65,10 @@ class GameEngine:
 
         self.__bound = gbox.get_rect() // 2 - (gunity, gunity)
 
-        incs = [Vector2(0,-1), Vector2(0,+1), Vector2(-1,0), Vector2(+1,0)]
+        incs = [Vector2(0, -1), Vector2(0, +1), Vector2(-1, 0), Vector2(+1, 0)]
         for i in range(4):
             for wall in self.__walls[i]:
-                wall.set_pos(wall.get_pos() + incs[i]*gunity)
+                wall.set_pos(wall.get_pos() + incs[i] * gunity)
 
         destroy = []
         for food in self.__foods:
@@ -96,7 +96,7 @@ class GameEngine:
         self.__playerkeys[id] = keyset
 
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
-        newui = PlayerUI(self.__screen,newplayer,*pos)
+        newui = PlayerUI(self.__screen, newplayer, *pos)
 
         self.__players.append(newplayer)
         self.__playeruis.append(newui)
@@ -207,11 +207,11 @@ class GameEngine:
         background.set_alpha(180)
         background = InterfaceObject(self.__screen, background, 0, 0)
 
-        inc = 2*gunity
-        incs = [(0,0),(-inc,+inc),(0,+inc),(+inc,+inc)]
+        inc = 2 * gunity
+        incs = [(0, 0), (-inc, +inc), (0, +inc), (+inc, +inc)]
 
-        pos0 = -self.__bound/2 - (0,inc)
-        order = [0,1,3,2]
+        pos0 = -self.__bound / 2 - (0, inc)
+        order = [0, 1, 3, 2]
         for i in range(4):
             if order[i] in self.__playerkeys.keys():
                 for j in range(4):
@@ -221,7 +221,7 @@ class GameEngine:
 
         font = font_barbarian
 
-        messages = ['Ready>','Set..>','Fight>']
+        messages = ['Ready>', 'Set..>', 'Fight>']
 
         for i in range(3):
             segundosIMG = font.render(messages[i], True, (134, 177, 11))
@@ -235,7 +235,7 @@ class GameEngine:
         del background, pos0, inc, incs, font, messages, i, segundosIMG
 
         # TODO: Definir intervalo de diminuição da arena
-        pg.time.set_timer(SHRINK_ARENA, 0)
+        pg.time.set_timer(SHRINK_ARENA, 90000)
 
         pg.key.get_pressed()
         for player in self.__players:
@@ -260,6 +260,7 @@ class GameEngine:
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
                 if event.type == SHRINK_ARENA:
+                    pg.time.set_timer(SHRINK_ARENA, 10000)
                     self.shrink_arena()
             # Fila de eventos
 
@@ -288,14 +289,14 @@ class GameEngine:
                     player.clear_command_queue()
 
                     spd = head.get_spd()
-                    angle = choice([90,-90])
+                    angle = choice([90, -90])
                     pos = pos + spd.rotate(angle)
                     abs_pos = abs(pos.elementwise())
 
                     if (
-                        abs_pos.elementwise() > self.__bound or
-                        abs_pos.x > self.__bound.x + gunity or
-                        abs_pos.y > self.__bound.y + gunity
+                            abs_pos.elementwise() > self.__bound or
+                            abs_pos.x > self.__bound.x + gunity or
+                            abs_pos.y > self.__bound.y + gunity
                     ):
                         head.set_spd(spd.rotate(-angle))
                     else:

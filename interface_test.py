@@ -12,7 +12,7 @@ def get_close():
 
 screen = Screen()
 
-SNAKE = pg.image.load('assets/img/snake_test.png')
+SNAKE = pg.image.load('assets/img/icon.png')
 SNAKE = pg.transform.scale(SNAKE,(90,90))
 
 KUNAI = pg.image.load('assets/img/kunai.png')

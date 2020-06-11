@@ -19,7 +19,7 @@ ui_positions = [
 
 
 class GameEngine:
-    def __init__(self, screen, gamebox):
+    def __init__(self, screen, gamebox, gamemap):
         self.__screen = screen
         self.__gamebox = gamebox
         self.__command = {}
@@ -35,11 +35,27 @@ class GameEngine:
 
         self.__walls = [deque() for i in range(4)]
 
-    def shrink_arena(self):
-        if not (self.__bound.elementwise() > 2 * gunity):
-            pg.time.set_timer(SHRINK_ARENA, 0)
-            return
+        for wall in gamemap['walls']:
+            params = {
+                'img': imgwall[wall[0]],
+                'x': wall[1],
+                'y': wall[2]
+            }
+            self.add_obstacle(**params)
 
+        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], x, +15 * gunity)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], x, -15 * gunity)
+            self.__walls[0].append(w1)
+            self.__walls[1].append(w2)
+
+        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], +30 * gunity, y)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], -30 * gunity, y)
+            self.__walls[2].append(w1)
+            self.__walls[3].append(w2)
+
+    def shrink_arena(self):
         gbox = self.__gamebox
         img = gbox.get_img()
         rect = img.get_rect()
@@ -127,27 +143,6 @@ class GameEngine:
         effect(end=True)
         self.__effects.remove(effect)
 
-    def load_map(self, map):
-        for wall in map['walls']:
-            params = {
-                'img': imgwall[wall[0]],
-                'x': wall[1] * gunity,
-                'y': wall[2] * gunity
-            }
-            self.add_obstacle(**params)
-
-        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
-            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], x, +15 * gunity)
-            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], x, -15 * gunity)
-            self.__walls[0].append(w1)
-            self.__walls[1].append(w2)
-
-        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
-            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], +30 * gunity, y)
-            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], -30 * gunity, y)
-            self.__walls[2].append(w1)
-            self.__walls[3].append(w2)
-
     def generate_powerups(self):
         if self.__nfood < max_food:
             self.__nfood += 1
@@ -220,6 +215,7 @@ class GameEngine:
                 timedw.destroy()
 
             elif timer >= 10 * fps:
+                self.shrink_arena()
                 self.remove_effect(print_message)
 
             else:
@@ -268,7 +264,7 @@ class GameEngine:
 
         del background, pos0, inc, incs, font, messages, i, segundosIMG
 
-        pg.time.set_timer(SHRINK_ARENA, 90000)
+        pg.time.set_timer(SHRINK_ARENA, 90000 - 10000)
 
         pg.key.get_pressed()
         for player in self.__players:
@@ -294,10 +290,13 @@ class GameEngine:
                         self.__command[event.key]()
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
-                if event.type == SHRINK_ARENA:
+                elif event.type == SHRINK_ARENA:
                     self.exibit_time()
-                    pg.time.set_timer(SHRINK_ARENA, 10000)
-                    self.shrink_arena()
+
+                    if self.__bound.elementwise() > 3 * gunity:
+                        pg.time.set_timer(SHRINK_ARENA, 10000)
+                    else:
+                        pg.time.set_timer(SHRINK_ARENA,0)
             # Fila de eventos
 
             # Efeitos na tela

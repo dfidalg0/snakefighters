@@ -15,6 +15,10 @@ for filename in listdir('assets/maps'):
         with open(path) as file:
             maps[filename[:-5]] = load(file)
 
+for i in maps.keys():
+    maps[i]['positions'] = [(pos[0]*gunity, pos[1]*gunity) for pos in maps[i]['positions']]
+    maps[i]['walls'] = [(wall[0],wall[1]*gunity,wall[2]*gunity) for wall in maps[i]['walls']]
+
 del load, listdir, filename
 
 pg.font.init()
@@ -231,6 +235,31 @@ imgbutton = {
         pg.image.load('assets/img/buttons/voltar.png'),
         pg.image.load('assets/img/buttons/voltar2.png'),
         pg.image.load('assets/img/buttons/voltar3.png')
+    ],
+    'eights':           [
+        pg.image.load('assets/img/buttons/eights.png'),
+        pg.image.load('assets/img/buttons/eights2.png'),
+        pg.image.load('assets/img/buttons/eights3.png')
+    ],
+    'mapa_aleatorio':           [
+        pg.image.load('assets/img/buttons/mapa_aleatorio.png'),
+        pg.image.load('assets/img/buttons/mapa_aleatorio2.png'),
+        pg.image.load('assets/img/buttons/mapa_aleatorio3.png')
+    ],
+    'cross_and_borders':           [
+        pg.image.load('assets/img/buttons/cross_and_borders.png'),
+        pg.image.load('assets/img/buttons/cross_and_borders2.png'),
+        pg.image.load('assets/img/buttons/cross_and_borders3.png')
+    ],
+    'lines':           [
+        pg.image.load('assets/img/buttons/lines.png'),
+        pg.image.load('assets/img/buttons/lines2.png'),
+        pg.image.load('assets/img/buttons/lines3.png')
+    ],
+    'menu_sec':           [
+        pg.image.load('assets/img/buttons/menu_sec.png'),
+        pg.image.load('assets/img/buttons/menu_sec.png'),
+        pg.image.load('assets/img/buttons/menu_sec.png')
     ]
 }
 

@@ -7,17 +7,18 @@ menu = MainMenu(screen)
 config = menu.menu_loop()
 
 n = config['player_number']
-sprites = config['players']['sprites']
-orientations = config['players']['orientations']
-positions = config['players']['positions']
-controls = config['players']['controls']
+
+players = config['players']
+sprites = players['sprites']
+controls = players['controls']
+
+orientations = config['map']['orientations']
+positions = config['map']['positions']
 
 if n > 0:
     background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 * gunity, 30 * gunity))
     arena = InterfaceObject(screen, background)
-    game = GameEngine(screen,arena)
-
-    game.load_map(maps['lines'])
+    game = GameEngine(screen,arena,config['map'])
 
     for i in range(n):
         game.add_player(sprites[i],orientations[i],*positions[i],controls[i])

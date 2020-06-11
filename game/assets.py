@@ -1,6 +1,7 @@
 from game import pg
 from game.constants import gunity, resolution
 
+
 dummy_surface = pg.Surface((2, 2))
 dummy_surface.set_colorkey((0, 0, 0))
 

@@ -53,9 +53,12 @@ class GameEngine:
 
         gbox = self.__gamebox
         img = gbox.get_img()
-        size = img.get_rect().size
-        dec = 2 * gunity
-        img = pg.transform.scale(img, (size[0] - dec, size[1] - dec))
+        rect = img.get_rect()
+        rect[0] += gunity
+        rect[1] += gunity
+        rect[2] -= 2*gunity
+        rect[3] -= 2*gunity
+        img = img.subsurface(rect)
 
         for wallset in self.__walls:
             wallset.popleft().destroy()

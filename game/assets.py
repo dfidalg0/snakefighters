@@ -18,6 +18,7 @@ del load, listdir, filename
 
 pg.font.init()
 font_barbarian = pg.font.Font('assets/fonts/barbarian.ttf', 90)
+font_snake = pg.font.Font('assets/fonts/Snake Chan.ttf', 50)
 
 img_icon = pg.image.load('assets/img/icon.png')
 

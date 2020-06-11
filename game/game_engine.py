@@ -1,7 +1,7 @@
 from game import InterfaceObject, PlayerUI
 from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity, max_food, resolution
-from game.assets import imgwall, img_wait_background, font_barbarian, imgkeyboard
+from game.assets import imgwall, img_wait_background, font_barbarian, font_snake, imgkeyboard
 from pygame.math import Vector2
 from pygame.time import Clock
 from random import randint, random, choice
@@ -34,18 +34,6 @@ class GameEngine:
 
         self.__walls = [deque() for i in range(4)]
 
-        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
-            w1 = InterfaceObject(gamebox, imgwall['H1'], x, +15 * gunity)
-            w2 = InterfaceObject(gamebox, imgwall['H1'], x, -15 * gunity)
-            self.__walls[0].append(w1)
-            self.__walls[1].append(w2)
-
-        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
-            w1 = InterfaceObject(gamebox, imgwall['H1'], +30 * gunity, y)
-            w2 = InterfaceObject(gamebox, imgwall['H1'], -30 * gunity, y)
-            self.__walls[2].append(w1)
-            self.__walls[3].append(w2)
-
     def shrink_arena(self):
         if not (self.__bound.elementwise() > 2 * gunity):
             pg.time.set_timer(SHRINK_ARENA, 0)
@@ -56,8 +44,8 @@ class GameEngine:
         rect = img.get_rect()
         rect[0] += gunity
         rect[1] += gunity
-        rect[2] -= 2*gunity
-        rect[3] -= 2*gunity
+        rect[2] -= 2 * gunity
+        rect[3] -= 2 * gunity
         img = img.subsurface(rect)
 
         for wallset in self.__walls:
@@ -147,6 +135,18 @@ class GameEngine:
             }
             self.add_obstacle(**params)
 
+        for x in range(-30 * gunity, +30 * gunity + 1, gunity):
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], x, +15 * gunity)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], x, -15 * gunity)
+            self.__walls[0].append(w1)
+            self.__walls[1].append(w2)
+
+        for y in range(-14 * gunity, +14 * gunity + 1, gunity):
+            w1 = InterfaceObject(self.__gamebox, imgwall['H1'], +30 * gunity, y)
+            w2 = InterfaceObject(self.__gamebox, imgwall['H1'], -30 * gunity, y)
+            self.__walls[2].append(w1)
+            self.__walls[3].append(w2)
+
     def generate_powerups(self):
         if self.__nfood < max_food:
             self.__nfood += 1
@@ -203,6 +203,32 @@ class GameEngine:
 
         return pup
 
+    def exibit_time(self):
+        font = font_snake
+        message = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
+        timer = 0
+
+        time = font.render(message[0], True, (0, 177, 11))
+        timeup = InterfaceObject(self.__screen, time, 0, -330)
+        timedw = InterfaceObject(self.__screen, time, 0, 330)
+
+        def print_message(end=False):
+            nonlocal timer
+            if end:
+                timeup.destroy()
+                timedw.destroy()
+
+            elif timer >= 10 * fps:
+                self.remove_effect(print_message)
+
+            else:
+                newtime = font.render(message[timer // fps], True, (0, 177, 11))
+                timeup.set_img(newtime)
+                timedw.set_img(newtime)
+                timer += 1
+
+        self.add_effect(print_message)
+
     def game_loop(self):
         pg.mouse.set_visible(False)
 
@@ -237,7 +263,6 @@ class GameEngine:
 
         del background, pos0, inc, incs, font, messages, i, segundosIMG
 
-        # TODO: Definir intervalo de diminuição da arena
         pg.time.set_timer(SHRINK_ARENA, 90000)
 
         pg.key.get_pressed()
@@ -263,6 +288,7 @@ class GameEngine:
                     except KeyError:
                         pass  # Chave não associada a nenhum comando
                 if event.type == SHRINK_ARENA:
+                    self.exibit_time()
                     pg.time.set_timer(SHRINK_ARENA, 10000)
                     self.shrink_arena()
             # Fila de eventos

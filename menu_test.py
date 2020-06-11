@@ -15,9 +15,7 @@ controls = config['players']['controls']
 if n > 0:
     background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 * gunity, 30 * gunity))
     arena = InterfaceObject(screen, background)
-    game = GameEngine(screen,arena)
-
-    game.load_map(maps['lines'])
+    game = GameEngine(screen,arena,maps['lines'])
 
     for i in range(n):
         game.add_player(sprites[i],orientations[i],*positions[i],controls[i])

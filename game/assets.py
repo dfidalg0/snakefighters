@@ -269,10 +269,11 @@ imgbutton = {
     ]
 }
 
-imgsnake = [ pg.image.load('assets/img/cobra_amarela.png'),
-             pg.image.load('assets/img/cobra_azul.png'),
-             pg.image.load('assets/img/cobra_roxa.png'),
-             pg.image.load('assets/img/cobra_laranja.png')
+imgsnake = [
+    pg.image.load('assets/img/cobra_amarela.png'),
+    pg.image.load('assets/img/cobra_azul.png'),
+    pg.image.load('assets/img/cobra_laranja.png'),
+    pg.image.load('assets/img/cobra_roxa.png')
 ]
 
 imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'), (5 * gunity, 5 * gunity))

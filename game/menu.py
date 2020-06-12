@@ -13,15 +13,6 @@ MULTIPLAYER = 2
 MAP_SELECTION = 3
 ENDING_SCREEN = 4
 
-default_sprites = [imgsety, imgsetb, imgseto, imgsetp]
-
-default_controls = [
-    [pg.K_w, pg.K_a, pg.K_s, pg.K_d],
-    [pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT],
-    [pg.K_y, pg.K_g, pg.K_h, pg.K_j],
-    [pg.K_KP8, pg.K_KP4, pg.K_KP5, pg.K_KP6]
-]
-
 class MainMenu():
     def __init__(self, screen, x=0, y=0):
         self.__pos = Vector2(x, y)
@@ -33,10 +24,13 @@ class MainMenu():
         self.__config = {
             'player_number': 0,
             'players': {
-                'sprites': [],
-                'orientations': [],
-                'positions': [],
-                'controls': []
+                'sprites': [imgsety, imgsetb, imgseto, imgsetp],
+                'controls': [
+                    [pg.K_w, pg.K_a, pg.K_s, pg.K_d],
+                    [pg.K_UP, pg.K_LEFT, pg.K_DOWN, pg.K_RIGHT],
+                    [pg.K_y, pg.K_g, pg.K_h, pg.K_j],
+                    [pg.K_KP8, pg.K_KP4, pg.K_KP5, pg.K_KP6]
+                ]
             },
             'map': choice(list(maps.values()))
         }
@@ -135,8 +129,6 @@ class MainMenu():
             # single player
             elif self.__buttons[1].check_hover():
                 self.__config['player_number'] = 1
-                self.__config['players']['sprites'].append(default_sprites[0])
-                self.__config['players']['controls'].append(default_controls[0])
                 self.map_selection()
 
             # opcoes
@@ -152,23 +144,14 @@ class MainMenu():
         if self.__state == MULTIPLAYER:
             if self.__buttons[0].check_hover():
                 self.__config['player_number'] = 2
-                for i in range(2):
-                    self.__config['players']['sprites'].append(default_sprites[i])
-                    self.__config['players']['controls'].append(default_controls[i])
                 self.map_selection()
 
             elif self.__buttons[1].check_hover():
                 self.__config['player_number'] = 3
-                for i in range(3):
-                    self.__config['players']['sprites'].append(default_sprites[i])
-                    self.__config['players']['controls'].append(default_controls[i])
                 self.map_selection()
 
             elif self.__buttons[2].check_hover():
                 self.__config['player_number'] = 4
-                for i in range(4):
-                    self.__config['players']['sprites'].append(default_sprites[i])
-                    self.__config['players']['controls'].append(default_controls[i])
                 self.map_selection()
 
             elif self.__buttons[3].check_hover():
@@ -192,10 +175,6 @@ class MainMenu():
                 self.__state = QUIT
             # voltar
             elif self.__buttons[4].check_hover():
-                self.__config['players']['sprites'].clear()
-                self.__config['players']['orientations'].clear()
-                self.__config['players']['positions'].clear()
-                self.__config['players']['controls'].clear()
                 self.__config['player_number'] = 0
                 self.__menu_barra.destroy()
                 if self.__last_state == MULTIPLAYER:
@@ -205,10 +184,6 @@ class MainMenu():
         if self.__state == ENDING_SCREEN:
             # menu principal
             if self.__buttons[0].check_hover():
-                self.__config['players']['sprites'].clear()
-                self.__config['players']['orientations'].clear()
-                self.__config['players']['positions'].clear()
-                self.__config['players']['controls'].clear()
                 self.__config['player_number'] = 0
                 self.__config['map'] = choice(list(maps.values()))
                 self.__background.destroy()

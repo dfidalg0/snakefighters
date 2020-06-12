@@ -51,7 +51,7 @@ class MainMenu():
         self.__last_state = self.__state
         self.__state = MAIN
 
-        if self.__last_state == QUIT:
+        if self.__last_state in [QUIT, ENDING_SCREEN]:
             pg.mixer.music.load('assets/sounds/intro.wav')
             pg.mixer.music.play(-1)
 

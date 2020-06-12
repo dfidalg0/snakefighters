@@ -214,9 +214,6 @@ class MainMenu():
                 if event.type == pg.QUIT:
                     self.__config['player_number'] = 0
                     self.__state = QUIT
-                elif event.type == pg.KEYDOWN:
-                    if event.key == pg.K_ESCAPE:
-                        self.__state = QUIT
 
         self.clear_buttons()
         self.__background.destroy()

@@ -266,11 +266,6 @@ imgbutton = {
         pg.image.load('assets/img/buttons/encerrar_w.png'),
         pg.image.load('assets/img/buttons/encerrar_w2.png'),
         pg.image.load('assets/img/buttons/encerrar_w3.png')
-    ],
-    'menu_sec':           [
-        pg.image.load('assets/img/buttons/menu_sec.png'),
-        pg.image.load('assets/img/buttons/menu_sec.png'),
-        pg.image.load('assets/img/buttons/menu_sec.png')
     ]
 }
 
@@ -282,6 +277,8 @@ imgsnake = [ pg.image.load('assets/img/cobra_amarela.png'),
 
 imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'), (5 * gunity, 5 * gunity))
 imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'), (24, 64))
+
+menu_sec = pg.image.load('assets/img/menu_sec.png')
 
 skull = pg.image.load('assets/img/skull.png')
 heart = pg.image.load('assets/img/coracao_interface.png')

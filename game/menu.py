@@ -1,5 +1,5 @@
 from game import pg,Screen,InterfaceObject,Button
-from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown
+from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown ,menu_sec
 from game.assets import imgbutton, img_menu_background ,img_ending_screen
 from game.assets import maps
 from game.constants import left, right, gunity
@@ -84,7 +84,7 @@ class MainMenu():
 
         self.clear_buttons()
 
-        Button(self, imgbutton['menu_sec'], -self.__bound[0] * 0.088, self.__bound[1] * 0)
+        self.__menu_barra = InterfaceObject(self.__background,menu_sec , -self.__bound[0] * 0.088, self.__bound[1] * 0)
 
         Button(self, imgbutton['mapa_aleatorio'],-self.__bound[0] * 0.655, -self.__bound[1] * 0.70)
 
@@ -107,15 +107,13 @@ class MainMenu():
         y = -self.__rect[1] * 0.24
         delta_y = + self.__rect[1]*0.56/(self.__config['player_number'] + 1)
         i = 0;
-        while i < self.__config['player_number']:
+        for i in range(self.__config['player_number']):
             y = y + delta_y
             snake_interface_object = InterfaceObject(self.__background,imgsnake[i],x,y)
 
-            i = i + 1;
-
-        x = self.__rect[1]*0.16
+        x = self.__rect[1]*0.25
         for player_id in winners:
-            coroa_interface_object = InterfaceObject(self.__background,crown,x,-self.__rect[1] * 0.24 + (player_id + 1)*delta_y)
+            coroa_obj = InterfaceObject(self.__background,crown,x,-self.__rect[1] * 0.24 + (player_id + 1)*delta_y)
 
         Button(self, imgbutton['menu_principal'], -self.__rect[0] * 0.1, self.__rect[1]*0.365)
         Button(self, imgbutton['encerrar_w'], +self.__rect[0] * 0.15, self.__rect[1]*0.365)
@@ -172,27 +170,28 @@ class MainMenu():
 
         if self.__state == MAP_SELECTION:
             # mapa aleatorio
-            if self.__buttons[1].check_hover():
+            if self.__buttons[0].check_hover():
                 self.__state = QUIT
             # eights
-            elif self.__buttons[2].check_hover():
+            elif self.__buttons[1].check_hover():
                 self.__config['map'] = maps['eights']
                 self.__state = QUIT
             # cross and borders
-            elif self.__buttons[3].check_hover():
+            elif self.__buttons[2].check_hover():
                 self.__config['map'] = maps['cross_and_borders']
                 self.__state = QUIT
             # lines
-            elif self.__buttons[4].check_hover():
+            elif self.__buttons[3].check_hover():
                 self.__config['map'] = maps['lines']
                 self.__state = QUIT
-
-            elif self.__buttons[5].check_hover():
+            # voltar
+            elif self.__buttons[4].check_hover():
                 self.__config['players']['sprites'].clear()
                 self.__config['players']['orientations'].clear()
                 self.__config['players']['positions'].clear()
                 self.__config['players']['controls'].clear()
                 self.__config['player_number'] = 0
+                self.__menu_barra.destroy()
                 self.multijogadores()
         if self.__state == ENDING_SCREEN:
             #menu principal

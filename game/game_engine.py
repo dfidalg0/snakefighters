@@ -268,7 +268,7 @@ class GameEngine:
 
         del background, pos0, inc, incs, font, messages, i, segundosIMG
 
-        pg.time.set_timer(SHRINK_ARENA, 11000 - 10000)
+        pg.time.set_timer(SHRINK_ARENA, 90000 - 10000)
 
         pg.key.get_pressed()
         for player in self.__players:

@@ -1,7 +1,7 @@
 from game import pg,Screen,InterfaceObject,Button
 from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown ,menu_sec
 from game.assets import imgbutton, img_menu_background ,img_ending_screen
-from game.assets import maps
+from game.assets import maps, img_wait_background, imgkeyboard
 from game.constants import left, right, gunity
 from pygame.math import Vector2
 from pygame.time import Clock
@@ -12,6 +12,15 @@ MAIN = 1
 MULTIPLAYER = 2
 MAP_SELECTION = 3
 ENDING_SCREEN = 4
+CONTROLS = 5
+
+def get_key():
+    while True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                return None
+            if event.type == pg.KEYDOWN:
+                return event.key
 
 class MainMenu():
     def __init__(self, screen, x=0, y=0):
@@ -51,7 +60,7 @@ class MainMenu():
 
         self.clear_buttons()
 
-        labels = ['jogar','modo_pratica','opcoes','extra']
+        labels = ['jogar','modo_pratica','controles']
 
         x = -self.__bound[0] * 0.66
         y = -self.__bound[1] * 0.70
@@ -59,6 +68,8 @@ class MainMenu():
         for label in labels:
             Button(self, imgbutton[label], x,y)
             y += self.__bound[1] * 0.307
+
+        y += self.__bound[1] * 0.307
 
         Button(self, imgbutton['encerrar'], -self.__bound[0] * 0.665, y)
 
@@ -126,6 +137,33 @@ class MainMenu():
 
         self.menu_loop()
 
+    def controls(self):
+        self.__last_state = self.__state
+        self.__state = CONTROLS
+
+        self.clear_buttons()
+
+        self.__menu_barra = InterfaceObject(self.__background, menu_sec)
+
+        inc = 2 * gunity
+        incs = [(0, 0), (-inc, +inc), (0, +inc), (+inc, +inc)]
+
+        bound = self.__menu_barra.get_rect()/2
+        pos0 = Vector2(-0.75*bound[0],-0.35*bound[1])
+
+        Inc = Vector2(10*gunity,6*gunity)
+        Incs = [-Inc,(Inc[0],-Inc[1]),(-Inc[0],Inc[1]),Inc]
+
+        playerkeys = self.__config['players']['controls']
+        for i in range(4):
+            for j in range(4):
+                pos = pos0 + Incs[i] + incs[j]
+                img = imgkeyboard[playerkeys[i][j]]
+                imgs = [img,img,img]
+                Button(self, imgs, *pos)
+
+        Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
+
     def update(self):
         if self.__state == MAIN:
             # multiplayer
@@ -137,17 +175,14 @@ class MainMenu():
                 self.__config['player_number'] = 1
                 self.map_selection()
 
-            # opcoes
+            # controles
             elif self.__buttons[2].check_hover():
-                print("opcoes")
-            # extras ?
-            elif self.__buttons[3].check_hover():
-                print("extras")
+                self.controls()
             # encerrar
-            elif self.__buttons[4].check_hover():
+            elif self.__buttons[3].check_hover():
                 self.__state = QUIT
 
-        if self.__state == MULTIPLAYER:
+        elif self.__state == MULTIPLAYER:
             if self.__buttons[0].check_hover():
                 self.__config['player_number'] = 2
                 self.map_selection()
@@ -163,7 +198,7 @@ class MainMenu():
             elif self.__buttons[3].check_hover():
                 self.main()
 
-        if self.__state == MAP_SELECTION:
+        elif self.__state == MAP_SELECTION:
             # mapa aleatorio
             if self.__buttons[0].check_hover():
                 self.__config['map'] = choice(list(maps.values()))
@@ -188,7 +223,7 @@ class MainMenu():
                     self.multijogadores()
                 elif self.__last_state == MAIN:
                     self.main()
-        if self.__state == ENDING_SCREEN:
+        elif self.__state == ENDING_SCREEN:
             # menu principal
             if self.__buttons[0].check_hover():
                 self.__config['player_number'] = 0
@@ -200,6 +235,19 @@ class MainMenu():
             elif self.__buttons[1].check_hover():
                 self.__config['player_number'] = 0
                 self.__state = QUIT
+        elif self.__state == CONTROLS:
+            if self.__buttons[16].check_hover():
+                self.main()
+            else:
+                for i in range(16):
+                    if self.__buttons[i].check_hover():
+                        n = i//4
+                        k = i % 4
+                        key = get_key()
+                        self.__config['players']['controls'][n][k] = key
+                        img = imgkeyboard[key]
+                        imgs = [img,img,img]
+                        self.__buttons[i].set_imglist(imgs)
 
     def add_button(self, button):
         self.__buttons.append(button)

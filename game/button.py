@@ -16,6 +16,10 @@ class Button(InterfaceObject):
 
         menu.add_button(self)
 
+    def set_imglist(self,imglist):
+        self.__imglist = imglist
+        self.set_img(imglist[UNP_UNH])
+
     def check_hover(self):
         rect = self.get_rect()
         self.set_img(self.__imglist[UNP_UNH])

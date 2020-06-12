@@ -10,3 +10,6 @@ class Food(PowerUpMeta):
 
     def catch(self,player,engine):
         player.grow_size()
+
+        sound = pg.mixer.Sound('assets/sounds/swallow.wav')
+        sound.play()

@@ -11,6 +11,11 @@ class SecondChance(PowerUpMeta):
 
     def catch(self,player,engine):
         health = player.get_health()
+
+        sound = pg.mixer.Sound('assets/sounds/heal.wav')
+        sound.set_volume(0.5)
+        sound.play()
+
         if health == inf:
             player.inc_virtual_health()
         else:

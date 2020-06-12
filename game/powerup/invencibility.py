@@ -13,6 +13,8 @@ class Invencibility(PowerUpMeta):
     def catch(self,player,engine):
         player.clear_effect()
 
+        sound = pg.mixer.Sound('assets/sounds/shield.wav')
+
         player.set_virtual_health(player.get_health())
         player.set_health(inf)
         timer = 0
@@ -44,4 +46,4 @@ class Invencibility(PowerUpMeta):
                     player.set_imgset(current)
                 timer += 1
 
-        player.add_effect(effect)
+        player.add_effect(effect,sound)

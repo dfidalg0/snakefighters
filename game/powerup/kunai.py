@@ -11,6 +11,9 @@ class Kunai(PowerUpMeta):
     def catch(self,player,engine):
         player.clear_effect()
 
+        sound = pg.mixer.Sound('assets/sounds/wind.wav')
+        sound.set_volume(0.5)
+
         head = player.get_head()
         kunai = engine.add_obstacle(master=head,x=0,y=-70,w=30,img=imgkunai)
 
@@ -27,4 +30,4 @@ class Kunai(PowerUpMeta):
                 kunai.update()
                 timer += 1
 
-        player.add_effect(spin)
+        player.add_effect(spin, sound)

@@ -2,7 +2,6 @@ from game import pg
 from game.constants import fps
 from game.assets import imgpowerup, imgexplosion
 from game.powerup.powerup_meta import PowerUpMeta
-from pygame.math import Vector2
 
 
 class Bomb(PowerUpMeta):
@@ -11,15 +10,20 @@ class Bomb(PowerUpMeta):
 
     def catch(self, player, engine):
         pos = self.get_pos()
+
+        sound = pg.mixer.Sound('assets/sounds/explosion.wav')
+        sound.set_volume(0.3)
+        sound.play()
+
         explosion = engine.add_obstacle(x=pos[0], y=pos[1], img=imgexplosion)
 
         timer = 0
 
         def explode(end=False):
-            nonlocal timer,explosion
+            nonlocal timer, explosion
             if end:
                 engine.remove_obstacle(explosion)
-            elif timer >= fps//2:
+            elif timer >= fps // 2:
                 engine.remove_effect(explode)
             else:
                 timer += 1

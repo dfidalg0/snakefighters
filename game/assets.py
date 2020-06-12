@@ -266,7 +266,13 @@ imgbutton = {
         pg.image.load('assets/img/buttons/encerrar_w.png'),
         pg.image.load('assets/img/buttons/encerrar_w2.png'),
         pg.image.load('assets/img/buttons/encerrar_w3.png')
+    ],
+    'controles':           [
+        pg.image.load('assets/img/buttons/controles.png'),
+        pg.image.load('assets/img/buttons/controles2.png'),
+        pg.image.load('assets/img/buttons/controles3.png')
     ]
+
 }
 
 imgsnake = [

@@ -160,6 +160,7 @@ class MainMenu():
         if self.__state == MAP_SELECTION:
             # mapa aleatorio
             if self.__buttons[0].check_hover():
+                self.__config['map'] = choice(list(maps.values()))
                 self.__state = QUIT
             # eights
             elif self.__buttons[1].check_hover():

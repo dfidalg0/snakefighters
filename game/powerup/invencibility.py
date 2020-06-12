@@ -24,11 +24,14 @@ class Invencibility(PowerUpMeta):
 
         current, aux = imgset0, imgsetw
 
+        sound.play()
+
         def effect(end=False):
             nonlocal timer, timer_end
             nonlocal imgset0, current, aux
 
             if end:
+                sound.stop()
                 new_health = player.get_virtual_health()
                 player.set_virtual_health(0)
 
@@ -46,4 +49,4 @@ class Invencibility(PowerUpMeta):
                     player.set_imgset(current)
                 timer += 1
 
-        player.add_effect(effect,sound)
+        player.add_effect(effect)

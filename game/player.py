@@ -25,7 +25,6 @@ class Player:
         self.__grow = False
         self.__health = [1, 0]
         self.__pontos = 0
-        self.__sound = mixer.Sound('assets/sounds/silence.wav')
         self.__effect = None
         self.__command_queue = deque()
 
@@ -178,18 +177,14 @@ class Player:
         for i in range(len(self.__nodes)):
             self.__nodes[i].destroy()
 
-    def add_effect(self, effect, sound=mixer.Sound('assets/sounds/silence.wav')):
+    def add_effect(self, effect):
         self.__effect = effect
-        self.__sound = sound
-        self.__sound.play()
 
     def clear_effect(self):
         if self.__effect:
             self.__effect(end=True)
 
         self.__effect = None
-        self.__sound.stop()
-        self.__sound = mixer.Sound('assets/sounds/silence.wav')
 
     # Funções auxiliares da classe
     def __get_img_body(self, old_spd, new_spd):

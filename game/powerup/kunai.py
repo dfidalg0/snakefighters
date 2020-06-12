@@ -20,9 +20,12 @@ class Kunai(PowerUpMeta):
         timer = 0
         timer_end = 7 * fps
 
+        sound.play()
+
         def spin(end=False):
             nonlocal timer,timer_end
             if end:
+                sound.stop()
                 engine.remove_obstacle(kunai)
             elif timer >= timer_end:
                 player.clear_effect()
@@ -30,4 +33,4 @@ class Kunai(PowerUpMeta):
                 kunai.update()
                 timer += 1
 
-        player.add_effect(spin, sound)
+        player.add_effect(spin)

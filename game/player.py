@@ -2,6 +2,7 @@ from game import pg, Screen, GameObject
 from game.constants import gspeed, gunity, left, right, max_health
 from pygame.math import Vector2
 from collections import deque
+from pygame import mixer
 
 
 class Player:

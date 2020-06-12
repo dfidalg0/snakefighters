@@ -1,7 +1,6 @@
 from game import pg
 from game.constants import gunity, resolution
 
-
 dummy_surface = pg.Surface((2, 2))
 dummy_surface.set_colorkey((0, 0, 0))
 
@@ -16,8 +15,8 @@ for filename in listdir('assets/maps'):
             maps[filename[:-5]] = load(file)
 
 for i in maps.keys():
-    maps[i]['positions'] = [(pos[0]*gunity, pos[1]*gunity) for pos in maps[i]['positions']]
-    maps[i]['walls'] = [(wall[0],wall[1]*gunity,wall[2]*gunity) for wall in maps[i]['walls']]
+    maps[i]['positions'] = [(pos[0] * gunity, pos[1] * gunity) for pos in maps[i]['positions']]
+    maps[i]['walls'] = [(wall[0], wall[1] * gunity, wall[2] * gunity) for wall in maps[i]['walls']]
 
 del load, listdir, filename
 
@@ -31,7 +30,7 @@ img_wait_background = pg.Surface(resolution)
 img_wait_background.fill((0, 0, 0))
 
 img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'), resolution)
-img_ending_screen = pg.transform.scale(pg.image.load('assets/img/ending_screen.png'),resolution)
+img_ending_screen = pg.transform.scale(pg.image.load('assets/img/ending_screen.png'), resolution)
 
 # Screen Background
 half_res = (resolution[0] / 2, resolution[1] / 2)
@@ -67,6 +66,15 @@ for (i, key) in enumerate(['up', 'down', 'right', 'left']):
         pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'), (2 * gunity, 2 * gunity))
 
 del key, keys, i
+
+sndpowerup = {
+    'BURN': pg.mixer.Sound('assets/sounds/burning.wav'),
+    'EXPL': pg.mixer.Sound('assets/sounds/explosion.wav'),
+    'HEAL': pg.mixer.Sound('assets/sounds/heal.wav'),
+    'SHLD': pg.mixer.Sound('assets/sounds/shield.wav'),
+    'SWLL': pg.mixer.Sound('assets/sounds/swallow.wav'),
+    'WIND': pg.mixer.Sound('assets/sounds/wind.wav')
+}
 
 imgpowerup = {
     'FOOD': pg.transform.scale(pg.image.load('assets/img/powerups/ponto.png'), (gunity, gunity)),
@@ -237,32 +245,32 @@ imgbutton = {
         pg.image.load('assets/img/buttons/voltar2.png'),
         pg.image.load('assets/img/buttons/voltar3.png')
     ],
-    'eights':           [
+    'eights': [
         pg.image.load('assets/img/buttons/eights.png'),
         pg.image.load('assets/img/buttons/eights2.png'),
         pg.image.load('assets/img/buttons/eights3.png')
     ],
-    'mapa_aleatorio':           [
+    'mapa_aleatorio': [
         pg.image.load('assets/img/buttons/mapa_aleatorio.png'),
         pg.image.load('assets/img/buttons/mapa_aleatorio2.png'),
         pg.image.load('assets/img/buttons/mapa_aleatorio3.png')
     ],
-    'cross_and_borders':           [
+    'cross_and_borders': [
         pg.image.load('assets/img/buttons/cross_and_borders.png'),
         pg.image.load('assets/img/buttons/cross_and_borders2.png'),
         pg.image.load('assets/img/buttons/cross_and_borders3.png')
     ],
-    'lines':           [
+    'lines': [
         pg.image.load('assets/img/buttons/lines.png'),
         pg.image.load('assets/img/buttons/lines2.png'),
         pg.image.load('assets/img/buttons/lines3.png')
     ],
-    'menu_principal':           [
+    'menu_principal': [
         pg.image.load('assets/img/buttons/menu_principal.png'),
         pg.image.load('assets/img/buttons/menu_principal2.png'),
         pg.image.load('assets/img/buttons/menu_principal3.png')
     ],
-    'encerrar_w':           [
+    'encerrar_w': [
         pg.image.load('assets/img/buttons/encerrar_w.png'),
         pg.image.load('assets/img/buttons/encerrar_w2.png'),
         pg.image.load('assets/img/buttons/encerrar_w3.png')

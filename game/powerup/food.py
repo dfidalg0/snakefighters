@@ -1,5 +1,5 @@
 from game import pg
-from game.assets import imgpowerup
+from game.assets import imgpowerup, sndpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 
@@ -10,3 +10,6 @@ class Food(PowerUpMeta):
 
     def catch(self,player,engine):
         player.grow_size()
+
+        sound = sndpowerup['SWLL']
+        sound.play()

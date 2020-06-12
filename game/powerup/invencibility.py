@@ -1,6 +1,6 @@
 from game import pg
 from game.constants import fps, max_health
-from game.assets import imgpowerup, imgsetw
+from game.assets import imgpowerup, imgsetw, sndpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 from math import inf
@@ -13,6 +13,8 @@ class Invencibility(PowerUpMeta):
     def catch(self,player,engine):
         player.clear_effect()
 
+        sound = sndpowerup['SHLD']
+
         player.set_virtual_health(player.get_health())
         player.set_health(inf)
         timer = 0
@@ -22,11 +24,14 @@ class Invencibility(PowerUpMeta):
 
         current, aux = imgset0, imgsetw
 
+        sound.play()
+
         def effect(end=False):
             nonlocal timer, timer_end
             nonlocal imgset0, current, aux
 
             if end:
+                sound.stop()
                 new_health = player.get_virtual_health()
                 player.set_virtual_health(0)
 

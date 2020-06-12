@@ -3,7 +3,6 @@ from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity, max_food, resolution
 from game.assets import imgwall, img_wait_background, font_barbarian, font_snake, imgkeyboard
 from pygame.math import Vector2
-from pygame import mixer
 from pygame.time import Clock
 from random import randint, random, choice
 from collections import deque
@@ -104,7 +103,7 @@ class GameEngine:
         self.__playerkeys[id] = keyset
 
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
-        newui = PlayerUI(self.__screen, newplayer, *pos)
+        newui = PlayerUI(self.__gamebox, newplayer, *pos)
 
         self.__players.append(newplayer)
         self.__playeruis.append(newui)
@@ -210,8 +209,8 @@ class GameEngine:
         timer = 0
 
         time = font.render(message[0], True, (0, 177, 11))
-        timeup = InterfaceObject(self.__screen, time, 0, -330)
-        timedw = InterfaceObject(self.__screen, time, 0, 330)
+        timeup = InterfaceObject(self.__gamebox, time, 0, -330)
+        timedw = InterfaceObject(self.__gamebox, time, 0, 330)
 
         def print_message(end=False):
             nonlocal timer
@@ -232,6 +231,10 @@ class GameEngine:
         self.add_effect(print_message)
 
     def game_loop(self):
+        pg.mixer.music.load('assets/sounds/music.wav')
+        pg.mixer.music.set_volume(0.8)
+        pg.mixer.music.play(-1)
+
         pg.mouse.set_visible(False)
 
         background = img_wait_background.convert()
@@ -400,5 +403,6 @@ class GameEngine:
             # Timer de power-ups
 
         self.clear_effects()
+        self.__gamebox.destroy()
         pg.mouse.set_visible(True)
         return winners

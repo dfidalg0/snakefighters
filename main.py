@@ -28,3 +28,5 @@ while config['player_number'] != 0:
         winners = game.game_loop()
 
         menu.ending_screen(winners)
+
+        del game

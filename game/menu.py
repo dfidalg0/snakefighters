@@ -45,6 +45,10 @@ class MainMenu():
         self.__last_state = self.__state
         self.__state = MAIN
 
+        if self.__last_state in [QUIT, ENDING_SCREEN]:
+            pg.mixer.music.load('assets/sounds/intro.wav')
+            pg.mixer.music.play(-1)
+
         self.clear_buttons()
 
         labels = ['jogar','modo_pratica','opcoes','extra']
@@ -98,6 +102,8 @@ class MainMenu():
         Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
 
     def ending_screen(self,winners):
+        pg.mixer.music.load('assets/sounds/ending.wav')
+        pg.mixer.music.play(0)
         self.__last_state = self.__state
         self.__state = ENDING_SCREEN
 

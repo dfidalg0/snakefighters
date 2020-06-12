@@ -103,7 +103,7 @@ class GameEngine:
         self.__playerkeys[id] = keyset
 
         newplayer = Player(self.__gamebox, imgset, x, y, orient)
-        newui = PlayerUI(self.__screen, newplayer, *pos)
+        newui = PlayerUI(self.__gamebox, newplayer, *pos)
 
         self.__players.append(newplayer)
         self.__playeruis.append(newui)
@@ -209,8 +209,8 @@ class GameEngine:
         timer = 0
 
         time = font.render(message[0], True, (0, 177, 11))
-        timeup = InterfaceObject(self.__screen, time, 0, -330)
-        timedw = InterfaceObject(self.__screen, time, 0, 330)
+        timeup = InterfaceObject(self.__gamebox, time, 0, -330)
+        timedw = InterfaceObject(self.__gamebox, time, 0, 330)
 
         def print_message(end=False):
             nonlocal timer
@@ -268,7 +268,7 @@ class GameEngine:
 
         del background, pos0, inc, incs, font, messages, i, segundosIMG
 
-        pg.time.set_timer(SHRINK_ARENA, 90000 - 10000)
+        pg.time.set_timer(SHRINK_ARENA, 11000 - 10000)
 
         pg.key.get_pressed()
         for player in self.__players:
@@ -403,5 +403,6 @@ class GameEngine:
             # Timer de power-ups
 
         self.clear_effects()
+        self.__gamebox.destroy()
         pg.mouse.set_visible(True)
         return winners

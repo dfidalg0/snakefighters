@@ -6,7 +6,7 @@ gunity = 20
 fps = 13
 
 # Power-up probability
-prob_pup = 1/150
+prob_pup = 1/5
 
 # Player max health
 max_health = 3

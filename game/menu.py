@@ -243,14 +243,17 @@ class MainMenu():
                     if self.__buttons[i].check_hover():
                         n = i//4
                         k = i % 4
-                        try:
-                            key = get_key()
-                            self.__config['players']['controls'][n][k] = key
+                        controls = self.__config['players']['controls']
+                        key = get_key()
+                        not_assigned = True
+                        for playerkeys in controls:
+                            if key in playerkeys:
+                                not_assigned = False
+                        if not_assigned and key in imgkeyboard.keys():
+                            controls[n][k] = key
                             img = imgkeyboard[key]
                             imgs = [img,img,img]
                             self.__buttons[i].set_imglist(imgs)
-                        except KeyError:
-                            pass
 
     def add_button(self, button):
         self.__buttons.append(button)

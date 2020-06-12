@@ -1,6 +1,6 @@
 from game import pg,Screen,InterfaceObject,Button
-from game.assets import imgsety, imgsetb, imgseto, imgsetp
-from game.assets import imgbutton, img_menu_background
+from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown
+from game.assets import imgbutton, img_menu_background ,img_ending_screen
 from game.assets import maps
 from game.constants import left, right, gunity
 from pygame.math import Vector2
@@ -11,6 +11,7 @@ QUIT = 0
 MAIN = 1
 MULTIPLAYER = 2
 MAP_SELECTION = 3
+ENDING_SCREEN = 4
 
 default_sprites = [imgsety, imgsetb, imgseto, imgsetp]
 
@@ -98,6 +99,29 @@ class MainMenu():
 
         Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
 
+    def ending_screen(self,winners):
+        self.__background = InterfaceObject(self.__screen,img_ending_screen)
+        self.__state = 4
+
+        x = -self.__rect[0] * 0.1
+        y = -self.__rect[1] * 0.24
+        delta_y = + self.__rect[1]*0.56/(self.__config['player_number'] + 1)
+        i = 0;
+        while i < self.__config['player_number']:
+            y = y + delta_y
+            snake_interface_object = InterfaceObject(self.__background,imgsnake[i],x,y)
+
+            i = i + 1;
+
+        x = self.__rect[1]*0.16
+        for player_id in winners:
+            coroa_interface_object = InterfaceObject(self.__background,crown,x,-self.__rect[1] * 0.24 + (player_id + 1)*delta_y)
+
+        Button(self, imgbutton['menu_principal'], -self.__rect[0] * 0.1, self.__rect[1]*0.365)
+        Button(self, imgbutton['encerrar_w'], +self.__rect[0] * 0.15, self.__rect[1]*0.365)
+
+        self.menu_loop()
+
     def update(self):
         if self.__state == MAIN:
             # multiplayer
@@ -170,6 +194,22 @@ class MainMenu():
                 self.__config['players']['controls'].clear()
                 self.__config['player_number'] = 0
                 self.multijogadores()
+        if self.__state == ENDING_SCREEN:
+            #menu principal
+            if self.__buttons[0].check_hover():
+                self.__config['players']['sprites'].clear()
+                self.__config['players']['orientations'].clear()
+                self.__config['players']['positions'].clear()
+                self.__config['players']['controls'].clear()
+                self.__config['player_number'] = 0
+                self.__background.destroy()
+                self.__background = InterfaceObject(self.__screen, img_menu_background)
+                self.main()
+            # encerrar
+            elif self.__buttons[1].check_hover():
+                self.__config['player_number'] = 0
+                self.__state = QUIT
+
 
     def add_button(self, button):
         self.__buttons.append(button)

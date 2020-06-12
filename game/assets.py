@@ -31,6 +31,7 @@ img_wait_background = pg.Surface(resolution)
 img_wait_background.fill((0, 0, 0))
 
 img_menu_background = pg.transform.scale(pg.image.load('assets/img/menu_background.png'), resolution)
+img_ending_screen = pg.transform.scale(pg.image.load('assets/img/ending_screen.png'),resolution)
 
 # Screen Background
 half_res = (resolution[0] / 2, resolution[1] / 2)
@@ -256,6 +257,16 @@ imgbutton = {
         pg.image.load('assets/img/buttons/lines2.png'),
         pg.image.load('assets/img/buttons/lines3.png')
     ],
+    'menu_principal':           [
+        pg.image.load('assets/img/buttons/menu_principal.png'),
+        pg.image.load('assets/img/buttons/menu_principal2.png'),
+        pg.image.load('assets/img/buttons/menu_principal3.png')
+    ],
+    'encerrar_w':           [
+        pg.image.load('assets/img/buttons/encerrar_w.png'),
+        pg.image.load('assets/img/buttons/encerrar_w2.png'),
+        pg.image.load('assets/img/buttons/encerrar_w3.png')
+    ],
     'menu_sec':           [
         pg.image.load('assets/img/buttons/menu_sec.png'),
         pg.image.load('assets/img/buttons/menu_sec.png'),
@@ -263,8 +274,15 @@ imgbutton = {
     ]
 }
 
+imgsnake = [ pg.image.load('assets/img/cobra_amarela.png'),
+             pg.image.load('assets/img/cobra_azul.png'),
+             pg.image.load('assets/img/cobra_roxa.png'),
+             pg.image.load('assets/img/cobra_laranja.png')
+]
+
 imgexplosion = pg.transform.scale(pg.image.load('assets/img/explosion.png'), (5 * gunity, 5 * gunity))
 imgkunai = pg.transform.scale(pg.image.load('assets/img/kunai.png'), (24, 64))
 
 skull = pg.image.load('assets/img/skull.png')
 heart = pg.image.load('assets/img/coracao_interface.png')
+crown = pg.image.load('assets/img/coroa.png')

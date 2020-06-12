@@ -6,22 +6,26 @@ screen = Screen()
 menu = MainMenu(screen)
 config = menu.menu_loop()
 
-n = config['player_number']
+while config['player_number'] != 0:
 
-players = config['players']
-sprites = players['sprites']
-controls = players['controls']
+    n = config['player_number']
 
-orientations = config['map']['orientations']
-positions = config['map']['positions']
+    players = config['players']
+    sprites = players['sprites']
+    controls = players['controls']
 
-if n > 0:
-    background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 * gunity, 30 * gunity))
-    arena = InterfaceObject(screen, background)
-    game = GameEngine(screen,arena,config['map'])
+    orientations = config['map']['orientations']
+    positions = config['map']['positions']
 
-    for i in range(n):
-        game.add_player(sprites[i],orientations[i],*positions[i],controls[i])
+    if n > 0:
+        background = pg.transform.scale(pg.image.load('assets/img/background.jpg'), (60 * gunity, 30 * gunity))
+        arena = InterfaceObject(screen, background)
+        game = GameEngine(screen,arena,config['map'])
 
-    winners = game.game_loop()
-    print(winners)
+        for i in range(n):
+            game.add_player(sprites[i],orientations[i],*positions[i],controls[i])
+
+        winners = game.game_loop()
+        print(winners)
+
+        menu.ending_screen(winners)

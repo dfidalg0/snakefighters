@@ -398,4 +398,5 @@ class GameEngine:
                 self.__powerups.popleft().destroy()
             # Timer de power-ups
 
+        pg.mouse.set_visible(True)
         return winners

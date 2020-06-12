@@ -6,6 +6,10 @@ from pygame.math import Vector2
 
 class Screen:
     def __init__(self):
+        pg.init()
+        pg.mixer.music.load('assets/music.wav')
+        pg.mixer.music.play(-1)
+
         self.__pos = Vector2(resolution[0] / 2, resolution[1] / 2)
         self.__resolution = Vector2(resolution)
         self.__slaves = []

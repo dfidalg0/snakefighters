@@ -227,7 +227,6 @@ class GameEngine:
         self.add_effect(print_message)
 
     def game_loop(self):
-        pg.init()
         pg.mouse.set_visible(False)
 
         background = img_wait_background.convert()
@@ -245,9 +244,6 @@ class GameEngine:
                     InterfaceObject(background, imgkeyboard[self.__playerkeys[order[i]][j]], *(pos0 + incs[j]))
 
             pos0[i % 2] *= -1
-
-        mixer.music.load('assets/music.wav')
-        mixer.music.play(-1)
 
         font = font_barbarian
 

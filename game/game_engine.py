@@ -143,6 +143,11 @@ class GameEngine:
         effect(end=True)
         self.__effects.remove(effect)
 
+    def clear_effects(self):
+        for effect in self.__effects:
+            effect(end=True)
+        self.__effects.clear()
+
     def generate_powerups(self):
         if self.__nfood < max_food:
             self.__nfood += 1
@@ -394,5 +399,6 @@ class GameEngine:
                 self.__powerups.popleft().destroy()
             # Timer de power-ups
 
+        self.clear_effects()
         pg.mouse.set_visible(True)
         return winners

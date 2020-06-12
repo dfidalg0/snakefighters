@@ -231,7 +231,7 @@ class GameEngine:
         self.add_effect(print_message)
 
     def game_loop(self):
-        pg.mixer.music.load('assets/music.wav')
+        pg.mixer.music.load('assets/sounds/music.wav')
         pg.mixer.music.play(-1)
 
         pg.mouse.set_visible(False)

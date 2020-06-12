@@ -1,5 +1,5 @@
 from game import pg
-from game.assets import imgpowerup, imgkunai
+from game.assets import imgpowerup, imgkunai, sndpowerup
 from game.constants import fps, gunity
 from game.powerup.powerup_meta import PowerUpMeta
 
@@ -11,7 +11,7 @@ class Kunai(PowerUpMeta):
     def catch(self,player,engine):
         player.clear_effect()
 
-        sound = pg.mixer.Sound('assets/sounds/wind.wav')
+        sound = sndpowerup['WIND']
         sound.set_volume(0.5)
 
         head = player.get_head()

@@ -1,6 +1,6 @@
 from game import pg
 from game.constants import fps
-from game.assets import imgpowerup, imgexplosion
+from game.assets import imgpowerup, imgexplosion, sndpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 
 
@@ -11,7 +11,7 @@ class Bomb(PowerUpMeta):
     def catch(self, player, engine):
         pos = self.get_pos()
 
-        sound = pg.mixer.Sound('assets/sounds/explosion.wav')
+        sound = sndpowerup['EXPL']
         sound.set_volume(0.3)
         sound.play()
 

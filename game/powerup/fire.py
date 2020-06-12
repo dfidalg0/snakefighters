@@ -1,5 +1,5 @@
 from game import pg
-from game.assets import imgpowerup
+from game.assets import imgpowerup, sndpowerup
 from game.constants import fps, gunity
 from game.powerup.powerup_meta import PowerUpMeta
 
@@ -42,7 +42,7 @@ class Fire(PowerUpMeta):
     def catch(self, player, engine):
         player.clear_effect()
 
-        sound = pg.mixer.Sound('assets/sounds/burning.wav')
+        sound = sndpowerup['BURN']
         sound.set_volume(0.6)
 
         head = player.get_head()

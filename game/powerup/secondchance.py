@@ -1,5 +1,5 @@
 from game import pg
-from game.assets import imgpowerup
+from game.assets import imgpowerup, sndpowerup
 from game.powerup.powerup_meta import PowerUpMeta
 from pygame.math import Vector2
 from math import inf
@@ -12,7 +12,7 @@ class SecondChance(PowerUpMeta):
     def catch(self,player,engine):
         health = player.get_health()
 
-        sound = pg.mixer.Sound('assets/sounds/heal.wav')
+        sound = sndpowerup['HEAL']
         sound.set_volume(0.5)
         sound.play()
 

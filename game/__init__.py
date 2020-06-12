@@ -1,5 +1,7 @@
 import pygame as pg
 
+pg.init()
+
 import game.constants as constants
 import game.assets as assets
 

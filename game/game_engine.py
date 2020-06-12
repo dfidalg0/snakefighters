@@ -3,7 +3,6 @@ from game import pg, Screen, GameObject, Player, Food, powerup_list
 from game.constants import fps, prob_pup, gunity, max_food, resolution
 from game.assets import imgwall, img_wait_background, font_barbarian, font_snake, imgkeyboard
 from pygame.math import Vector2
-from pygame import mixer
 from pygame.time import Clock
 from random import randint, random, choice
 from collections import deque
@@ -232,7 +231,6 @@ class GameEngine:
         self.add_effect(print_message)
 
     def game_loop(self):
-        pg.init()
         pg.mixer.music.load('assets/music.wav')
         pg.mixer.music.play(-1)
 

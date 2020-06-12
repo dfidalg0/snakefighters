@@ -24,7 +24,6 @@ default_controls = [
 
 class MainMenu():
     def __init__(self, screen, x=0, y=0):
-        pg.init()
         self.__pos = Vector2(x, y)
         self.__screen = screen
         self.__background = InterfaceObject(screen, img_menu_background)
@@ -42,17 +41,19 @@ class MainMenu():
             'map': choice(list(maps.values()))
         }
 
-        self.__state = QUIT
+        self.__state = -1
         self.main()
 
     def get_screen(self):
         return self.__screen
 
     def main (self):
-        pg.mixer.music.load('assets/intro.wav')
-        pg.mixer.music.play(-1)
         self.__last_state = self.__state
         self.__state = MAIN
+
+        if self.__last_state == -1:
+            pg.mixer.music.load('assets/intro.wav')
+            pg.mixer.music.play(-1)
 
         self.clear_buttons()
 

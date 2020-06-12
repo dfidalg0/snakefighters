@@ -24,6 +24,7 @@ default_controls = [
 
 class MainMenu():
     def __init__(self, screen, x=0, y=0):
+        pg.init()
         self.__pos = Vector2(x, y)
         self.__screen = screen
         self.__background = InterfaceObject(screen, img_menu_background)
@@ -48,6 +49,8 @@ class MainMenu():
         return self.__screen
 
     def main (self):
+        pg.mixer.music.load('assets/intro.wav')
+        pg.mixer.music.play(-1)
         self.__last_state = self.__state
         self.__state = MAIN
 
@@ -104,6 +107,8 @@ class MainMenu():
         Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
 
     def ending_screen(self,winners):
+        pg.mixer.music.load('assets/ending.wav')
+        pg.mixer.music.play(0)
         self.__last_state = self.__state
         self.__state = ENDING_SCREEN
 

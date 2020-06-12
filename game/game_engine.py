@@ -232,6 +232,10 @@ class GameEngine:
         self.add_effect(print_message)
 
     def game_loop(self):
+        pg.init()
+        pg.mixer.music.load('assets/music.wav')
+        pg.mixer.music.play(-1)
+
         pg.mouse.set_visible(False)
 
         background = img_wait_background.convert()

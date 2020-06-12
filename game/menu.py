@@ -247,15 +247,28 @@ class MainMenu():
                         controls = self.__config['players']['controls']
                         key = get_key()
                         assigned = False
-                        for playerkeys in controls:
-                            if key in playerkeys:
-                                assigned = True
+
+                        for a in range(len(controls)):
+                            for b in range(4):
+                                if key == controls[a][b]:
+                                    assigned = True
+                                    n1 = a
+                                    k1 = b
 
                         if not key:
                             self.__config['player_number'] = 0
                             self.__state = QUIT
                         elif assigned:
-                            print('Tecla já está sendo utilizada')
+                            key1 = controls[n][k]
+                            controls[n1][k1] = key1
+                            img = imgkeyboard[key1]
+                            imgs = [img,img,img]
+                            self.__buttons[n1*4 + k1].set_imglist(imgs)
+
+                            controls[n][k] = key
+                            img = imgkeyboard[key]
+                            imgs = [img,img,img]
+                            self.__buttons[i].set_imglist(imgs)
                         elif key not in imgkeyboard.keys():
                             print('Tecla inválida')
                         else:

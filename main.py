@@ -26,6 +26,5 @@ while config['player_number'] != 0:
             game.add_player(sprites[i],orientations[i],*positions[i],controls[i])
 
         winners = game.game_loop()
-        print(winners)
 
         menu.ending_screen(winners)

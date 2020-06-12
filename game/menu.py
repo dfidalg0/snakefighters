@@ -210,6 +210,7 @@ class MainMenu():
                 self.__config['players']['positions'].clear()
                 self.__config['players']['controls'].clear()
                 self.__config['player_number'] = 0
+                self.__config['map'] = choice(list(maps.values()))
                 self.__background.destroy()
                 self.__background = InterfaceObject(self.__screen, img_menu_background)
                 self.main()

@@ -241,15 +241,24 @@ class MainMenu():
             else:
                 for i in range(16):
                     if self.__buttons[i].check_hover():
+                        print('Selecione uma tecla')
                         n = i//4
                         k = i % 4
                         controls = self.__config['players']['controls']
                         key = get_key()
-                        not_assigned = True
+                        assigned = False
                         for playerkeys in controls:
                             if key in playerkeys:
-                                not_assigned = False
-                        if not_assigned and key in imgkeyboard.keys():
+                                assigned = True
+
+                        if not key:
+                            self.__config['player_number'] = 0
+                            self.__state = QUIT
+                        elif assigned:
+                            print('Tecla já está sendo utilizada')
+                        elif key not in imgkeyboard.keys():
+                            print('Tecla inválida')
+                        else:
                             controls[n][k] = key
                             img = imgkeyboard[key]
                             imgs = [img,img,img]

@@ -56,42 +56,46 @@ imgkeyboard = {}
 keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 for key in keys:
-    imgkeyboard[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),
-                                               (2 * gunity, 2 * gunity))
+    imgkeyboard[ord(key)] = pg.transform.scale(
+        pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),
+        (2 * gunity, 2 * gunity)
+    )
 
 for i in range(10):
     imgkeyboard[pg.K_KP0 + i] = imgkeyboard[pg.K_0 + i]
 
 for (i, key) in enumerate(['up', 'down', 'right', 'left']):
     imgkeyboard[pg.K_UP + i] = pg.transform.scale(
-        pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'), (2 * gunity, 2 * gunity))
-
-del key, keys, i
+        pg.image.load('assets/img/keyboard_keys/keyboard_key_' + key + '.png'),
+        (2 * gunity, 2 * gunity)
+    )
 
 # keyboard 2
 imgkeyboard2 = {}
-keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 for key in keys:
-    imgkeyboard2[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys2/keyboard_key_' + key + '.png'),
-                                               (2 * gunity, 2 * gunity))
+    imgkeyboard2[ord(key)] = pg.transform.scale(
+        pg.image.load('assets/img/keyboard_keys2/keyboard_key_' + key + '.png'),
+        (2 * gunity, 2 * gunity)
+    )
 
 for i in range(10):
     imgkeyboard2[pg.K_KP0 + i] = imgkeyboard2[pg.K_0 + i]
 
 for (i, key) in enumerate(['up', 'down', 'right', 'left']):
     imgkeyboard2[pg.K_UP + i] = pg.transform.scale(
-        pg.image.load('assets/img/keyboard_keys2/keyboard_key_' + key + '.png'), (2 * gunity, 2 * gunity))
-
-del key, keys, i
+        pg.image.load('assets/img/keyboard_keys2/keyboard_key_' + key + '.png'),
+        (2 * gunity, 2 * gunity)
+    )
 
 # keyboard 3
 imgkeyboard3 = {}
-keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 for key in keys:
-    imgkeyboard3[ord(key)] = pg.transform.scale(pg.image.load('assets/img/keyboard_keys3/keyboard_key_' + key + '.png'),
-                                               (2 * gunity, 2 * gunity))
+    imgkeyboard3[ord(key)] = pg.transform.scale(
+        pg.image.load('assets/img/keyboard_keys3/keyboard_key_' + key + '.png'),
+        (2 * gunity, 2 * gunity)
+    )
 
 for i in range(10):
     imgkeyboard3[pg.K_KP0 + i] = imgkeyboard3[pg.K_0 + i]

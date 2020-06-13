@@ -1,10 +1,16 @@
 from game import pg,Screen,InterfaceObject,Button
-from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown ,menu_sec , imgsnake_small,jogador_titulo
+
+from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake
+from game.assets import crown ,menu_sec , imgsnake_small,jogador_titulo
 from game.assets import imgbutton, img_menu_background ,img_ending_screen
-from game.assets import maps, img_wait_background, imgkeyboard ,imgkeyboard2, imgkeyboard3
+from game.assets import maps, img_wait_background
+from game.assets import imgkeyboard, imgkeyboard2, imgkeyboard3
+
 from game.constants import left, right, gunity
+
 from pygame.math import Vector2
 from pygame.time import Clock
+
 from random import choice
 
 QUIT = 0
@@ -145,11 +151,9 @@ class MainMenu():
 
         self.__menu_barra = InterfaceObject(self.__background, menu_sec,-self.__bound[0] * 0.088, self.__bound[1] * 0)
 
-
         inc = 2 * gunity
         incs = [(0, 0), (-inc, +inc), (0, +inc), (+inc, +inc)]
 
-        bound = self.__menu_barra.get_rect()/2
         pos0 = Vector2(-self.__rect[0]*0.35, -self.__rect[1]*0.24)
 
         Inc = Vector2(self.__rect[0]*0.358, self.__rect[1]*0.38)
@@ -164,7 +168,6 @@ class MainMenu():
                 pos = pos1 + incs[j]
                 imgs = [imgkeyboard[playerkeys[i][j]],imgkeyboard2[playerkeys[i][j]],imgkeyboard3[playerkeys[i][j]]]
                 Button(self, imgs, *pos)
-
 
         Button(self, imgbutton['voltar'], -self.__rect[0]*0.35, self.__rect[1]*0.37)
 
@@ -248,7 +251,6 @@ class MainMenu():
             else:
                 for i in range(16):
                     if self.__buttons[i].check_hover():
-                        print('Selecione uma tecla')
                         n = i//4
                         k = i % 4
                         controls = self.__config['players']['controls']
@@ -274,12 +276,9 @@ class MainMenu():
                             controls[n][k] = key
                             imgs = [imgkeyboard[key],imgkeyboard2[key],imgkeyboard3[key]]
                             self.__buttons[i].set_imglist(imgs)
-                        elif key not in imgkeyboard.keys():
-                            print('Tecla inválida')
-                        else:
+                        elif key in imgkeyboard.keys():
                             controls[n][k] = key
-                            img = imgkeyboard[key]
-                            imgs = [img,img,img]
+                            imgs = [imgkeyboard[key],imgkeyboard2[key],imgkeyboard3[key]]
                             self.__buttons[i].set_imglist(imgs)
 
     def add_button(self, button):

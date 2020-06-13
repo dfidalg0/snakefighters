@@ -1,7 +1,7 @@
 from game import pg,Screen,InterfaceObject,Button
-from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown ,menu_sec
+from game.assets import imgsety, imgsetb, imgseto, imgsetp ,imgsnake , crown ,menu_sec , imgsnake_small,jogador_titulo
 from game.assets import imgbutton, img_menu_background ,img_ending_screen
-from game.assets import maps, img_wait_background, imgkeyboard
+from game.assets import maps, img_wait_background, imgkeyboard ,imgkeyboard2, imgkeyboard3
 from game.constants import left, right, gunity
 from pygame.math import Vector2
 from pygame.time import Clock
@@ -143,26 +143,30 @@ class MainMenu():
 
         self.clear_buttons()
 
-        self.__menu_barra = InterfaceObject(self.__background, menu_sec)
+        self.__menu_barra = InterfaceObject(self.__background, menu_sec,-self.__bound[0] * 0.088, self.__bound[1] * 0)
+
 
         inc = 2 * gunity
         incs = [(0, 0), (-inc, +inc), (0, +inc), (+inc, +inc)]
 
         bound = self.__menu_barra.get_rect()/2
-        pos0 = Vector2(-0.75*bound[0],-0.35*bound[1])
+        pos0 = Vector2(-self.__rect[0]*0.35, -self.__rect[1]*0.24)
 
-        Inc = Vector2(10*gunity,6*gunity)
-        Incs = [-Inc,(Inc[0],-Inc[1]),(-Inc[0],Inc[1]),Inc]
+        Inc = Vector2(self.__rect[0]*0.358, self.__rect[1]*0.38)
+        Incs = [(0,0),(Inc[0],0),(0,Inc[1]),Inc]
 
         playerkeys = self.__config['players']['controls']
         for i in range(4):
+            pos1 = pos0 + Incs[i]
+            InterfaceObject(self.__background, imgsnake_small[i], *pos1 + Vector2(-self.__rect[0]*0.11,0))
+            InterfaceObject(self.__background, jogador_titulo[i], *pos1 + Vector2(0,-self.__rect[1]*0.15))
             for j in range(4):
-                pos = pos0 + Incs[i] + incs[j]
-                img = imgkeyboard[playerkeys[i][j]]
-                imgs = [img,img,img]
+                pos = pos1 + incs[j]
+                imgs = [imgkeyboard[playerkeys[i][j]],imgkeyboard2[playerkeys[i][j]],imgkeyboard3[playerkeys[i][j]]]
                 Button(self, imgs, *pos)
 
-        Button(self, imgbutton['voltar'], -self.__bound[0] * 0.67, +self.__bound[1] * 0.528)
+
+        Button(self, imgbutton['voltar'], -self.__rect[0]*0.35, self.__rect[1]*0.37)
 
     def update(self):
         if self.__state == MAIN:
@@ -223,6 +227,7 @@ class MainMenu():
                     self.multijogadores()
                 elif self.__last_state == MAIN:
                     self.main()
+
         elif self.__state == ENDING_SCREEN:
             # menu principal
             if self.__buttons[0].check_hover():
@@ -235,8 +240,10 @@ class MainMenu():
             elif self.__buttons[1].check_hover():
                 self.__config['player_number'] = 0
                 self.__state = QUIT
+
         elif self.__state == CONTROLS:
             if self.__buttons[16].check_hover():
+                self.__background.remove_all_slaves()
                 self.main()
             else:
                 for i in range(16):
@@ -261,13 +268,11 @@ class MainMenu():
                         elif assigned:
                             key1 = controls[n][k]
                             controls[n1][k1] = key1
-                            img = imgkeyboard[key1]
-                            imgs = [img,img,img]
+                            imgs = [imgkeyboard[key1],imgkeyboard2[key1],imgkeyboard3[key1]]
                             self.__buttons[n1*4 + k1].set_imglist(imgs)
 
                             controls[n][k] = key
-                            img = imgkeyboard[key]
-                            imgs = [img,img,img]
+                            imgs = [imgkeyboard[key],imgkeyboard2[key],imgkeyboard3[key]]
                             self.__buttons[i].set_imglist(imgs)
                         elif key not in imgkeyboard.keys():
                             print('Tecla inválida')

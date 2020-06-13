@@ -61,6 +61,9 @@ class InterfaceObject:
     def remove_slave(self, slave):
         self.__slaves.remove(slave)
 
+    def remove_all_slaves(self):
+        del self.__slaves[:]
+
     def destroy(self):
         for slave in self.__slaves:
             slave.destroy()

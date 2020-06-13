@@ -402,6 +402,7 @@ class GameEngine:
                 self.__powerups.popleft().destroy()
             # Timer de power-ups
 
+        pg.time.set_timer(SHRINK_ARENA,0)
         self.clear_effects()
         self.__gamebox.destroy()
         pg.mouse.set_visible(True)

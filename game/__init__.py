@@ -1,6 +1,7 @@
 import pygame as pg
 
 pg.init()
+pg.mixer.music.set_volume(0.8)
 
 import game.constants as constants
 import game.assets as assets

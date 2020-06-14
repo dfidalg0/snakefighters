@@ -1,7 +1,7 @@
 # Snake Fighters
 Bem vindo ao nosso primeiro projeto de CES 22: um jogo completamente desenvolvido em **Python!** 
 
-E se é pra desenvolver um jogo em Python, por que não trabalhar com as cobras que simbolizam a linguagem :snake: ?
+E se é pra desenvolver um jogo em Python, por que não trabalhar com as cobras que simbolizam a linguagem :snake:  ?
 
 Pensando nisso, decidimos recriar o famoso "jogo da cobrinha", mas em um ambiente um pouco mais competitivo.
 

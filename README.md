@@ -27,7 +27,7 @@ Power-up básico. Sempre 4 presentes ao mesmo tempo. Colete para aumentar de tam
 
 Power-up aleatório. Colete para sobreviver a uma morte certa adicional. Limite de 3 ao mesmo tempo para cada jogador.
 
-* **Invencibilidadw**:
+* **Invencibilidade**:
 
 ![Invencibilidade](/assets/img/powerups/invencibilidade.png)
 

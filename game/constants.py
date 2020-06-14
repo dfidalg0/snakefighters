@@ -6,10 +6,10 @@ gunity = 20
 fps = 13
 
 # Power-up probability
-prob_pup = 1/150
+prob_pup = 1/30
 
 # Player max health
-max_health = 3
+max_health = 5
 
 # Screen resolution
 resolution = (1280,720)
